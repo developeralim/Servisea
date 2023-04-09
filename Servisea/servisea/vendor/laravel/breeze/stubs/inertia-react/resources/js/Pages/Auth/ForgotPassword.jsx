@@ -9,6 +9,10 @@ export default function ForgotPassword({ status }) {
         email: '',
     });
 
+    const onHandleChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
     const submit = (e) => {
         e.preventDefault();
 
@@ -34,7 +38,7 @@ export default function ForgotPassword({ status }) {
                     value={data.email}
                     className="mt-1 block w-full"
                     isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
+                    onChange={onHandleChange}
                 />
 
                 <InputError message={errors.email} className="mt-2" />

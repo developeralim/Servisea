@@ -26,7 +26,6 @@ class InstallCommand extends Command
                             {--inertia : Indicate that the Vue Inertia stack should be installed (Deprecated)}
                             {--pest : Indicate that Pest should be installed}
                             {--ssr : Indicates if Inertia SSR support should be installed}
-                            {--typescript : Indicates if TypeScript is preferred for the Inertia stack (Experimental)}
                             {--composer=global : Absolute path to the Composer binary which should be used to install packages}';
 
     /**
@@ -87,8 +86,6 @@ class InstallCommand extends Command
         $input->setOption('dark', $this->components->confirm('Would you like to install dark mode support?'));
 
         if (in_array($input->getArgument('stack'), ['vue', 'react'])) {
-            $input->setOption('typescript', $this->components->confirm('Would you like TypeScript support? (Experimental)'));
-
             $input->setOption('ssr', $this->components->confirm('Would you like to install Inertia SSR support?'));
         }
 
@@ -107,9 +104,9 @@ class InstallCommand extends Command
         $stubStack = $this->argument('stack') === 'api' ? 'api' : 'default';
 
         if ($this->option('pest')) {
-            $this->removeComposerPackages(['phpunit/phpunit'], true);
+            $this->removeComposerPackages(['nunomaduro/collision', 'phpunit/phpunit'], true);
 
-            if (! $this->requireComposerPackages(['pestphp/pest:^2.0', 'pestphp/pest-plugin-laravel:^2.0'], true)) {
+            if (! $this->requireComposerPackages(['nunomaduro/collision:^6.4', 'pestphp/pest:^1.22', 'pestphp/pest-plugin-laravel:^1.2'], true)) {
                 return false;
             }
 
