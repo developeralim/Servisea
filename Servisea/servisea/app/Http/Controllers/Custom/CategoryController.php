@@ -11,21 +11,27 @@ class CategoryController extends Controller
 {
     public function insertCategory(Request $request){
         $category = $request->input();
-        $category = DB::table('category')
-        ->where('CATEGORY_NAME', $category['name'])
-        ->get();
+        $categoryDB = DB::table('category')
+                      ->where('CATEGORY_NAME', $category['CATEGORY_NAME'])
+                      ->get();
 
-            if($category->isEmpty()){
-                $dataExist[0] = 1;
-                return view("admin.gig",$dataExist);
-            }else{
-                $category_name = $category['CATEGORY_NAME'];
-                $category_description = $category['CATEGORY_DESCRIPTION'];
-                DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
-                $dataExist[1] = 1;
-                return view("admin.gig",$dataExist);
-            }
+        if($categoryDB->isEmpty()){
+            //if data does not exist - insert in DB
+            $category_name = $category['CATEGORY_NAME'];
+            $category_description = $category['CATEGORY_DESCRIPTION'];
+            DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
+        }else{
+            //if data does exist - send
+            $dataExist = 1;
         }
+        $AllCategory = Category::all();
+
+        if($dataExist == 1){
+            return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
+        }
+
+        return view("admin.gig",['gigcategory'=>$AllCategory]);
+    }
 
     public function viewCategory(Request $request){
 

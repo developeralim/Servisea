@@ -94,14 +94,14 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon">CATEGORY NAME</div>
-                                        <input class="form-control">
+                                        <input name="CATEGORY_NAME" class="form-control">
                                         <!--<div class="input-group-addon"><i class="fa fa-envelope"></i></div>-->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-addon">CATEGORY DESCRIPTION</div>
-                                        <input class="form-control">
+                                        <input name="CATEGORY_DESCRIPTION" class="form-control">
                                         <!--<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>-->
                                     </div>
                                 </div>
@@ -111,6 +111,9 @@
                                     <button type="submit" style="display:none;" class="btn btn-primary btn-sm">Cancel</button>
                                 </div>
                             </form>
+                            @if(isset($dataExist))
+                                    <span>{{$dataExist}}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
