@@ -114,6 +114,9 @@
                             @if(isset($dataExist))
                                     <span>{{$dataExist}}</span>
                             @endif
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
                         </div>
                     </div>
                 </div>

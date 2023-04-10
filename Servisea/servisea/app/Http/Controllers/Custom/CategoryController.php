@@ -10,7 +10,15 @@ use App\Models\Category;
 class CategoryController extends Controller
 {
     public function insertCategory(Request $request){
-        $category = $request->input();
+
+        $category = $request->validate([
+            'CATEGORY_NAME' => 'required|max:255',
+            'CATEGORY_DESCRIPTION' => 'required|max:255',
+        ]);
+
+        //$category = $request->input();
+
+
         $categoryDB = DB::table('category')
                       ->where('CATEGORY_NAME', $category['CATEGORY_NAME'])
                       ->get();
@@ -29,7 +37,6 @@ class CategoryController extends Controller
         if($dataExist == 1){
             return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
         }
-
         return view("admin.gig",['gigcategory'=>$AllCategory]);
     }
 
