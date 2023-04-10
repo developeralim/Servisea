@@ -84,7 +84,9 @@
                                     <div class="input-group">
 
                                         <div class="input-group-addon">CATEGORY ID</div>
+                                        @if(isset($test))
                                         <input class="form-control" value="{{$test}}" disabled>
+                                        @endif
                                         <!--<div class="input-group-addon"><i class="fa fa-user"></i></div>-->
 
                                     </div>
