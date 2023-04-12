@@ -19,7 +19,6 @@ class CategoryController extends Controller
 
         //$category = $request->input();
 
-
         $categoryDB = DB::table('category')
                       ->where('CATEGORY_NAME', $category['CATEGORY_NAME'])
                       ->get();
