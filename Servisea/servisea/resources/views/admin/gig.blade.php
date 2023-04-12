@@ -58,9 +58,8 @@
                                             </form>
                                             </td>
                                             <td>
-                                            <form action="" method="get">
+                                            <form action="{{route('deleteCategory')}}" method="post">
                                             <input class="form-control" name="category_ID" value="{{$i->CATEGORY_ID}}" hidden>
-
                                             <button type="submit" value="{{$i->CATEGORY_ID}}">Delete</button>
                                             </form>
                                             </td>
@@ -113,6 +112,9 @@
                             </form>
                             @if(isset($dataExist))
                                     <span>{{$dataExist}}</span>
+                            @endif
+                            @if(isset($td))
+                                    <span>delete {{$td}}</span>
                             @endif
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
