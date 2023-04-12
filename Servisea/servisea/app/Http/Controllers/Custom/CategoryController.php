@@ -11,8 +11,9 @@ class CategoryController extends Controller
 {
     public function insertCategory(Request $request){
 
+        #validation
         $category = $request->validate([
-            'CATEGORY_NAME' => 'required|max:255',
+            'CATEGORY_NAME' => 'required|string|max:255|regex:/[a-zA-Z]/',
             'CATEGORY_DESCRIPTION' => 'required|max:255',
         ]);
 
@@ -34,9 +35,12 @@ class CategoryController extends Controller
         }
         $AllCategory = Category::all();
 
-        if($dataExist == 1){
+        if(isset($dataExist)){
+            $category=[];
             return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
+
         }
+        $category=[];
         return view("admin.gig",['gigcategory'=>$AllCategory]);
     }
 
