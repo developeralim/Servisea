@@ -62,9 +62,9 @@ class CategoryController extends Controller
 
     public function deleteCategory(Request $request){
         $category = $request->input('category_ID');
-        // DB::delete('DELETE FROM category WHERE CATEGORY_ID = ?', [$category]);
+        DB::delete('DELETE FROM category WHERE CATEGORY_ID = ?', [$category]);
         $AllCategory = Category::all();
-        return view("admin.gig",['gigcategory'=>$AllCategory,'td'=>$category]);
+        return redirect("admin/category")->with('gigcategory',$AllCategory);
     }
 
     public function updateCategory(Request $request){

@@ -59,8 +59,9 @@
                                             </td>
                                             <td>
                                             <form action="{{route('deleteCategory')}}" method="post">
+                                            @csrf
                                             <input class="form-control" name="category_ID" value="{{$i->CATEGORY_ID}}" hidden>
-                                            <button type="submit" value="{{$i->CATEGORY_ID}}">Delete</button>
+                                            <button type="submit">Delete</button>
                                             </form>
                                             </td>
                                         </tr>
