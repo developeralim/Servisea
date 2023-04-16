@@ -40,12 +40,14 @@ Route::get('/admin.dashboard', function () {
     return view('admin.dashboard');
 });
 
+//
 Route::get('/admin/category', [CategoryController::class, 'viewCategory'])->name('category.page');
 Route::post('/editCategory', [CategoryController::class, 'editCategory'])->name('editCategory');
 Route::post('/insertCategory', [CategoryController::class, 'insertCategory'])->name('insertCategory');
 Route::post('/updateCategory', [CategoryController::class, 'updateCategory'])->name('updateCategory');
 Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
 
+Route::get('/admin/profile', [ProfileController::class, 'viewProfile'])->name('view_profile.page');
 
 //Admin Controller
 Route::controller(AdminController::class)->group(function(){

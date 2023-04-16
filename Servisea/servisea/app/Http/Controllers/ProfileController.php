@@ -57,4 +57,29 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+   /**
+     * view the user's account.
+     */
+    public function viewProfile(Request $request)
+    {
+        return view('admin.profileAdmin');
+    }
+
+       /**
+     * update the user's account.
+     */
+    public function updateProfile(Request $request)
+    {
+        return view('admin.profileAdmin');
+    }
+
+       /**
+     * delete the user's account.
+     */
+    public function deleteProfile(Request $request)
+    {
+        return view('admin.profileAdmin');
+    }
+
 }
