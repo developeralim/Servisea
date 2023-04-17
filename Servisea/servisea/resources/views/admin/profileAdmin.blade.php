@@ -83,15 +83,33 @@ color: #9b9ca1;
 							<div class="row g-3">
 								<h4 class="mb-4 mt-0">Contact detail</h4>
                                 <div class="row">
+                                <!-- USER ID -->
+								<div class="col-md-6">
+									<label class="form-label">User ID</label>
+                                    @if(isset($adminDetails[0]->ADMIN_ID))
+									<input type="text" name="ADMIN_ID" class="form-control" placeholder="" aria-label="User ID" value="{{$adminDetails[0]->ADMIN_ID}}">
+                                    @endif
+								</div>
+                                <!-- Username -->
+								<div class="col-md-6">
+									<label class="form-label">Username</label>
+                                    @if(isset($adminDetails[0]->ADMIN_USERNAME))
+									<input type="text" name="ADMIN_USERNAME" class="form-control" placeholder="" aria-label="Username" value="{{$adminDetails[0]->ADMIN_USERNAME}}">
+                                    @endif
+								</div>
 								<!-- First Name -->
 								<div class="col-md-6">
 									<label class="form-label">First Name *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="First name" value="Scaralet">
+                                    @if(isset($adminDetails[0]->ADMIN_FNAME))
+									<input type="text" name="ADMIN_FNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_FNAME}}">
+                                    @endif
 								</div>
 								<!-- Last name -->
 								<div class="col-md-6">
 									<label class="form-label">Last Name *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Last name" value="Doe">
+                                    @if(isset($adminDetails[0]->ADMIN_LNAME))
+									<input type="text" name="ADMIN_LNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_LNAME}}">
+                                    @endif
 								</div>
 								<!-- Phone number -->
 								<div class="col-md-6">
@@ -106,8 +124,10 @@ color: #9b9ca1;
 								<!-- Email -->
 								<div class="col-md-6">
 									<label for="inputEmail4" class="form-label">Email *</label>
-									<input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com">
-								</div>
+                                @if(isset($adminDetails[0]->ADMIN_EMAIL))
+									<input type="email" class="form-control" id="inputEmail4" value="{{$adminDetails[0]->ADMIN_EMAIL}}">
+                                @endif
+                                </div>
 								<!-- Skype -->
 								<div class="col-md-6">
 									<label class="form-label">Skype *</label>

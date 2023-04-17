@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\admin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,9 @@ class ProfileController extends Controller
      */
     public function viewProfile(Request $request)
     {
-        return view('admin.profileAdmin');
+        $adminDetails = admin::all();
+        return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
+
     }
 
        /**
@@ -71,7 +74,43 @@ class ProfileController extends Controller
      */
     public function updateProfile(Request $request)
     {
-        return view('admin.profileAdmin');
+        //validation
+        $admin = $request->validate([
+            'ADMIN_FNAME' => 'required|string|max:255|regex:/[a-zA-Z]/',
+            'ADMIN_LNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z]/',
+        ]);
+
+        //$category = $request->input();
+
+        $categoryDB = DB::table('category')
+                      ->where('CATEGORY_NAME', $category['CATEGORY_NAME'])
+                      ->get();
+
+        if($categoryDB->isEmpty()){
+            //if data does not exist - insert in DB
+            $category_name = $category['CATEGORY_NAME'];
+            $category_description = $category['CATEGORY_DESCRIPTION'];
+            DB::table('category')
+              ->where('CATEGORY_ID', 1)
+              ->update(['votes' => 1]);
+
+            DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
+        }else{
+            //if data does exist - send
+            $dataExist = 1;
+        }
+        $AllCategory = Category::all();
+
+        if(isset($dataExist)){
+            $category=[];
+            return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
+
+        }
+        $category=[];
+        return view("admin.gig",['gigcategory'=>$AllCategory]);
+
+        $adminDetails = admin::all();
+        return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
     }
 
        /**
@@ -79,7 +118,7 @@ class ProfileController extends Controller
      */
     public function deleteProfile(Request $request)
     {
-        return view('admin.profileAdmin');
+        return view('login');
     }
 
 }
