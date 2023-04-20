@@ -44,7 +44,6 @@ class CategoryController extends Controller
     }
 
     public function viewCategory(Request $request){
-
         $session= $request->session()->get('admin');
         if ($session['ADMIN_ID'] != 0 ){
             $AllCategory = Category::all();
