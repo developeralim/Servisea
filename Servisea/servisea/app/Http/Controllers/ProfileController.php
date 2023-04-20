@@ -76,42 +76,43 @@ class ProfileController extends Controller
     {
         //validation
         $admin = $request->validate([
-            'ADMIN_FNAME' => 'required|string|max:255|regex:/[a-zA-Z]/',
+            'ADMIN_MAIL' => 'required|string|max:255|','unique:posts',
             'ADMIN_LNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z]/',
         ]);
 
         //$category = $request->input();
+        $session= $request->session()->get('admin');
+        $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
+                        ->where()
+                        ->get();
 
-        $categoryDB = DB::table('category')
-                      ->where('CATEGORY_NAME', $category['CATEGORY_NAME'])
-                      ->get();
-
-        if($categoryDB->isEmpty()){
+        if($adminDB->isEmpty()){
             //if data does not exist - insert in DB
-            $category_name = $category['CATEGORY_NAME'];
-            $category_description = $category['CATEGORY_DESCRIPTION'];
-            DB::table('category')
-              ->where('CATEGORY_ID', 1)
-              ->update(['votes' => 1]);
+        //     $category_name = $category['CATEGORY_NAME'];
+        //     $category_description = $category['CATEGORY_DESCRIPTION'];
+        //     DB::table('category')
+        //       ->where('CATEGORY_ID', 1)
+        //       ->update(['votes' => 1]);
 
-            DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
-        }else{
+        //     DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
+        // }else{
             //if data does exist - send
             $dataExist = 1;
         }
-        $AllCategory = Category::all();
+        // $AllCategory = Category::all();
 
         if(isset($dataExist)){
-            $category=[];
-            return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
+            // $category=[];
+            // return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
 
         }
-        $category=[];
-        return view("admin.gig",['gigcategory'=>$AllCategory]);
+    //     $category=[];
+    //     return view("admin.gig",['gigcategory'=>$AllCategory]);
 
-        $adminDetails = admin::all();
-        return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
-    }
+    //     $adminDetails = admin::all();
+    //     return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
+    //
+}
 
        /**
      * delete the user's account.
