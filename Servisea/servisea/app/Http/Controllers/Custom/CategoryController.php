@@ -88,7 +88,6 @@ class CategoryController extends Controller
               ->where('CATEGORY_ID', 1)
               ->update(['votes' => 1]);
 
-            DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
         }else{
             //if data does exist - send
             $dataExist = 1;

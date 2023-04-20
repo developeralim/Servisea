@@ -114,18 +114,18 @@ color: #9b9ca1;
 								<!-- Phone number -->
 								<div class="col-md-6">
 									<label class="form-label">Phone number *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Phone number" value="(333) 000 555">
+									<input type="text" name="ADMIN_PHONE" class="form-control" placeholder="" aria-label="Phone number" value="(333) 000 555">
 								</div>
 								<!-- Mobile number -->
 								<div class="col-md-6">
 									<label class="form-label">Mobile number *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Phone number" value="+91 9852 8855 252">
+									<input type="text" name="ADMIN_TEL" class="form-control" placeholder="" aria-label="Phone number" value="+91 9852 8855 252">
 								</div>
 								<!-- Email -->
 								<div class="col-md-6">
 									<label for="inputEmail4" class="form-label">Email *</label>
                                 @if(isset($adminDetails[0]->ADMIN_EMAIL))
-									<input type="email" class="form-control" id="inputEmail4" value="{{$adminDetails[0]->ADMIN_EMAIL}}">
+									<input type="email" name="ADMIN_EMAIL" class="form-control" id="inputEmail4" value="{{$adminDetails[0]->ADMIN_EMAIL}}">
                                 @endif
                                 </div>
 								<!-- Skype -->
