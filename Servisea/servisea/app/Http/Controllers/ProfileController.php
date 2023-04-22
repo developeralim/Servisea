@@ -78,25 +78,37 @@ class ProfileController extends Controller
         $admin = $request->validate([
             'ADMIN_FNAME' => 'required|string|max:255|regex:/[a-zA-Z]/',
             'ADMIN_LNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z]/',
-            'ADMIN_MAIL' => 'required|string|max:255|regex:/[a-zA-Z]/',
-            'ADMIN_USERNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z]/',
+            'ADMIN_EMAIL' => 'required|string|max:255|regex:/[a-zA-Z@0-9]/',
+            'ADMIN_USERNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z0-9]/',
         ]);
-
-        //$category = $request->input();
-
-        $categoryDB = DB::table('category')
-                      ->where('CATEGORY_NAME', $category['CATEGORY_NAME'])
-                      ->get();
+        $session= $request->session()->get('admin');
+        $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
+                        ->where(function($query) use ($admin){
+                            $query->where('ADMIN_EMAIL', $admin['ADMIN_EMAIL'])
+                            ->orWhere('ADMIN_USERNAME', $admin['ADMIN_USERNAME']);
+                        })
+                        ->get();
 
         if($adminDB->isEmpty()){
-            //if data does not exist - insert in DB
-            $category_name = $category['CATEGORY_NAME'];
-            $category_description = $category['CATEGORY_DESCRIPTION'];
-            DB::table('category')
-              ->where('CATEGORY_ID', 1)
-              ->update(['votes' => 1]);
+            //if data does not exist - update db
+           admin::where('ADMIN_ID',$session['ADMIN_ID'])
+              ->update([
+                        'ADMIN_FNAME' => $admin['ADMIN_FNAME'],
+                        'ADMIN_LNAME' => $admin['ADMIN_LNAME'],
+                        'ADMIN_USERNAME' => $admin['ADMIN_USERNAME'],
+                        'ADMIN_EMAIL' => $admin['ADMIN_EMAIL'],
+                        'ADMIN_PASSWORD' => $admin['ADMIN_PASSWORD'],
+                        'ADMIN_TEL' => $admin['ADMIN_TEL'],
+                        'ADMIN_IMG' => $admin['ADMIN_IMG'],
+                        'ADMIN_DOB' => $admin['ADMIN_DOB'],
+                        'ADMIN_GENDER' => $admin['ADMIN_GENDER'],
+                        'ADMIN_CITY' => $admin['ADMIN_CITY'],
+                        'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
+                        'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
+                        'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
+                        'ADMIN_LEVEL' => $admin['ADMIN_LEVEL'],
+                    ]);
 
-            DB::insert('insert into category (CATEGORY_NAME,CATEGORY_DESCRIPTION) values (?, ?)', [$category_name, $category_description]);
         }else{
             //if data does exist - send
             $dataExist = 1;
