@@ -233,9 +233,12 @@ color: #9b9ca1;
 				<!-- button -->
                 <div class='row'>
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
-					<button type="button" class="btn btn-danger btn-lg">Delete profile</button>
+					<button type="button" href="{{route('updateProfile.page')}}" class="btn btn-danger btn-lg">Delete profile</button>
 					<button type="button" class="btn btn-primary btn-lg">Update profile</button>
 				</div>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
                 </div>
 			</form> <!-- Form END -->
 		</div>
