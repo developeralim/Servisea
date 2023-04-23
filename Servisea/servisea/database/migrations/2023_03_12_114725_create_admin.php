@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('ADMIN_LNAME')->nullable();
             $table->String('ADMIN_TEL')->nullable();
             $table->binary('ADMIN_IMG')->nullable();
-            $table->string('ADMIN_DOB')->nullable();
+            $table->date('ADMIN_DOB')->nullable();
             $table->char('ADMIN_GENDER',7)->nullable();
 
             $table->string('ADMIN_CITY')->nullable();

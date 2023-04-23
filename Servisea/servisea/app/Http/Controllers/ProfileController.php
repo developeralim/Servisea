@@ -76,10 +76,20 @@ class ProfileController extends Controller
     {
         //validation
         $admin = $request->validate([
-            'ADMIN_FNAME' => 'required|string|max:255|regex:/[a-zA-Z]/',
-            'ADMIN_LNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z]/',
-            'ADMIN_EMAIL' => 'required|string|max:255|regex:/[a-zA-Z@0-9]/',
-            'ADMIN_USERNAME' => 'required|max:255|string|max:255|regex:/[a-zA-Z0-9]/',
+            'ADMIN_FNAME'      =>   'required|max:255|string|regex:/[a-zA-Z]/',
+            'ADMIN_LNAME'      =>   'required|max:255|string|regex:/[a-zA-Z]/',
+            'ADMIN_EMAIL'      =>   'required|max:255|string|regex:/[a-zA-Z@0-9]/',
+            'ADMIN_USERNAME'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_PASSWORD'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_TEL'        =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_IMG'        =>   'required|mimes:jpg,bmp,png',
+            'ADMIN_DOB'        =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_GENDER'     =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_CITY'       =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_COUNTRY'    =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_DISTRICT'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_POSTALCODE' =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_LEVEL'      =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
         ]);
         $session= $request->session()->get('admin');
         $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
@@ -113,11 +123,11 @@ class ProfileController extends Controller
             //if data does exist - send
             $dataExist = 1;
         }
-        // $AllCategory = Category::all();
+        // $AllC = admin::all();
 
         if(isset($dataExist)){
             // $category=[];
-            // return view("admin.gig",['dataExist'=>$dataExist,'gigcategory'=>$AllCategory]);
+            // return view("admin.gig",['dataExist'=>$dataExist,'adminDetails'=>$AllCategory]);
 
         }
     //     $category=[];
