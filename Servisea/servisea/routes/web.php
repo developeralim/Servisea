@@ -48,7 +48,7 @@ Route::post('/updateCategory', [CategoryController::class, 'updateCategory'])->n
 Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
 
 Route::get('/admin/profile', [ProfileController::class, 'viewProfile'])->name('view_profile.page');
-Route::post('/updateAdmin', [ProfileController::class, 'updateProfile'])->name('updateProfile.page');
+Route::post('/updateAdmin', [ProfileController::class, 'updateProfile'])->name('updateAdmin');
 
 
 //Admin Controller

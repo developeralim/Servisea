@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -76,8 +77,8 @@ class ProfileController extends Controller
     {
         //validation
         $admin = $request->validate([
-            'ADMIN_FNAME'      =>   'required|max:255|string|regex:/[a-zA-Z]/',
-            'ADMIN_LNAME'      =>   'required|max:255|string|regex:/[a-zA-Z]/'
+            'ADMIN_FNAME' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
+            'ADMIN_LNAME' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             // 'ADMIN_EMAIL'      =>   'required|max:255|string|regex:/[a-zA-Z@0-9]/',
             // 'ADMIN_USERNAME'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
             // 'ADMIN_PASSWORD'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
@@ -91,45 +92,44 @@ class ProfileController extends Controller
             // 'ADMIN_POSTALCODE' =>   'required|max:255|string|regex:/[A-Z0-9]/',
             // 'ADMIN_LEVEL'      =>   'required|max:255|Integer|regex:/[0-9]/',
         ]);
-        $session= $request->session()->get('admin');
-        $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
-                        ->where(function($query) use ($admin){
-                            $query->where('ADMIN_EMAIL', $admin['ADMIN_EMAIL'])
-                            ->orWhere('ADMIN_USERNAME', $admin['ADMIN_USERNAME']);
-                        })
-                        ->get();
+        // $session= $request->session()->get('admin');
+        // $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
+        //                 ->where(function($query) use ($admin){
+        //                     $query->where('ADMIN_EMAIL', $admin['ADMIN_EMAIL'])
+        //                     ->orWhere('ADMIN_USERNAME', $admin['ADMIN_USERNAME']);
+        //                 })
+        //                 ->get();
 
-        if($adminDB->isEmpty()){
-            //if data does not exist - update db
-           admin::where('ADMIN_ID',$session['ADMIN_ID'])
-              ->update([
-                        'ADMIN_FNAME' => $admin['ADMIN_FNAME'],
-                        'ADMIN_LNAME' => $admin['ADMIN_LNAME'],
-                        'ADMIN_USERNAME' => $admin['ADMIN_USERNAME'],
-                        'ADMIN_EMAIL' => $admin['ADMIN_EMAIL'],
-                        'ADMIN_PASSWORD' => $admin['ADMIN_PASSWORD'],
-                        'ADMIN_TEL' => $admin['ADMIN_TEL'],
-                        'ADMIN_IMG' => $admin['ADMIN_IMG'],
-                        'ADMIN_DOB' => $admin['ADMIN_DOB'],
-                        'ADMIN_GENDER' => $admin['ADMIN_GENDER'],
-                        'ADMIN_CITY' => $admin['ADMIN_CITY'],
-                        'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
-                        'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
-                        'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
-                        'ADMIN_LEVEL' => $admin['ADMIN_LEVEL'],
-                    ]);
+        // if($adminDB->isEmpty()){
+        //     //if data does not exist - update db
+        //    admin::where('ADMIN_ID',$session['ADMIN_ID'])
+        //       ->update([
+        //                 'ADMIN_FNAME' => $admin['ADMIN_FNAME'],
+        //                 'ADMIN_LNAME' => $admin['ADMIN_LNAME'],
+        //                 'ADMIN_USERNAME' => $admin['ADMIN_USERNAME'],
+        //                 'ADMIN_EMAIL' => $admin['ADMIN_EMAIL'],
+        //                 'ADMIN_PASSWORD' => $admin['ADMIN_PASSWORD'],
+        //                 'ADMIN_TEL' => $admin['ADMIN_TEL'],
+        //                 'ADMIN_IMG' => $admin['ADMIN_IMG'],
+        //                 'ADMIN_DOB' => $admin['ADMIN_DOB'],
+        //                 'ADMIN_GENDER' => $admin['ADMIN_GENDER'],
+        //                 'ADMIN_CITY' => $admin['ADMIN_CITY'],
+        //                 'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
+        //                 'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
+        //                 'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
+        //                 'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
+        //             ]);
 
-        }else{
-            //if data does exist - send
-            $dataExist = 1;
-        }
-        // $AllC = admin::all();
+        // }else{
+        //     //if data does exist - send
+        //     $dataExist = 1;
+        // }
+        // // $AllC = admin::all();
 
-        if(isset($dataExist)){
-            // $category=[];
-            // return view("admin.gig",['dataExist'=>$dataExist,'adminDetails'=>$AllCategory]);
+        // if(isset($dataExist)){
+        //     // $category=[];
 
-        }
+        // }
     //     $category=[];
     //     return view("admin.gig",['gigcategory'=>$AllCategory]);
 

@@ -75,7 +75,8 @@ color: #9b9ca1;
 				<hr>
 			</div>
 			<!-- Form START -->
-			<form class="file-upload">
+			<form class="file-upload" action="{{route('updateAdmin')}}" method="post">
+                @csrf
 				<div class="row mb-5 gx-5">
 					<!-- Contact detail -->
 					<div class="col-xxl-8 mb-5 mb-xxl-0">
@@ -233,14 +234,13 @@ color: #9b9ca1;
 				<!-- button -->
                 <div class='row'>
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
-					<button type="button" href="{{route('updateProfile.page')}}" class="btn btn-danger btn-lg">Delete profile</button>
-					<button type="button" class="btn btn-primary btn-lg">Update profile</button>
-				</div>
+					<button type="submit" class="btn btn-primary btn-lg">Update profile</button>
+			</form> <!-- Form END -->
+            </div>
                 @foreach ($errors->all() as $error)
                     <li>{{$error}}</li>
                 @endforeach
                 </div>
-			</form> <!-- Form END -->
 		</div>
 	</div>
 	</div>
