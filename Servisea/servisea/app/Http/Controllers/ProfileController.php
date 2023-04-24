@@ -80,7 +80,7 @@ class ProfileController extends Controller
             'ADMIN_FNAME' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'ADMIN_LNAME' => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             // 'ADMIN_EMAIL'      =>   'required|max:255|string|regex:/[a-zA-Z@0-9]/',
-            // 'ADMIN_USERNAME'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_USERNAME' =>  'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/'
             // 'ADMIN_PASSWORD'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
             // 'ADMIN_TEL'        =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
             // 'ADMIN_IMG'        =>   'required|mimes:jpg,bmp,png',
