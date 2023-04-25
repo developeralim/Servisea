@@ -75,7 +75,7 @@ color: #9b9ca1;
 				<hr>
 			</div>
 			<!-- Form START -->
-			<form class="file-upload" action="{{route('updateAdmin')}}" method="post">
+			<form class="file-upload" action="{{route('updateAdmin')}}" method="post" enctype="multipart/form-data">
                 @csrf
 				<div class="row mb-5 gx-5">
 					<!-- Contact detail -->
@@ -131,8 +131,8 @@ color: #9b9ca1;
                                 </div>
 								<!-- Skype -->
 								<div class="col-md-6">
-									<label class="form-label">Skype *</label>
-									<input type="text" class="form-control" placeholder="" aria-label="Phone number" value="Scaralet D">
+									<label class="form-label">Date *</label>
+									<input type="Date" name="ADMIN_DOB" class="form-control" placeholder="" aria-label="Phone number" value="Scaralet D">
 								</div>
                                 </div>
 							</div> <!-- Row END -->
@@ -151,7 +151,7 @@ color: #9b9ca1;
                                         <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
                                     </div>
                                     <!-- Button -->
-                                    <input type="file" id="customFile" name="file" hidden="">
+                                    <input type="file" id="customFile" name="file">
                                     <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
                                     <button type="button" class="btn btn-danger-soft">Remove</button>
                                     <!-- Content -->

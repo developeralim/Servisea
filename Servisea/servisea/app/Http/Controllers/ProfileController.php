@@ -65,9 +65,11 @@ class ProfileController extends Controller
      */
     public function viewProfile(Request $request)
     {
-        $adminDetails = admin::all();
-        return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
 
+        $session= $request->session()->get('admin');
+        $adminDetails = admin::where('ADMIN_ID',$session['ADMIN_ID'])
+                         ->get();
+        return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
     }
 
        /**
@@ -75,16 +77,17 @@ class ProfileController extends Controller
      */
     public function updateProfile(Request $request)
     {
+        $session= $request->session()->get('admin');
         //validation
         $admin = $request->validate([
             'ADMIN_FNAME'         => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'ADMIN_LNAME'         => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'ADMIN_EMAIL'         => 'required|email|unique:users,USER_EMAIL|unique:admin',
-            'ADMIN_USERNAME'      =>  'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/'
-            // 'ADMIN_PASSWORD'   =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
-            // 'ADMIN_TEL'        =>   'required|max:255|string|regex:/[a-zA-Z0-9]/',
-            // 'ADMIN_IMG'        =>   'required|mimes:jpg,bmp,png',
-            // 'ADMIN_DOB'        =>   'required|date_format:Y-m-d',
+            'ADMIN_EMAIL'         => 'required|email|unique:users,USER_EMAIL|unique:admin,ADMIN_EMAIL,'.$session['ADMIN_ID'].',ADMIN_ID',
+            'ADMIN_USERNAME'      =>  'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
+            //'ADMIN_PASSWORD'   =>   'required|min:8|string|regex:/[a-zA-Z0-9]/',
+            //'ADMIN_TEL'        =>   'required|max:255|string|regex:/^[0-9]+$/',
+            //'ADMIN_IMG'        =>   'required|image|mimes:jpg,jpeg,gif,png',
+            //'ADMIN_DOB'        =>   'required|before:'.now()->subYears(18)->toDateString(),
             // 'ADMIN_GENDER'     =>   'required|in:MALE,FEMALE,OTHERS',
             // 'ADMIN_CITY'       =>   'required|max:255|string|regex:/[a-zA-Z]/',
             // 'ADMIN_COUNTRY'    =>   'required|max:255|string|regex:/[a-zA-Z]/',
@@ -92,7 +95,10 @@ class ProfileController extends Controller
             // 'ADMIN_POSTALCODE' =>   'required|max:255|string|regex:/[A-Z0-9]/',
             // 'ADMIN_LEVEL'      =>   'required|max:255|Integer|regex:/[0-9]/',
         ]);
-        // $session= $request->session()->get('admin');
+
+        $imageName = $request->file('file')->getClientOriginalName();
+        return ($imageName);
+
         // $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
         //                 ->where(function($query) use ($admin){
         //                     $query->where('ADMIN_EMAIL', $admin['ADMIN_EMAIL'])
@@ -133,8 +139,9 @@ class ProfileController extends Controller
     //     $category=[];
     //     return view("admin.gig",['gigcategory'=>$AllCategory]);
 
-    //     $adminDetails = admin::all();
-    //     return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
+        $adminDetails = admin::where('ADMIN_ID',$session['ADMIN_ID'])
+                         ->get();
+        //return view('admin.profileAdmin',['adminDetails'=>$adminDetails]);
     //
 }
 
