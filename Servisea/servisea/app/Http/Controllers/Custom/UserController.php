@@ -12,25 +12,28 @@ class UserController extends Controller
 
         #validation
         $userInput = $request->validate([
-            'USERNAME'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
-            'USER_EMAIL'      =>
-            'USER_PASSWORD'   =>
-            'USER_LNAME'      => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
+            'USERNAME'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_-.]+$/',
+            'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
+            'USER_PASSWORD'   => 'required|string|min:6|regex:/^[a-zA-Z0-9_-.]+$/',
+            'USER_LNAME'      => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
             'USER_FNAME'      => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'USER_IMG'        =>
-            'USER_DOB'        =>
-            'USER_GENDER'     =>
-            'USER_TEL'        =>
-            'USER_CITY'       =>
-            'USER_COUNTRY'    =>
-            'USER_DISTRICT'   =>
-            'USER_POSTALCODE' =>
+            'USER_IMG'        => 'required|mimes:jpg,bmp,png',
+            'USER_DOB'        => 'required|date_format:Y-m-d',
+            'USER_GENDER'     => 'required|char|max:7',
+            'USER_TEL'        => 'required|string|max:255|regex:/^[0-9]+$/',
+            'USER_CITY'       => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
+            'USER_COUNTRY'    => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
+            'USER_DISTRICT'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
+            'USER_POSTALCODE' => 'required|string|max:255|regex:/^[0-9]+$/'
        ]);
 
         //$category = $request->input();
 
-        $categoryDB = User::where('CATEGORY_NAME', $category['CATEGORY_NAME'])
-                      ->get();
+        $userDB = User::where(function($query) use ($userInput){
+                            $query->where('ADMIN_EMAIL', $userInput['USER_EMAIL'])
+                            ->orWhere('ADMIN_USERNAME', $admin['ADMIN_USERNAME']);
+                        })
+                        ->get();
 
         if($categoryDB->isEmpty()){
             //if data does not exist - insert in DB
