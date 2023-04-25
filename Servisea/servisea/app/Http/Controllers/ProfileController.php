@@ -97,6 +97,9 @@ class ProfileController extends Controller
         ]);
 
         $imageName = $request->file('file')->getClientOriginalName();
+        $request->file('file')->store('public/images');
+
+
         return ($imageName);
 
         // $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
