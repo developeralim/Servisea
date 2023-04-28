@@ -112,11 +112,6 @@ color: #9b9ca1;
 									<input type="text" name="ADMIN_LNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_LNAME}}">
                                     @endif
 								</div>
-								<!-- Phone number -->
-								<div class="col-md-6">
-									<label class="form-label">Phone number *</label>
-									<input type="text" name="ADMIN_PHONE" class="form-control" placeholder="" aria-label="Phone number" value="(333) 000 555">
-								</div>
 								<!-- Mobile number -->
 								<div class="col-md-6">
 									<label class="form-label">Mobile number *</label>

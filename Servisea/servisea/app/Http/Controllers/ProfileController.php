@@ -83,9 +83,9 @@ class ProfileController extends Controller
             'ADMIN_FNAME'         => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'ADMIN_LNAME'         => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'ADMIN_EMAIL'         => 'required|email|unique:users,USER_EMAIL|unique:admin,ADMIN_EMAIL,'.$session['ADMIN_ID'].',ADMIN_ID',
-            'ADMIN_USERNAME'      =>  'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
-            //'ADMIN_PASSWORD'   =>   'required|min:8|string|regex:/[a-zA-Z0-9]/',
-            //'ADMIN_TEL'        =>   'required|max:255|string|regex:/^[0-9]+$/',
+            'ADMIN_USERNAME'      => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
+            //'ADMIN_PASSWORD'   =>  'required|min:8|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_TEL'           => 'required|max:255|string|regex:/^[0-9+]+$/',
             //'ADMIN_IMG'        =>   'required|image|mimes:jpg,jpeg,gif,png',
             //'ADMIN_DOB'        =>   'required|before:'.now()->subYears(18)->toDateString(),
             // 'ADMIN_GENDER'     =>   'required|in:MALE,FEMALE,OTHERS',
@@ -96,11 +96,11 @@ class ProfileController extends Controller
             // 'ADMIN_LEVEL'      =>   'required|max:255|Integer|regex:/[0-9]/',
         ]);
 
-        $imageName = $request->file('file')->getClientOriginalName();
-        $request->file('file')->store('public/images');
+        //$imageName = $request->file('file')->getClientOriginalName();
+        //$request->file('file')->store('public/images');
 
 
-        return ($imageName);
+
 
         // $adminDB = admin::where('ADMIN_ID','!=',$session['ADMIN_ID'])
         //                 ->where(function($query) use ($admin){

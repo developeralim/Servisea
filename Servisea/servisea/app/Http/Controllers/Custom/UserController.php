@@ -20,7 +20,7 @@ class UserController extends Controller
             'USER_IMG'        => 'required|mimes:jpg,bmp,png',
             'USER_DOB'        => 'required|before:'.now()->subYears(18)->toDateString(),
             'USER_GENDER'     => 'required|char|max:7',
-            'USER_TEL'        => 'required|string|max:255|regex:/^[0-9]+$/',
+            'USER_TEL'        => 'required|string|max:255|regex:/^[0-9+]+$/',
             'USER_CITY'       => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
             'USER_COUNTRY'    => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
             'USER_DISTRICT'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
