@@ -1,6 +1,6 @@
 
  <!-- Start Top Nav -->
- <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+</nav>
     <!-- Close Top Nav -->
 
 
@@ -66,14 +66,14 @@
                     </a>
 
                     @if (session('user.0.USER_ID') == 0 )
-                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('register')}}">
+                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
                         <i class="" >Register</i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="{{route('login_user')}}">
                         <i class="" >Login</i>
                     </a>
                     @else
-                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('register')}}">
+                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
                         <i class="" >Welcome {{session('user.0.USERNAME')}}</i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none"  href="{{route('clearSession')}}">

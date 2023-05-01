@@ -1,21 +1,24 @@
 
 @extends('user.user_master')
-@section('user-main-content')
 
+@section('user_page')
 <head>
+<title>Sign Up Form by Colorlib</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
-
-
 </head>
-<body>
+
+@stop
+
+@section('user_style')
     <!-- Font Icon -->
     <link rel="stylesheet" href="{{asset('backend/USER_ASSET/fonts/material-icon/css/material-design-iconic-font.min.css')}}">
-
     <!-- Main css -->
     <link rel="stylesheet" href="{{asset('backend/USER_ASSET/css/style.css')}}">
+
+@stop
+@section('user-main-content')
     <div class="main">
         <!-- Sign up form -->
         <section class="signup">
@@ -75,11 +78,12 @@
             </div>
         </section>
     </div>
-
+    @stop
+    @section('user_script')
     <!-- JS -->
     <script src="{{asset('backend/USER_ASSET/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('backend/USER_ASSET/js/main.js')}}"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+    @stop
 
-@stop
+
 
