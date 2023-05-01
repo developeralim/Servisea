@@ -1,11 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="eng">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Dashboard - Servisea</title>
-    <meta name="description" content="Dashboard for Administrators">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @yield('admin_head')
 
     <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
@@ -62,11 +58,8 @@
         #cellPaiChart{
             height: 160px;
         }
-
-
     </style>
-
-        @yield('admin-style')
+    @yield('admin-style')
 </head>
 
 <body>

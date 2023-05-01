@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Demo\DemoController;
 use App\Http\Controllers\Custom\CustomController;
 use App\Http\Controllers\Custom\CategoryController;
+use App\Http\Controllers\Custom\UserController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AdminController;
 
@@ -24,10 +25,16 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+//USER PAGE
+Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
+
+
+
 //Index Page
 Route::get('/index', function () {
     return view('index');
 });
+
 
 //Login Page
 Route::get('/login_user', function () {
@@ -62,9 +69,6 @@ Route::get('/clearSession', function (request $request) {
     return redirect('index');
 })->name('clearSession');
 
-Route::get('/register', function () {
-    return view('user.register');
-});
 
 Route::post('/register/store', [RegisteredUserController::class, "store"])->name("register.user");
 

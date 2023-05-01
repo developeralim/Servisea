@@ -84,7 +84,9 @@
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{asset('backend/ADMIN_ASSET/images/admin.jpg')}}" alt="User Avatar">
+                        <!-- @if(isset($adminDetails[0]->ADMIN_IMG)) -->
+                        <img class="user-avatar rounded-circle" src="{{ asset('/storage/images/'.$adminDetails[0]->ADMIN_IMG)}}" alt="User Avatar">
+                        <!-- @endif -->
                         </a>
 
                         <div class="user-menu dropdown-menu">

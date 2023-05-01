@@ -1,6 +1,12 @@
 @extends('user.user_master')
-@section('user-main-content')
 
+@section('user_page')
+<title>Zay Shop eCommerce HTML CSS Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+@stop
+
+@section('user-main-content')
 <!-- Start Banner Hero -->
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">

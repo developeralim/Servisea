@@ -77,63 +77,9 @@ color: #9b9ca1;
 			<!-- Form START -->
 			<form class="file-upload" action="{{route('updateAdmin')}}" method="post" enctype="multipart/form-data">
                 @csrf
+
 				<div class="row mb-5 gx-5">
-					<!-- Contact detail -->
-					<div class="col-xxl-8 mb-5 mb-xxl-0">
-						<div class="bg-secondary-soft px-4 py-5 rounded">
-							<div class="row g-3">
-								<h4 class="mb-4 mt-0">Contact detail</h4>
-                                <div class="row">
-                                <!-- USER ID -->
-								<div class="col-md-6">
-									<label class="form-label">User ID</label>
-                                    @if(isset($adminDetails[0]->ADMIN_ID))
-									<input type="text" name="ADMIN_ID" class="form-control" placeholder="" aria-label="User ID" value="{{$adminDetails[0]->ADMIN_ID}}">
-                                    @endif
-								</div>
-                                <!-- Username -->
-								<div class="col-md-6">
-									<label class="form-label">Username</label>
-                                    @if(isset($adminDetails[0]->ADMIN_USERNAME))
-									<input type="text" name="ADMIN_USERNAME" class="form-control" placeholder="" aria-label="Username" value="{{$adminDetails[0]->ADMIN_USERNAME}}">
-                                    @endif
-								</div>
-								<!-- First Name -->
-								<div class="col-md-6">
-									<label class="form-label">First Name *</label>
-                                    @if(isset($adminDetails[0]->ADMIN_FNAME))
-									<input type="text" name="ADMIN_FNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_FNAME}}">
-                                    @endif
-								</div>
-								<!-- Last name -->
-								<div class="col-md-6">
-									<label class="form-label">Last Name *</label>
-                                    @if(isset($adminDetails[0]->ADMIN_LNAME))
-									<input type="text" name="ADMIN_LNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_LNAME}}">
-                                    @endif
-								</div>
-								<!-- Mobile number -->
-								<div class="col-md-6">
-									<label class="form-label">Mobile number *</label>
-									<input type="text" name="ADMIN_TEL" class="form-control" placeholder="" aria-label="Phone number" value="+91 9852 8855 252">
-								</div>
-								<!-- Email -->
-								<div class="col-md-6">
-									<label for="inputEmail4" class="form-label">Email *</label>
-                                @if(isset($adminDetails[0]->ADMIN_EMAIL))
-									<input type="email" name="ADMIN_EMAIL" class="form-control" id="inputEmail4" value="{{$adminDetails[0]->ADMIN_EMAIL}}">
-                                @endif
-                                </div>
-								<!-- Skype -->
-								<div class="col-md-6">
-									<label class="form-label">Date *</label>
-									<input type="Date" name="ADMIN_DOB" class="form-control" placeholder="" aria-label="Phone number" value="Scaralet D">
-								</div>
-                                </div>
-							</div> <!-- Row END -->
-						</div>
-					</div>
-					<!-- Upload profile -->
+                     <!-- Upload profile -->
 					<div class="col-xxl-4">
 						<div class="bg-secondary-soft px-4 py-5 rounded">
 							<div class="row g-3" style="display:block;">
@@ -143,19 +89,121 @@ color: #9b9ca1;
                                    <div class="text-center">
                                     <!-- Image upload -->
                                     <div class="square position-relative display-2 mb-3">
-                                        <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                                        <img src="{{ asset('/storage/images/'.$adminDetails[0]->ADMIN_IMG)}}" alt="{{$adminDetails[0]->ADMIN_IMG}}" height="250px" width="250px">
+                                        <!-- <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i> -->
                                     </div>
                                     <!-- Button -->
-                                    <input type="file" id="customFile" name="file">
-                                    <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
-                                    <button type="button" class="btn btn-danger-soft">Remove</button>
+                                    <input type="file" value="{{$adminDetails[0]->ADMIN_IMG}}" placeholder="{{$adminDetails[0]->ADMIN_IMG}}" id="customFile" name="ADMIN_IMG">
+                                    <!-- <label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
+                                    <button type="button" class="btn btn-danger-soft">Remove</button> -->
                                     <!-- Content -->
-                                    <p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span>Minimum size 300px x 300px</p>
+                                    <p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span> Minimum size 300px x 300px</p>
                                   </div>
 							</div>
-
 						</div>
 					</div>
+
+                    <!-- change password -->
+					<div class="col-xxl-4">
+						<div class="bg-secondary-soft px-4 py-5 rounded">
+							<div class="row g-3" style="display:block;">
+                                <h4 class="my-4">Change Password</h4>
+                                <div class="row">
+                                    <!-- Old password -->
+                                    <div class="col-md-6">
+                                        <label for="exampleInputPassword1" class="form-label">Old password *</label>
+                                        <input type="password" value="$adminDetails[0]->ADMIN_PASSWORD" name="OLD_PASSWORD" class="form-control" id="exampleInputPassword1">
+                                    </div>
+                                    <!-- New password -->
+                                    <div class="col-md-6">
+                                        <label for="exampleInputPassword2" class="form-label">New password *</label>
+                                        <input type="password" name="ADMIN_PASSWORD" class="form-control" id="exampleInputPassword2">
+                                    </div>
+                                    <!-- Confirm password -->
+                                    <div class="col-md-12">
+                                        <label for="exampleInputPassword3" class="form-label">Confirm Password *</label>
+                                        <input type="password" name="CONFIRMED_PASSWORD" class="form-control" id="exampleInputPassword3">
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Contact detail -->
+					<div class="col-xxl-8 mb-5 mb-xxl-0">
+						<div class="bg-secondary-soft px-4 py-5 rounded">
+							<div class="row g-3">
+								<h4 class="mb-4 mt-0">Contact detail</h4>
+                                <div class="row">
+                                <!-- USER ID -->
+								<div class="col-md-6">
+									<label class="form-label">Admin ID</label>
+                                    @if(isset($adminDetails[0]->ADMIN_ID))
+									<input type="text" name="ADMIN_ID" class="form-control" aria-label="User ID" value="{{$adminDetails[0]->ADMIN_ID}}" disabled>
+                                    @endif
+                                    <br>
+								</div>
+
+                                <!-- Username -->
+								<div class="col-md-6">
+									<label class="form-label">Admin Username</label>
+                                    @if(isset($adminDetails[0]->ADMIN_USERNAME))
+									<input type="text" name="ADMIN_USERNAME" class="form-control" placeholder="" aria-label="Username" value="{{$adminDetails[0]->ADMIN_USERNAME}}">
+                                    @endif
+                                    <br>
+								</div>
+								<!-- First Name -->
+								<div class="col-md-6">
+									<label class="form-label">First Name</label>
+                                    @if(isset($adminDetails[0]->ADMIN_FNAME))
+									<input type="text" name="ADMIN_FNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_FNAME}}">
+                                    @endif
+                                    <br>
+								</div>
+								<!-- Last name -->
+								<div class="col-md-6">
+									<label class="form-label">Last Name</label>
+                                    @if(isset($adminDetails[0]->ADMIN_LNAME))
+									<input type="text" name="ADMIN_LNAME" class="form-control" placeholder="" aria-label="First name" value="{{$adminDetails[0]->ADMIN_LNAME}}">
+                                    @endif
+                                    <br>
+								</div>
+								<!-- Mobile number -->
+								<div class="col-md-6">
+									<label class="form-label">Mobile Number</label>
+									<input type="text" name="ADMIN_TEL" class="form-control" placeholder="" aria-label="Phone number" value="+23059266692">
+                                    <br>
+                                </div>
+								<!-- Email -->
+								<div class="col-md-6">
+									<label for="inputEmail4" class="form-label">Email</label>
+                                    @if(isset($adminDetails[0]->ADMIN_EMAIL))
+									<input type="email" name="ADMIN_EMAIL" class="form-control" id="inputEmail4" value="{{$adminDetails[0]->ADMIN_EMAIL}}">
+                                    @endif
+                                </div>
+								<!-- Skype -->
+								<div class="col-md-6">
+									<label class="form-label">Date of Birth</label>
+									<input type="Date" name="ADMIN_DOB" class="form-control" placeholder="" aria-label="Phone number" value="{{$adminDetails[0]->ADMIN_DOB}}">
+								</div>
+                                <!-- Skype -->
+								<div class="col-md-6">
+                                <label class="form-label">Gender</label>
+                                <select class="form-control form-select" name="ADMIN_GENDER" aria-label="Default select example">
+                                    <option selected>Select Gender</option>
+                                    <option value="MALE" @selected($adminDetails[0]->ADMIN_GENDER == 'MALE')>Male</option>
+                                    <option value="FEMALE" {{ $adminDetails[0]->ADMIN_GENDER == 'FEMALE'  ? 'selected' : '' }}>Female</option>
+                                    <option value="OTHERS" {{ $adminDetails[0]->ADMIN_GENDER == 'OTHERS'  ? 'selected' : '' }}>Others</option>
+                                </select>
+								</div>
+
+
+
+                                </div>
+							</div> <!-- Row END -->
+						</div>
+					</div>
+
 				</div> <!-- Row END -->
 
 				<!-- Social media detail -->
@@ -199,33 +247,8 @@ color: #9b9ca1;
 							</div> <!-- Row END -->
 						</div>
 					</div>
-
-					<!-- change password -->
-					<div class="col-xxl-6">
-						<div class="bg-secondary-soft px-4 py-5 rounded">
-							<div class="row g-3" style="display:block;">
-                                <h4 class="my-4">Change Password</h4>
-                                <div class="row">
-                                    <!-- Old password -->
-                                    <div class="col-md-6">
-                                        <label for="exampleInputPassword1" class="form-label">Old password *</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                    </div>
-                                    <!-- New password -->
-                                    <div class="col-md-6">
-                                        <label for="exampleInputPassword2" class="form-label">New password *</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword2">
-                                    </div>
-                                    <!-- Confirm password -->
-                                    <div class="col-md-12">
-                                        <label for="exampleInputPassword3" class="form-label">Confirm Password *</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword3">
-                                    </div>
-                                </div>
-							</div>
-						</div>
-					</div>
 				</div> <!-- Row END -->
+
 				<!-- button -->
                 <div class='row'>
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">

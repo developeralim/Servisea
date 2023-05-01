@@ -44,7 +44,7 @@ class CategoryController extends Controller
     }
 
     public function viewCategory(Request $request){
-        $session= $request->session()->get('admin');
+        $session= $request->session()->get('adminDetails');
         if ($session['ADMIN_ID'] != 0 ){
             $AllCategory = Category::all();
             return view("admin.gig",['gigcategory'=>$AllCategory]);

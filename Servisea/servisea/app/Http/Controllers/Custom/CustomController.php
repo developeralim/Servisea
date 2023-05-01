@@ -17,36 +17,32 @@ function login(Request $request){
     //REQUEST INPUT FROM FORM
     $data = $request->input();
     $email = $data['email'];
-    //$password = Hash::make($data['password']);
+    $password = Hash::make($data['password']);
     $password = $data['password'];
     //CHECK IF USER
-    $user = DB::table('users')
-                ->where('USER_EMAIL', $email)
-                ->where('USER_PASSWORD',$password)
+    $user = User::where('USER_EMAIL', $email)
                 ->get();
 
     if($user->isEmpty()){
     //CHECK IF ADMIN
-    $admin = DB::table('admin')
-            ->where('ADMIN_EMAIL', $email)
-            ->where('ADMIN_PASSWORD',$password)
-            ->get();
+    $admin = admin::where('ADMIN_EMAIL', $email)->get();
 
         if($admin->isEmpty()){
             $noUser = 1;
             return redirect('login',$noUser);
         }else{
-            $result = json_decode($admin,true);
-            if( $result[0]['ADMIN_STATUS'] == 1){
-                //REDIRECT TO ADMIN DASHBOARD
-                $admin["ADMIN_ID"] = $result[0]['ADMIN_ID'];
-                session()->put('admin',$admin);
-                return redirect('admin.dashboard');
-            }else{
-                //ADMIN ACCOUNT HAS BEEN BLOCKED
-                $admin["ADMIN_ID"] = 0;
-                session()->put('admin',$admin);
-                return redirect('login');
+            $adminDetails = json_decode(json_encode($admin[0]), true);
+            if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
+                if( $adminDetails['ADMIN_STATUS'] == 1){
+                    //REDIRECT TO ADMIN DASHBOARD
+                    session()->put('adminDetails',$adminDetails);
+                    return redirect('admin.dashboard');
+                }else{
+                    //ADMIN ACCOUNT HAS BEEN BLOCKED
+                    //$adminDetails[0]["ADMIN_ID"] = 0;
+                    session()->put('adminDetails',$adminDetails);
+                    return redirect('login');
+                }
             }
         }
     }else{

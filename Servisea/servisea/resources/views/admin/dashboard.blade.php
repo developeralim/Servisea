@@ -1,4 +1,13 @@
 @extends('admin.admin_master')
+
+@section('admin_head')
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Dashboard - Servisea</title>
+    <meta name="description" content="Dashboard for Administrators">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+@stop
+
 @section('admin-main-content')
 
 <div class="content">
