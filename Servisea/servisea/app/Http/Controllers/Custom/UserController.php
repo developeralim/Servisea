@@ -43,7 +43,7 @@ class UserController extends Controller
         $userInput = $request->validate([
             'USERNAME'        => 'required|string|max:255|unique:users|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
             'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
-            'USER_PASSWORD'   => 'required|min:8|string|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            'USER_PASSWORD'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
        ]);
 
        $messages = array(
