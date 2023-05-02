@@ -90,7 +90,7 @@ class ProfileController extends Controller
             'ADMIN_LNAME'         => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'ADMIN_EMAIL'         => 'required|email|unique:users,USER_EMAIL|unique:admin,ADMIN_EMAIL,'.$session['ADMIN_ID'].',ADMIN_ID',
             'ADMIN_USERNAME'      => 'required|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
-            'ADMIN_PASSWORD'   =>  'required|min:8|string|regex:/[a-zA-Z0-9]/',
+            'ADMIN_PASSWORD'   =>  'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
             'ADMIN_TEL'           => 'required|max:255|string|regex:/^[0-9+]+$/',
             'ADMIN_IMG'        =>   'image|mimes:jpg,jpeg,gif,png',
             'ADMIN_DOB'        =>   'required|before:'.now()->subYears(18)->toDateString(),

@@ -69,6 +69,10 @@
                     <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
                         <i class="" >Register</i>
                     </a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Register
+                    </button>
                     <a class="nav-icon position-relative text-decoration-none" href="{{route('login_user')}}">
                         <i class="" >Login</i>
                     </a>
@@ -85,4 +89,5 @@
 
         </div>
     </nav>
+
     <!-- Close Header -->

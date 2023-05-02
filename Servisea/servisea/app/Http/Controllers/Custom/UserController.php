@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Custom;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -20,8 +22,7 @@ class UserController extends Controller
     }
 
     public function RegisterUser(Request $request){
-
-        #validation
+/*
         $userInput = $request->validate([
             'USERNAME'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_-.]+$/|unique:users|unique:admin,ADMIN_USERNAME',
             'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
@@ -36,11 +37,24 @@ class UserController extends Controller
             'USER_COUNTRY'    => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
             'USER_DISTRICT'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
             'USER_POSTALCODE' => 'required|string|max:255|regex:/^[0-9]+$/'
+       ]); */
+
+        #validation
+        $userInput = $request->validate([
+            'USERNAME'        => 'required|string|max:255|unique:users|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
+            'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
+            'USER_PASSWORD'   => 'required|min:8|string|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
        ]);
 
-       User::insert();
+       $messages = array(
+        'required' => 'The :attribute field is required.',
+    );
 
 
+
+       DB::insert('Insert into users(USERNAME,USER_EMAIL,USER_PASSWORD) values(?,?,?)', [$userInput['USERNAME'],$userInput['USER_EMAIL'],$userInput['USER_PASSWORD']]);
+
+       return redirect('login_user');
 
     }
 

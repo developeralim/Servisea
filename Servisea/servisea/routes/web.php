@@ -70,7 +70,7 @@ Route::get('/clearSession', function (request $request) {
 })->name('clearSession');
 
 
-Route::post('/register/store', [RegisteredUserController::class, "store"])->name("register.user");
+Route::post('/register/store', [UserController::class, "registerUser"])->name("registerUser");
 
 //Route::get('/about',[DemoController::class,'Index']);
 //Route::get('/contact',[DemoController::class,'contact']);
