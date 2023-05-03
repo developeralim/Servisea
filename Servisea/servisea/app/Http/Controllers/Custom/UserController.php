@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
@@ -50,11 +51,13 @@ class UserController extends Controller
         'required' => 'The :attribute field is required.',
     );
 
+       DB::insert('Insert into users(USERNAME,USER_EMAIL,USER_PASSWORD) values(?,?,?)', [$userInput['USERNAME'],$userInput['USER_EMAIL'],Hash::make($userInput['USER_PASSWORD'])]);
 
+       $user = User::where('USER_EMAIL', $userInput['USER_EMAIL'])->get();
+       $user = json_decode(json_encode($user[0]), true);
 
-       DB::insert('Insert into users(USERNAME,USER_EMAIL,USER_PASSWORD) values(?,?,?)', [$userInput['USERNAME'],$userInput['USER_EMAIL'],$userInput['USER_PASSWORD']]);
-
-       return redirect('login_user');
+       $request->session()->put('user',$user);
+       return redirect('index');
 
     }
 

@@ -65,10 +65,10 @@
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
 
-                    @if (session('user.0.USER_ID') == 0 )
-                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
+                    @if (session()->has('USER_ID') == 0 )
+                   <!--  <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
                         <i class="" >Register</i>
-                    </a>
+                    </a> -->
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Register
@@ -78,7 +78,7 @@
                     </a>
                     @else
                     <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
-                        <i class="" >Welcome {{session('user.0.USERNAME')}}</i>
+                        <i class="" >Welcome {{session('user.USER_ID')}}</i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none"  href="{{route('clearSession')}}">
                         <i class="" >clear session</i>
