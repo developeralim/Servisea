@@ -67,11 +67,14 @@
   </div>
 </div>
 
-                    @if (isset($user(USER_ID)))
-                    <i class="" >Welcome {{session('user.0.USER_ID')}}</i>
-                    @endif
 
 <!-- Start Banner Hero -->
+
+@if (Session::get('user') !== null)
+ <h1>{{Session('user.USER_ID')}} </h1>
+ @endif
+
+
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>

@@ -48,7 +48,28 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact</a>
                         </li>
+                        <li class="nav-item">
+                        @if (Session::get('user') !== null )
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            User
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{route('viewProfileUser')}}">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Post a request</a></li>
+                            <li><a class="dropdown-item" href="#">Become a Seller</a></li>
+                            <li><a class="dropdown-item" href="#">View all Gig</a></li>
+                            <li><a class="dropdown-item" href="#">Setting</a></li>
+                            <li><a class="dropdown-item" href="#">Orders</a></li>
+                            <li><a class="dropdown-item" href="#">Lists</a></li>
+                            <li><a class="dropdown-item" href="#">Chat</a></li>
+                            <li><a class="dropdown-item" href="{{route('clearSession')}}">Log Out</a></li>
+                        </ul>
+                    </div>
+                    @endif
+                        </li>
                     </ul>
+
                 </div>
                 <div class="navbar align-self-center d-flex">
 
@@ -65,23 +86,17 @@
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
 
-                    @if (session()->has('USER_ID') == 0 )
-                   <!--  <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
-                        <i class="" >Register</i>
-                    </a> -->
-                    <!-- Button trigger modal -->
+                    @if (Session::get('user') == null )
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Register
                     </button>
+                    <br>
                     <a class="nav-icon position-relative text-decoration-none" href="{{route('login_user')}}">
                         <i class="" >Login</i>
                     </a>
                     @else
-                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('RegisterUser.page')}}">
-                        <i class="" >Welcome {{session('user.USER_ID')}}</i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none"  href="{{route('clearSession')}}">
-                        <i class="" >clear session</i>
+                    <a class="nav-icon position-relative text-decoration-none">
+                        <i class="" >Welcome {{Session('user.USERNAME')}}</i>
                     </a>
                     @endif
                 </div>

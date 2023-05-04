@@ -22,6 +22,16 @@ class UserController extends Controller
 
     }
 
+    public function viewProfile(Request $request)
+    {
+        $session= $request->session()->get('user');
+        if(isset($session)){
+            return view('user.profile');
+        }else{
+            return redirect('login_user');
+        }
+    }
+
     public function RegisterUser(Request $request){
 /*
         $userInput = $request->validate([

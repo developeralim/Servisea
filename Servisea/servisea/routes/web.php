@@ -27,7 +27,7 @@ use App\Http\Controllers\AdminController;
 
 //USER PAGE
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
-
+Route::get('/user/profile', [UserController::class, 'viewProfile'])->name('viewProfileUser');
 
 
 //Index Page

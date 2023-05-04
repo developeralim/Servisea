@@ -35,12 +35,12 @@ function login(Request $request){
             if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
                 if( $adminDetails['ADMIN_STATUS'] == 1){
                     //REDIRECT TO ADMIN DASHBOARD
-                    session()->put('adminDetails',$adminDetails);
+                    $request->Session()->put('adminDetails',$adminDetails);
                     return redirect('admin.dashboard');
                 }else{
                     //ADMIN ACCOUNT HAS BEEN BLOCKED
                     //$adminDetails[0]["ADMIN_ID"] = 0;
-                    session()->put('adminDetails',$adminDetails);
+                    $request->Session()->put('adminDetails',$adminDetails);
                     return redirect('login');
                 }
             }else{
@@ -49,12 +49,13 @@ function login(Request $request){
         }
     }else{
         $user = json_decode(json_encode($user[0]), true);
-        if($user['ACCOUNT_STATUS'] == 0){
-            // return redirect('index');
-        }else{
-            $request->session()->put('user',$user);
-            return redirect('index')->with('user', $request->session()->get('user'));
-        }
+        if($user['ACCOUNT_STATUS'] == 1){
+            //$session = $request->session()->get('user');
+            $request->Session()->put('user',$user);
+            return redirect('index');
+         }//else{
+        //      return redirect('login');
+        // }
     }
 }
 
