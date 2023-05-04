@@ -48,12 +48,12 @@ function login(Request $request){
             }
         }
     }else{
-        $user = json_decode($user,true);
-        if($user[0]['ACCOUNT_STATUS'] == 0){
-            return redirect('index');
+        $user = json_decode(json_encode($user[0]), true);
+        if($user['ACCOUNT_STATUS'] == 0){
+            // return redirect('index');
         }else{
             $request->session()->put('user',$user);
-            return redirect('index');
+            return redirect('index')->with('user', $request->session()->get('user'));
         }
     }
 }

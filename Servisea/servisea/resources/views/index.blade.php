@@ -67,6 +67,9 @@
   </div>
 </div>
 
+                    @if (isset($user(USER_ID)))
+                    <i class="" >Welcome {{session('user.0.USER_ID')}}</i>
+                    @endif
 
 <!-- Start Banner Hero -->
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
