@@ -43,6 +43,8 @@ function login(Request $request){
                     session()->put('adminDetails',$adminDetails);
                     return redirect('login');
                 }
+            }else{
+                return redirect('index');
             }
         }
     }else{
