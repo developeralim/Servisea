@@ -17,7 +17,7 @@
                             <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
                             <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
                             <li><i class="fa fa-th"></i><a href="{{route('category.page')}}">Gig</a></li>
-                            <li><i class="fa fa-file-word-o"></i><a href="ui-typography.html">Typography</a></li>
+                            <li><i class="fa fa-file-word-o"></i><a  href="{{route('address.page')}}">Address</a></li>
                         </ul>
                     </li>
 

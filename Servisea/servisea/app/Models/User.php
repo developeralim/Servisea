@@ -43,5 +43,23 @@ class User extends Authenticatable
     //     'email_verified_at' => 'datetime',
     // ];
 
+    public $timestamps = true;
+
     protected $table = "users";
+
+    protected $fillable = [
+            'USERNAME',
+            'USER_EMAIL',
+            'USER_PASSWORD',
+            'USER_TEL',
+            'USER_LNAME',
+            'USER_FNAME',
+            'USER_IMG',
+            'USER_DOB',
+            'USER_GENDER',
+            'USER_TEL',
+            'ADDRESS_ID',
+            'ACCOUNT_STATUS',
+            'USER_ROLE',
+            ];
 }

@@ -26,14 +26,12 @@ return new class extends Migration
             $table->char('USER_GENDER',7)->nullable();
             $table->String('USER_TEL')->nullable();
 
-            $table->string('USER_CITY')->nullable();
-            $table->string('USER_COUNTRY')->nullable();
-            $table->string('USER_DISTRICT')->nullable();
-            $table->string('USER_POSTALCODE')->nullable();
+            $table->unsignedInteger('ADDRESS_ID')->nullable();
+            $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('address')->onDelete('cascade')->cascadeOnUpdate();
 
             $table->tinyInteger('ACCOUNT_STATUS')->default(1);
             $table->tinyInteger('USER_ROLE')->default(1);
-
+            $table->timestamps();
         });
     }
 

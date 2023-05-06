@@ -28,6 +28,7 @@ use App\Http\Controllers\AdminController;
 //USER PAGE
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
 Route::get('/user/profile', [UserController::class, 'viewProfile'])->name('viewProfileUser');
+Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
 
 
 //Index Page
@@ -57,6 +58,8 @@ Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->n
 Route::get('/admin/profile', [ProfileController::class, 'viewProfile'])->name('view_profile.page');
 Route::post('/admin/profile', [ProfileController::class, 'updateProfile'])->name('updateAdmin');
 
+
+Route::get('/admin/Address', [CategoryController::class, 'viewAddressPage'])->name('address.page');
 
 //Admin Controller
 Route::controller(AdminController::class)->group(function(){

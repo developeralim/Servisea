@@ -88,47 +88,80 @@ body {
 			<div class="user-profile">
 				<div class="user-avatar">
 					<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
-				</div>
-				<h5 class="user-name">Yuki Hayashi</h5>
-				<h6 class="user-email">yuki@Maxwell.com</h6>
-			</div>
-			<div class="about">
-				<h5>About</h5>
-				<p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
+                    <input type="file" value="{{Session('user.USER_IMG')}}" placeholder="" id="customFile" name="USER_IMG">
+                </div>
+				<h5 class="user-name">{{Session('user.USER_FNAME')}} {{Session('user.LNAME')}}</h5>
+				<h6 class="user-email">{{Session('user.USER_EMAIL')}}</h6>
 			</div>
 		</div>
 	</div>
 </div>
 </div>
+
 <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 <div class="card h-100">
 	<div class="card-body">
+    @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+     <form method="POST" action="{{ route('updateUser')}}" class="register-form" id="register-form">
+        @csrf
+     <div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<h6 class="mb-2 text-primary">User Details</h6>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input type="text" class="form-control" value="{{Session('user.USERNAME')}}" name="USERNAME" placeholder="Enter Username">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="Email">Email</label>
+					<input type="Email" class="form-control" value="{{Session('user.USER_EMAIL')}}" name="USER_EMAIL" placeholder="Enter email ID">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="Password">Password</label>
+					<input type="Password" class="form-control" value="{{Session('user.USER_PASSWORD')}}" name="USER_PASSWORD" placeholder="Enter password">
+				</div>
+			</div>
+		</div>
+        <br>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<h6 class="mb-2 text-primary">Personal Details</h6>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="fullName">Full Name</label>
-					<input type="text" class="form-control" id="fullName" placeholder="Enter full name">
+					<label for="username">First Name</label>
+					<input type="text" class="form-control" value="{{Session('user.FNAME')}}" name="USER_FNAME" id="USER_FNAME" placeholder="Enter full name">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="eMail">Email</label>
-					<input type="email" class="form-control" id="eMail" placeholder="Enter email ID">
+					<label for="eMail">Last Name</label>
+					<input type="email" class="form-control" value="{{Session('user.LNAME')}}"  name="USER_LNAME" id="USER_LNAME" placeholder="Enter email ID">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="phone">Phone</label>
-					<input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+					<label for="phone">Telephone</label>
+					<input type="text" class="form-control" value="{{Session('user.USER_TEL')}}" name="USER_TEL" id="USER_TEL" placeholder="Enter phone number">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="website">Website URL</label>
-					<input type="url" class="form-control" id="website" placeholder="Website url">
+					<label for="website">Date Of Birth</label>
+					<input type="url" class="form-control" value="{{Session('user.USER_DOB')}}" name="USER_DOB" id="USER_DOB" placeholder="Website url">
+				</div>
+			</div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="website">Gender</label>
+					<input type="url" class="form-control" value="{{Session('user.USER_GENDER')}}" name="USER_GENDER" id="USER_GENDER" placeholder="Website url">
 				</div>
 			</div>
 		</div>
@@ -139,25 +172,31 @@ body {
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="Street">Street</label>
-					<input type="name" class="form-control" id="Street" placeholder="Enter Street">
+					<input type="name" class="form-control" name="ADDRESS_STREET" id="ADDRESS_STREET" placeholder="Enter Street">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="ciTy">City</label>
-					<input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+					<label for="City">City</label>
+					<input type="name" class="form-control" name="ADDRESS_CITY" id="ADDRESS_CITY" placeholder="Enter City">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="sTate">State</label>
-					<input type="text" class="form-control" id="sTate" placeholder="Enter State">
+					<label for="State">State</label>
+					<input type="text" class="form-control" name="ADDRESS_STATE" id="ADDRESS_STATE" placeholder="Enter State">
+				</div>
+			</div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="State">District</label>
+					<input type="text" class="form-control" name="ADDRESS_DISTRICT" id="ADDRESS_DISTRICT" placeholder="Enter District">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="zIp">Zip Code</label>
-					<input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+					<label for="Zip">Zip Code</label>
+					<input type="text" class="form-control" name="ADDRESS_POSTALCODE" id="ADDRESS_POSTALCODE" placeholder="Enter District">
 				</div>
 			</div>
 		</div>
@@ -165,11 +204,13 @@ body {
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<di  v class="text-right">
 					<button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-					<button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+					<button type="submit" id="submit" name="submit" class="btn btn-primary">Update</button>
 				</di>
 			</div>
 		</div>
+        </form>
 	</div>
+
 </div>
 </div>
 </div>
