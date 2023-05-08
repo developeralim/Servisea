@@ -20,6 +20,7 @@ class Address extends Model
         'ADDRESS_STATE',
         'ADDRESS_DISTRICT',
         'ADDRESS_POSTALCODE',
+        'ADDRESS_COUNTRY',
         'ADDED_BY_USER_ROLE',
         'ADDED_BY_USER_ID',
         ];

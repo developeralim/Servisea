@@ -56,7 +56,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{route('viewProfileUser')}}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Post a request</a></li>
+                            <li><a class="dropdown-item" href="{{ route('viewRequestJobPage') }}">Post a request</a></li>
                             <li><a class="dropdown-item" href="#">Become a Seller</a></li>
                             <li><a class="dropdown-item" href="#">View all Gig</a></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Custom\CategoryController;
 use App\Http\Controllers\Custom\UserController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Custom\jobController;
 
 
 
@@ -57,9 +58,10 @@ Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->n
 
 Route::get('/admin/profile', [ProfileController::class, 'viewProfile'])->name('view_profile.page');
 Route::post('/admin/profile', [ProfileController::class, 'updateProfile'])->name('updateAdmin');
-
-
 Route::get('/admin/Address', [CategoryController::class, 'viewAddressPage'])->name('address.page');
+
+
+Route::get('/user/postJob', [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
 
 //Admin Controller
 Route::controller(AdminController::class)->group(function(){

@@ -137,68 +137,119 @@ body {
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="username">First Name</label>
-					<input type="text" class="form-control" value="{{Session('user.FNAME')}}" name="USER_FNAME" id="USER_FNAME" placeholder="Enter full name">
+					<input type="text" class="form-control" value="{{Session('user.FNAME')}}" name="USER_FNAME" id="USER_FNAME" placeholder="Enter First Name">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="eMail">Last Name</label>
-					<input type="email" class="form-control" value="{{Session('user.LNAME')}}"  name="USER_LNAME" id="USER_LNAME" placeholder="Enter email ID">
+					<input type="email" class="form-control" value="{{Session('user.LNAME')}}"  name="USER_LNAME" id="USER_LNAME" placeholder="Enter Last Name">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="phone">Telephone</label>
-					<input type="text" class="form-control" value="{{Session('user.USER_TEL')}}" name="USER_TEL" id="USER_TEL" placeholder="Enter phone number">
+					<input type="text" class="form-control" value="{{Session('user.USER_TEL')}}" name="USER_TEL" id="USER_TEL" placeholder="Enter Phone Number">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="website">Date Of Birth</label>
-					<input type="url" class="form-control" value="{{Session('user.USER_DOB')}}" name="USER_DOB" id="USER_DOB" placeholder="Website url">
+					<input type="date" class="form-control" value="{{Session('user.USER_DOB')}}" name="USER_DOB" id="USER_DOB" placeholder="Date of Birth">
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="website">Gender</label>
-					<input type="url" class="form-control" value="{{Session('user.USER_GENDER')}}" name="USER_GENDER" id="USER_GENDER" placeholder="Website url">
+                    <select class="form-control" name="USER_GENDER" aria-label="Default select example">
+                                    <option selected>Select Gender</option>
+                                    <option value="MALE" @selected( Session('user.USER_GENDER') == 'MALE')>Male</option>
+                                    <option value="FEMALE" {{ Session('user.USER_GENDER') == 'FEMALE'  ? 'selected' : '' }}>Female</option>
+                                    <option value="OTHERS" {{ Session('user.USER_GENDER') == 'OTHERS'  ? 'selected' : '' }}>Others</option>
+                    </select>
 				</div>
 			</div>
 		</div>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mt-3 mb-2 text-primary">Address</h6>
+				<h6 class="mt-3 mb-2 text-primary">Address Details</h6>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="Street">Street</label>
-					<input type="name" class="form-control" name="ADDRESS_STREET" id="ADDRESS_STREET" placeholder="Enter Street">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="City">City</label>
-					<input type="name" class="form-control" name="ADDRESS_CITY" id="ADDRESS_CITY" placeholder="Enter City">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="State">State</label>
-					<input type="text" class="form-control" name="ADDRESS_STATE" id="ADDRESS_STATE" placeholder="Enter State">
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="State">District</label>
-					<input type="text" class="form-control" name="ADDRESS_DISTRICT" id="ADDRESS_DISTRICT" placeholder="Enter District">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="Zip">Zip Code</label>
-					<input type="text" class="form-control" name="ADDRESS_POSTALCODE" id="ADDRESS_POSTALCODE" placeholder="Enter District">
-				</div>
-			</div>
+            @if(isset($addressDetails))
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Country">Country</label>
+                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_COUNTRY']}}" name="ADDRESS_COUNTRY" id="ADDRESS_COUNTRY" placeholder="Enter District">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Street">Street</label>
+                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_STREET']}}" name="ADDRESS_STREET" id="ADDRESS_STREET" placeholder="Enter Street">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="City">City</label>
+                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_CITY']}}" name="ADDRESS_CITY" id="ADDRESS_CITY" placeholder="Enter City">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="State">State</label>
+                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_STATE']}}" name="ADDRESS_STATE" id="ADDRESS_STATE" placeholder="Enter State">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="State">District</label>
+                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_DISTRICT']}}" name="ADDRESS_DISTRICT" id="ADDRESS_DISTRICT" placeholder="Enter District">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Zip">Postal/Zip Code</label>
+                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_POSTALCODE']}}" name="ADDRESS_POSTALCODE" id="ADDRESS_POSTALCODE" placeholder="Enter District">
+                    </div>
+                </div>
+
+                @else
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Street">Street</label>
+                        <input type="text" class="form-control" name="ADDRESS_STREET" id="ADDRESS_STREET" placeholder="Enter Street">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="City">City</label>
+                        <input type="text" class="form-control" name="ADDRESS_CITY" id="ADDRESS_CITY" placeholder="Enter City">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="State">State</label>
+                        <input type="text" class="form-control" name="ADDRESS_STATE" id="ADDRESS_STATE" placeholder="Enter State">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="State">District</label>
+                        <input type="text" class="form-control" name="ADDRESS_DISTRICT" id="ADDRESS_DISTRICT" placeholder="Enter District">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Zip">Postal/Zip Code</label>
+                        <input type="text" class="form-control" name="ADDRESS_POSTALCODE" id="ADDRESS_POSTALCODE" placeholder="Enter District">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Country">Country</label>
+                        <input type="text" class="form-control" name="ADDRESS_COUNTRY" id="ADDRESS_COUNTRY" placeholder="Enter District">
+                    </div>
+                </div>
+                @endif
 		</div>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
