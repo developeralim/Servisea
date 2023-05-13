@@ -192,7 +192,9 @@ class UserController extends Controller
                $request->session()->put('user',$user);
                return redirect('user.profile');
 
-            }
+    }
+
+
 
 
 }
