@@ -41,8 +41,8 @@
     <label for="project" class="form-label">Attach file</label>
     <input type="text" class="form-control" id="exampleInputPassword1">
   </div>
-  div class="mb-3">
-    <label for="project" class="form-label">a</label>
+ <div class="mb-3">
+    <label for="project" class="form-label">Category</label>
     <input type="text" class="form-control" id="exampleInputPassword1">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
