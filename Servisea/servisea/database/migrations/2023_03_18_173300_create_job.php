@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedInteger('CATEGORY_ID');
             $table->foreign('CATEGORY_ID')->references('CATEGORY_ID')->on('category')->onDelete('cascade')->cascadeOnUpdate();
 
-            $table->unsignedInteger('FREELANCER_ID');
-            $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
+            $table->unsignedInteger('POSTED_BY_USER');
+            $table->foreign('POSTED_BY_USER')->references('USER_ID')->on('users')->onDelete('cascade')->cascadeOnUpdate();
 
             $table->string('JR_TITLE')->nullable();
             $table->string('JR_DESCRIPTION')->nullable();
@@ -28,6 +28,9 @@ return new class extends Migration
             $table->enum('JR_STATUS',['DRAFT','PENDING','CONFIRMED','SUSPENDED']);
             $table->date('JR_DELIVERYDATE')->nullable();
             $table->binary('JR_ATTACHMENT')->nullable();
+            $table->timestamps();
+
+
         });
     }
 

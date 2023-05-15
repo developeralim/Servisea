@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::IL1LT0ucLN3EmmGw',
+            '_route' => 'generated::xcaWzWmxKIAU1Vas',
           ),
           1 => NULL,
           2 => 
@@ -172,13 +172,69 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/user/postJob=1' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'viewRequestJobPage',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'JobPageA',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/user/postJob=2' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'viewRequestJobPageB',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/index' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::ws15Rl5QtuP8ycjQ',
+            '_route' => 'generated::LN8MtiUsudvKtBhd',
           ),
           1 => NULL,
           2 => 
@@ -237,7 +293,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::SVAJ4UFS3COxhUin',
+            '_route' => 'generated::Y1mFsnmJclGEterR',
           ),
           1 => NULL,
           2 => 
@@ -403,26 +459,6 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/user/postJob' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'viewRequestJobPage',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
       '/admin/dashboard' => 
       array (
         0 => 
@@ -528,7 +564,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::pEnHzvWjSNkcnxCu',
+            '_route' => 'generated::TBd1f44fY3KFUUYx',
           ),
           1 => NULL,
           2 => 
@@ -637,7 +673,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::EVJUUIEGg3r0RNKY',
+            '_route' => 'generated::oNiyapuqskzQvnWp',
           ),
           1 => NULL,
           2 => 
@@ -767,7 +803,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::qJrMDpEUwq6NIp3V',
+            '_route' => 'generated::ve7E7M7ZWwYyO6XZ',
           ),
           1 => NULL,
           2 => 
@@ -1033,7 +1069,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::IL1LT0ucLN3EmmGw' => 
+    'generated::xcaWzWmxKIAU1Vas' => 
     array (
       'methods' => 
       array (
@@ -1056,7 +1092,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::IL1LT0ucLN3EmmGw',
+        'as' => 'generated::xcaWzWmxKIAU1Vas',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1182,7 +1218,117 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::ws15Rl5QtuP8ycjQ' => 
+    'viewRequestJobPage' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'user/postJob=1',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Custom\\jobController@viewRequestJobPage',
+        'controller' => 'App\\Http\\Controllers\\Custom\\jobController@viewRequestJobPage',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'viewRequestJobPage',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'viewRequestJobPageB' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'user/postJob=2',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Custom\\jobController@viewRequestJobPageB',
+        'controller' => 'App\\Http\\Controllers\\Custom\\jobController@viewRequestJobPageB',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'viewRequestJobPageB',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'JobPageA' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'user/postJob=1',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Custom\\jobController@CreateJob',
+        'controller' => 'App\\Http\\Controllers\\Custom\\jobController@CreateJob',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'JobPageA',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::LN8MtiUsudvKtBhd' => 
     array (
       'methods' => 
       array (
@@ -1198,13 +1344,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:42:"function () {
     return \\view(\'index\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051a0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051d0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::ws15Rl5QtuP8ycjQ',
+        'as' => 'generated::LN8MtiUsudvKtBhd',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1236,7 +1382,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:47:"function () {
     return \\view(\'login_user\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051c0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051f0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
@@ -1294,7 +1440,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::SVAJ4UFS3COxhUin' => 
+    'generated::Y1mFsnmJclGEterR' => 
     array (
       'methods' => 
       array (
@@ -1310,13 +1456,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:52:"function () {
     return \\view(\'admin.dashboard\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051f0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005220000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::SVAJ4UFS3COxhUin',
+        'as' => 'generated::Y1mFsnmJclGEterR',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1623,43 +1769,6 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'viewRequestJobPage' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'user/postJob',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\Custom\\jobController@viewRequestJobPage',
-        'controller' => 'App\\Http\\Controllers\\Custom\\jobController@viewRequestJobPage',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'viewRequestJobPage',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
     'admin.dashboard' => 
     array (
       'methods' => 
@@ -1714,7 +1823,7 @@ app('router')->setCompiledRoutes(
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:113:"function (\\Illuminate\\Http\\Request $request) {
     $request->session()->flush();
     return \\redirect(\'index\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000052a0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000052c0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
@@ -1846,7 +1955,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::pEnHzvWjSNkcnxCu' => 
+    'generated::TBd1f44fY3KFUUYx' => 
     array (
       'methods' => 
       array (
@@ -1867,7 +1976,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::pEnHzvWjSNkcnxCu',
+        'as' => 'generated::TBd1f44fY3KFUUYx',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2071,7 +2180,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::EVJUUIEGg3r0RNKY' => 
+    'generated::oNiyapuqskzQvnWp' => 
     array (
       'methods' => 
       array (
@@ -2092,7 +2201,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::EVJUUIEGg3r0RNKY',
+        'as' => 'generated::oNiyapuqskzQvnWp',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2412,7 +2521,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::qJrMDpEUwq6NIp3V' => 
+    'generated::ve7E7M7ZWwYyO6XZ' => 
     array (
       'methods' => 
       array (
@@ -2433,7 +2542,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::qJrMDpEUwq6NIp3V',
+        'as' => 'generated::ve7E7M7ZWwYyO6XZ',
       ),
       'fallback' => false,
       'defaults' => 

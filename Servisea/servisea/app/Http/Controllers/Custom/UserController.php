@@ -82,7 +82,7 @@ class UserController extends Controller
         $session= $request->session()->get('user');
 
         /*
-                $userInput = $request->validate([
+                  $userInput = $request->validate([
                     'USERNAME'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_-.]+$/|unique:users|unique:admin,ADMIN_USERNAME',
                     'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
                     'USER_PASSWORD'   => 'required|string|min:6|regex:/^[a-zA-Z0-9_-.]+$/',
@@ -154,11 +154,11 @@ class UserController extends Controller
                             //   'USER_IMG' => $imageName,
                             //   'USER_DOB' => $userInput['USER_DOB'],
                             //   'USER_GENDER' => $userInput['USER_GENDER'],
-            //                 'ADMIN_CITY' => $admin['ADMIN_CITY'],
-            //                 'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
-            //                 'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
-            //                 'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
-            //                 'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
+                            //   'ADMIN_CITY' => $admin['ADMIN_CITY'],
+                            //   'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
+                            //   'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
+                            //   'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
+                            //   'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
                         ]);
 
 
@@ -166,32 +166,26 @@ class UserController extends Controller
 
                 user::where('USER_ID',$session['USER_ID'])
                 ->update([
-                         //  'USER_FNAME' => $userInput['USER_FNAME'],
-                         //  'USER_LNAME' => $userInput['USER_LNAME'],
+                        //  'USER_FNAME' => $userInput['USER_FNAME'],
+                        //  'USER_LNAME' => $userInput['USER_LNAME'],
                           'USERNAME' => $userInput['USERNAME'],
                           'USER_EMAIL' => $userInput['USER_EMAIL'],
                           'USER_PASSWORD' => Hash::make($userInput['USER_PASSWORD']),
-                         //   'USER_TEL' => $userInput['USER_TEL'],
-                         //   'USER_IMG' => $imageName,
-                         //   'USER_DOB' => $userInput['USER_DOB'],
-                         //   'USER_GENDER' => $userInput['USER_GENDER'],
-         //                 'ADMIN_CITY' => $admin['ADMIN_CITY'],
-         //                 'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
-         //                 'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
-         //                 'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
-         //                 'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
+                        //   'USER_TEL' => $userInput['USER_TEL'],
+                        //   'USER_IMG' => $imageName,
+                        //   'USER_DOB' => $userInput['USER_DOB'],
+                        //   'USER_GENDER' => $userInput['USER_GENDER'],
+                        //  'ADMIN_CITY' => $admin['ADMIN_CITY'],
+                        //  'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
+                        //  'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
+                        //  'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
+                        //  'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
                      ]);
             }
-
-
-
-               //DB::insert('Insert into users(USERNAME,USER_EMAIL,USER_PASSWORD) values(?,?,?)', [$userInput['USERNAME'],$userInput['USER_EMAIL'],Hash::make($userInput['USER_PASSWORD'])]);
-
                $user = User::where('USER_ID', $session['USER_ID'])->get();
                $user = json_decode(json_encode($user[0]), true);
                $request->session()->put('user',$user);
                return redirect('user.profile');
-
     }
 
 

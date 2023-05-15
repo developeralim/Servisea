@@ -30,13 +30,17 @@ use App\Http\Controllers\Custom\jobController;
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
 Route::get('/user/profile', [UserController::class, 'viewProfile'])->name('viewProfileUser');
 Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
+Route::get('/user/postJob=1', [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
+Route::get('/user/postJob=2', [jobController::class, 'viewRequestJobPageB'])->name('viewRequestJobPageB');
+
+Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPageA');
+
 
 
 //Index Page
 Route::get('/index', function () {
     return view('index');
 });
-
 
 //Login Page
 Route::get('/login_user', function () {
@@ -49,7 +53,7 @@ Route::get('/admin.dashboard', function () {
     return view('admin.dashboard');
 });
 
-//
+//Admin
 Route::get('/admin/category', [CategoryController::class, 'viewCategory'])->name('category.page');
 Route::post('/editCategory', [CategoryController::class, 'editCategory'])->name('editCategory');
 Route::post('/insertCategory', [CategoryController::class, 'insertCategory'])->name('insertCategory');
@@ -61,7 +65,6 @@ Route::post('/admin/profile', [ProfileController::class, 'updateProfile'])->name
 Route::get('/admin/Address', [CategoryController::class, 'viewAddressPage'])->name('address.page');
 
 
-Route::get('/user/postJob', [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
 
 //Admin Controller
 Route::controller(AdminController::class)->group(function(){

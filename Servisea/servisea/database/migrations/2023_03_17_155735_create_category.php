@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->integerIncrements('CATEGORY_ID');
-            $table->string('CATEGORY_NAME')->nullable();
+            $table->string('CATEGORY_NAME')->nullable()->unique();
             $table->string('CATEGORY_DESCRIPTION')->nullable();
+            $table->string('CREATED_BY')->nullable();
+            $table->string('UPDATED_BY')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -17,36 +17,43 @@
 @stop
 
 @section('user-main-content')
+<div class="container">
+
+
 <h2>Servisea</h2>
 <ul class="breadcrumb">
-  <li>Share brief Description </li><li> Timeline and Budget</li>
+  <li> <b>Share Brief Description </b> > </li><li> Timeline and Budget</li>
 </ul>
 
-<form>
+<form id="categoryFormCrud" action="{{route('JobPageA')}}" method="post">
 @csrf
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
     <label for="project" class="form-label">Project Title</label>
-    <input type="text" class="form-control" id="exampleInputPassword1">
+    <input type="text" class="form-control" id="JR_TITLE" name="JR_TITLE">
   </div>
   <div class="mb-3">
     <label for="project" class="form-label">Project Description</label>
-    <input type="text" class="form-control" id="exampleInputPassword1">
+    <textarea class="form-control" id="JR_DESCRIPTION"  name="JR_DESCRIPTION" rows="3"></textarea>
   </div>
   <div class="mb-3">
     <label for="project" class="form-label">Attach file</label>
-    <input type="text" class="form-control" id="exampleInputPassword1">
+    <input type="file" class="form-control" id="JR_ATTACHMENT" name="JR_ATTACHMENT">
   </div>
  <div class="mb-3">
     <label for="project" class="form-label">Category</label>
-    <input type="text" class="form-control" id="exampleInputPassword1">
+    <select class="form-control" id="CATEGORY_ID" name='CATEGORY_ID' aria-label="Default select example">
+        <option selected>Select Category</option>
+        @foreach (Session('categoryList') as $category)
+        <option value="{{$category->CATEGORY_ID}}" >{{$category->CATEGORY_NAME}}</option>
+        @endforeach
+    </select>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<a href="{{route('viewRequestJobPageB')}}">lolo</a>
+
+</div>
 
 @stop
 
