@@ -24,13 +24,14 @@
   <li>Share Brief Description > </li><li><b>Timeline and Budget</b></li>
 </ul>
 
-<form id="jobFormCrud" action="{{route('')}}" method="POST">
+<form id="jobFormCrud" action="{{route('viewRequestJobPageB')}}" method="POST">
 @csrf
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 </div>
+<a href="{{route('viewRequestJobPage')}}">lolo</a>
 
 @stop
 
