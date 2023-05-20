@@ -30,10 +30,12 @@ use App\Http\Controllers\Custom\jobController;
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
 Route::get('/user/profile', [UserController::class, 'viewProfile'])->name('viewProfileUser');
 Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
+//User Get Job Page and Post Job
 Route::get('/user/postJob=1', [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
-Route::get('/user/postJob=2', [jobController::class, 'viewRequestJobPageB'])->name('viewRequestJobPageB');
-
 Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPageA');
+//View Job
+Route::get('/user/jobRequest?=view', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
+
 
 
 
@@ -63,6 +65,8 @@ Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->n
 Route::get('/admin/profile', [ProfileController::class, 'viewProfile'])->name('view_profile.page');
 Route::post('/admin/profile', [ProfileController::class, 'updateProfile'])->name('updateAdmin');
 Route::get('/admin/Address', [CategoryController::class, 'viewAddressPage'])->name('address.page');
+
+
 
 
 

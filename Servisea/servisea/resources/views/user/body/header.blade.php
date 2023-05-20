@@ -61,7 +61,7 @@
                             <li><a class="dropdown-item" href="#">View all Gig</a></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li><a class="dropdown-item" href="#">Orders</a></li>
-                            <li><a class="dropdown-item" href="#">Lists</a></li>
+                            <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li>
                             <li><a class="dropdown-item" href="#">Chat</a></li>
                             <li><a class="dropdown-item" href="{{route('clearSession')}}">Log Out</a></li>
                         </ul>
