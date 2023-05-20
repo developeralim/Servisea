@@ -8,6 +8,7 @@ use App\Models\Job_Request;
 use Illuminate\Http\Request;
 use Phpml\Classification\NaiveBayes;
 use Phpml\Dataset\ArrayDataset;
+use App\Helpers\AppHelper;
 
 class jobController extends Controller
 {
@@ -36,52 +37,60 @@ class jobController extends Controller
 
     public function CreateJob(Request $request){
 
-        #validation
-        $jobInput = $request->validate([
-            'JR_TITLE'        => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'JR_DESCRIPTION'  => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'CATEGORY_ID'     => 'required|integer|regex:/^[0-9]+$/',
-            'JR_ATTACHMENT'   => 'mimes:jpg,bmp,png',
-       ]);
-
-       $request->session()->put('job_details',$jobInput);
-
-    }
-
-    public function createJobB(Request $request){
         $session= $request->session()->get('user');
-        $category= $request->session()->get('categoryList');
-        $job_details= $request->session()->get('job_details');
-
-        return $job_details;
 
         #validation
         $jobInput = $request->validate([
             'JR_TITLE'        => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'JR_DESCRIPTION'  => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
             'CATEGORY_ID'     => 'required|integer|regex:/^[0-9]+$/',
-            'POSTED_BY_USER'  => 'required|integer|regex:/^[0-9]+$/'
+            'JR_ATTACHMENT'   => 'nullable|mimes:pdf,docx,ppt,word,pptx',
+            'JR_REMUNERATION' => 'required|integer|regex:/^[0-9]+$/',
+            'JR_DELIVERYDATE' => 'required|after_or_equal:'.now()->toDateString(),
        ]);
 
-        if($request->hasFile($job_details['JR_ATTACHMENT'])){
-            $imageName = $request->file($job_details['JR_ATTACHMENT'])->getClientOriginalName();
-            $request->file($job_details['JR_ATTACHMENT'])->storeAs('public/images/',$imageName);
+       Job_Request::create([
+        'CATEGORY_ID'     => $jobInput['CATEGORY_ID'],
+        'POSTED_BY_USER'  => $session['USER_ID'],
+        'JR_TITLE'        => $jobInput['JR_TITLE'],
+        'JR_REMUNERATION' => $jobInput['JR_REMUNERATION'],
+        'JR_STATUS'       => 'PENDING',
+        'JR_DELIVERYDATE' => $jobInput['JR_DELIVERYDATE'],
+        'JR_DATEPOSTED'   => now(),
 
-            Job_Request::create([
-                        'JR_TITLE'        => $jobInput['JR_TITLE'],
-                        'JR_DESCRIPTION'  => $jobInput['JR_DESCRIPTION'],
-                        'CATEGORY_ID'     => $jobInput['CATEGORY_ID'],
-                        'POSTED_BY_USER'  => $session['USER_ID'],
-                        'JR_ATTACHMENT'   => $jobInput['JR_ATTACHMENT']
+        ]);
+
+        return Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->latest()->first();
+
+        if($request->hasFile($jobInput['JR_ATTACHMENT'])){
+            $imageName = $request->file($jobInput['JR_ATTACHMENT'])->getClientOriginalName();
+            $request->file($jobInput['JR_ATTACHMENT'])->storeAs('public/images/',$imageName);
+
+            Job_Request::where('JR_ID',Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->latest()->first())
+                ->update([
+                'JR_REMUNERATION' => $jobInput['JR_REMUNERATION']
             ]);
+
+        }
+
+        if(AppHelper::instance()->ai($jobInput['JR_DESCRIPTION'])=='foul'){
+
+            Job_Request::where('JR_ID',Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->latest()->first())
+                ->update([
+                'JR_DESCRIPTION' => $jobInput['JR_DESCRIPTION'],
+                'JR_STATUS'       => 'DRAFT',
+            ]);
+
         }else{
-            Job_Request::create([
-                'JR_TITLE'        => $jobInput['JR_TITLE'],
-                'JR_DESCRIPTION'  => $jobInput['JR_DESCRIPTION'],
-                'CATEGORY_ID'     => $jobInput['CATEGORY_ID'],
-                'POSTED_BY_USER'  => $session['USER_ID']
+            Job_Request::where('JR_ID',Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->latest()->first())
+                ->update([
+                'JR_DESCRIPTION' => $jobInput['JR_DESCRIPTION'],
+                'JR_STATUS'       => 'CONFIRMED',
             ]);
         }
+
+
+
 
     }
 
@@ -94,12 +103,11 @@ class jobController extends Controller
                     ['I hate this game, it sucks!'],
                     ['I love spending time with my family'],
                     ['I can\'t believe how stupid you are'],
-                    // ['I hate this game, it\'s so stupid!'],
-                    // ['I love spending time with my family'],
-
+                    ['I hate this game, it\'s so stupid!'],
+                    ['I love spending time with my family'],
                 ];
 
-                $labels = ['clean', 'foul', 'clean', 'foul', 'clean', 'foul'/*,  'foul', 'clean' */];
+                $labels = ['clean', 'foul', 'clean', 'foul', 'clean', 'foul'];
 
                 $classifier = new NaiveBayes();
                 $classifier->train($samples, $labels);
