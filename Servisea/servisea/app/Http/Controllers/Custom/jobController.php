@@ -25,7 +25,8 @@ class jobController extends Controller
 
     public function viewRequestJobList(Request $request){
         $session= $request->session()->get('user');
-        $jobs =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->latest();
+        $jobs =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->get();
+        $jobs = json_decode(json_encode($jobs), true);
         return view("user.jobList")->with('jobList',$jobs);
     }
 
@@ -64,7 +65,6 @@ class jobController extends Controller
                 ->update([
                 'JR_REMUNERATION' => $jobInput['JR_REMUNERATION']
             ]);
-
         }
 
         if(AppHelper::instance()->ai($jobInput['JR_DESCRIPTION'])=='foul'){

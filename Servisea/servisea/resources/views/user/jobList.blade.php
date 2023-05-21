@@ -18,7 +18,7 @@
 
 @section('user-main-content')
 <div class="container">
-{{$jobList}}
+{{ $jobList }}
 </div>
 
 @stop

@@ -34,7 +34,7 @@ Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('up
 Route::get('/user/postJob=1', [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
 Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPageA');
 //View Job
-Route::get('/user/jobRequest?=view', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
+Route::get('/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
 
 
 
