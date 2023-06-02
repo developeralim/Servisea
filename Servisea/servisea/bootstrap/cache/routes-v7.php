@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::eGa5aJxjCsuxQ7kU',
+            '_route' => 'generated::o4eVjw3naGD0nDW4',
           ),
           1 => NULL,
           2 => 
@@ -228,13 +228,49 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/freelancer/becomeSeller' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'viewSellerPage1',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'switchToBuyer',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/index' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::uvmCOLMq7qhqAlJH',
+            '_route' => 'generated::MIkQw8VXHRoootep',
           ),
           1 => NULL,
           2 => 
@@ -293,7 +329,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::6gWfwx60ZNHahY3H',
+            '_route' => 'generated::ucqK7hgXL5tYLXVf',
           ),
           1 => NULL,
           2 => 
@@ -564,7 +600,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::PVsb6ZiwZ95j042C',
+            '_route' => 'generated::rAeFRTyOI5RJxy6O',
           ),
           1 => NULL,
           2 => 
@@ -673,7 +709,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::FQNs68D0QrLnsDry',
+            '_route' => 'generated::XQ2J8g16jgbqheQ2',
           ),
           1 => NULL,
           2 => 
@@ -803,7 +839,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::AMWNOXMjKIG03Z7F',
+            '_route' => 'generated::tnJheIuKaCPCWgTJ',
           ),
           1 => NULL,
           2 => 
@@ -1069,7 +1105,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::eGa5aJxjCsuxQ7kU' => 
+    'generated::o4eVjw3naGD0nDW4' => 
     array (
       'methods' => 
       array (
@@ -1092,7 +1128,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::eGa5aJxjCsuxQ7kU',
+        'as' => 'generated::o4eVjw3naGD0nDW4',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1328,7 +1364,80 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::uvmCOLMq7qhqAlJH' => 
+    'viewSellerPage1' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'freelancer/becomeSeller',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Custom\\FreelancerController@viewS1p',
+        'controller' => 'App\\Http\\Controllers\\Custom\\FreelancerController@viewS1p',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'viewSellerPage1',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'switchToBuyer' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'freelancer/becomeSeller',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Custom\\FreelancerController@switchToBuyer',
+        'controller' => 'App\\Http\\Controllers\\Custom\\FreelancerController@switchToBuyer',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'switchToBuyer',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::MIkQw8VXHRoootep' => 
     array (
       'methods' => 
       array (
@@ -1344,13 +1453,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:42:"function () {
     return \\view(\'index\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051d0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005200000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::uvmCOLMq7qhqAlJH',
+        'as' => 'generated::MIkQw8VXHRoootep',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1382,7 +1491,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:47:"function () {
     return \\view(\'login_user\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000051f0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005220000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
@@ -1440,7 +1549,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::6gWfwx60ZNHahY3H' => 
+    'generated::ucqK7hgXL5tYLXVf' => 
     array (
       'methods' => 
       array (
@@ -1456,13 +1565,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:52:"function () {
     return \\view(\'admin.dashboard\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005220000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005250000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::6gWfwx60ZNHahY3H',
+        'as' => 'generated::ucqK7hgXL5tYLXVf',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1823,7 +1932,7 @@ app('router')->setCompiledRoutes(
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:113:"function (\\Illuminate\\Http\\Request $request) {
     $request->session()->flush();
     return \\redirect(\'index\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000052c0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000052f0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
@@ -1955,7 +2064,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::PVsb6ZiwZ95j042C' => 
+    'generated::rAeFRTyOI5RJxy6O' => 
     array (
       'methods' => 
       array (
@@ -1976,7 +2085,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::PVsb6ZiwZ95j042C',
+        'as' => 'generated::rAeFRTyOI5RJxy6O',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2180,7 +2289,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::FQNs68D0QrLnsDry' => 
+    'generated::XQ2J8g16jgbqheQ2' => 
     array (
       'methods' => 
       array (
@@ -2201,7 +2310,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::FQNs68D0QrLnsDry',
+        'as' => 'generated::XQ2J8g16jgbqheQ2',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2521,7 +2630,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::AMWNOXMjKIG03Z7F' => 
+    'generated::tnJheIuKaCPCWgTJ' => 
     array (
       'methods' => 
       array (
@@ -2542,7 +2651,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::AMWNOXMjKIG03Z7F',
+        'as' => 'generated::tnJheIuKaCPCWgTJ',
       ),
       'fallback' => false,
       'defaults' => 

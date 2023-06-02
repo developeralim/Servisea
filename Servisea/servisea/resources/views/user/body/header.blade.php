@@ -56,14 +56,20 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{route('viewProfileUser')}}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ route('viewRequestJobPage') }}">Post a request</a></li>
-                            <li><a class="dropdown-item" href="#">Become a Seller</a></li>
+                            <li><a class="dropdown-item" href="{{route('viewRequestJobPage') }}">Post a request</a></li>
+                            <li><a class="dropdown-item" href="#">Billing and Payments</a></li>
                             <li><a class="dropdown-item" href="#">View all Gig</a></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li><a class="dropdown-item" href="#">Orders</a></li>
                             <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li>
                             <li><a class="dropdown-item" href="#">Chat</a></li>
                             <li><a class="dropdown-item" href="{{route('clearSession')}}">Log Out</a></li>
+                            @if (Session::get('user.USER_ROLE') == 2 )
+                            <li><a class="dropdown-item" href="{{route('switchToBuyer') }}">Switch to Buyer</a></li>
+                            @else
+                            <li><a class="dropdown-item" href="{{route('switchToSeller') }}">Become a Seller</a></li>
+                            @endif
+
                         </ul>
                     </div>
                     @endif

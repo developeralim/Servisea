@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Freelancer extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    protected $table = 'freelancer';
+    protected $fillable = [
+        'USER_ID',
+        'F_LEVEL',
+        'F_DESCRIPTION',
+        'F_SINCE',
+        'F_LANGUAGE',
+        ];
+
 }

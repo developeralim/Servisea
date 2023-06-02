@@ -12,6 +12,8 @@ use App\Http\Controllers\Custom\UserController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Custom\jobController;
+use App\Http\Controllers\Custom\FreelancerController;
+
 
 
 
@@ -36,6 +38,10 @@ Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPa
 //View Job
 Route::get('/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
 
+//FREELANCER PAGE
+Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
+Route::post('/freelancer/becomeSeller', [FreelancerController::class, 'createFreelancer'])->name('switchToSeller');
+Route::post('/freelancer/becomeSeller', [FreelancerController::class, 'switchToBuyer'])->name('switchToBuyer');
 
 
 

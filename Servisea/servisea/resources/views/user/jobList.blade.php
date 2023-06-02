@@ -18,7 +18,9 @@
 
 @section('user-main-content')
 <div class="container">
-{{ $jobList }}
+@foreach($jobList as $drug => $d)
+   <br>{{ $d['JR_ID'] }}</br>
+@endforeach
 </div>
 
 @stop

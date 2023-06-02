@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
+use App\Models\Freelancer;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -34,12 +35,17 @@ class DatabaseSeeder extends Seeder
 
         $user = [
             ['USERNAME' => 'Jean',  'USER_EMAIL' => 'Jean@gmail.com',   'USER_PASSWORD' => Hash::make('Jean1234'),  'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '1'],
-            ['USERNAME' => 'Jean1', 'USER_EMAIL' => 'Jean1@gmail.com',  'USER_PASSWORD' =>Hash::make('Jean1234'),   'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '1'],
+            ['USERNAME' => 'Jean1', 'USER_EMAIL' => 'Jean1@gmail.com',  'USER_PASSWORD' =>Hash::make('Jean1234'),   'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '2'],
+        ];
+
+        $freelancer= [
+            ['USER_ID' => 2,  'F_LEVEL' => 1,   'F_DESCRIPTION' =>'Description of Freelancer',  'F_SINCE' => now(),    'F_LANGUAGE' => 'EN'],
         ];
 
 
         Category::insert($category);
         User::insert($user);
+        Freelancer::insert($freelancer);
 
 
     }
