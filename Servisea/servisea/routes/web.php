@@ -13,9 +13,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Custom\jobController;
 use App\Http\Controllers\Custom\FreelancerController;
-
-
-
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,14 +37,22 @@ Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPa
 Route::get('/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
 
 //FREELANCER PAGE
+//Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
 Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
 Route::post('/freelancer/becomeSeller', [FreelancerController::class, 'createFreelancer'])->name('switchToSeller');
-Route::post('/freelancer/becomeSeller', [FreelancerController::class, 'switchToBuyer'])->name('switchToBuyer');
+Route::get('/freelancer/becomeBuyer', [FreelancerController::class, 'switchToBuyer'])->name('switchToBuyer');
+
+Route::get('/freelancer/postService/overview', [FreelancerController::class, 'viewOverviewPage'])->name('viewOverviewPage');
+Route::post('/freelancer/postService/package', [FreelancerController::class, 'viewPackagePage'])->name('viewPackagePage');
 
 
 
 //Index Page
-Route::get('/index', function () {
+Route::get('/index', function (request $request) {
+
+    $category = Category::all();
+    $request->session()->put('categoryList',$category);
+
     return view('index');
 });
 

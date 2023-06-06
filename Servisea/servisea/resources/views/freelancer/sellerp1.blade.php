@@ -16,7 +16,7 @@
 
 @section('user-main-content')
 
-<form method="POST" action="{{ route('updateUser')}}" class="register-form" id="register-form">
+<form method="POST" action="{{ route('switchToSeller')}}" class="register-form" id="register-form">
         @csrf
         <div class="row gutters">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

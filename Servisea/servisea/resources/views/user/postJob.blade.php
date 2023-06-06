@@ -66,9 +66,9 @@
   <button type="submit" class="btn btn-primary">Submit</button>
  </div>
 </form>
-@foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
 </div>
 
 @stop

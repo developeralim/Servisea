@@ -6,15 +6,37 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Freelancer;
+use App\Models\Category;
+use PhpParser\Node\Stmt\Return_;
 
 use function Pest\Laravel\get;
 
 class FreelancerController extends Controller
 {
     public function viewS1p(Request $request){
-        $sessionUser= $request->session()->get('user');
-        if(isset($sessionUser)!=null){
+        $session= $request->session()->get('user');
+        if(isset($session)!=null){
             return view("freelancer.sellerp1");
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function viewOverviewPage(Request $request){
+        $session= $request->session()->get('user');
+        if(isset($session)!=null){
+            $category = Category::all();
+            $request->session()->put('categoryList',$category);
+            return view("freelancer.overview");
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function viewPackagePage(Request $request){
+        $session= $request->session()->get('user');
+        if(isset($session)!=null){
+            return view("freelancer.package");
         }else{
             return redirect('login_user');
         }
@@ -43,7 +65,6 @@ class FreelancerController extends Controller
 
                 if (Freelancer::where('USER_ID',$session['USER_ID'])->exists()) {
 
-                    return redirect('index');
                     }else{
 
                         Freelancer::create([
@@ -53,9 +74,12 @@ class FreelancerController extends Controller
                             'F_SINCE' => now(),
                             'F_LANGUAGE' => 'ENGLISH'
                             ]);
-                            return redirect('index');
+
                     }
 
+                    $request->Session()->put('user.USER_ROLE',2);
+                    $session= $request->session()->get('user');
+                    return redirect('index');
 
     }
 
@@ -64,11 +88,10 @@ class FreelancerController extends Controller
         $session= $request->session()->get('user');
 
                 user::where('USER_ID',$session['USER_ID'])
-                   ->update([
-                            'USER_ROLE' => 1,
-                        ]);
+                ->update(['USER_ROLE' => 1,]);
+                        $request->Session()->put('user.USER_ROLE',1);
+                        $session= $request->session()->get('user');
                         return redirect('index');
-
     }
 
 }
