@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('DELIVERY_DAYS')->nullable();
             $table->string('REVISION')->nullable();
             $table->enum('PACKAGE_STATUS',['CUSTOM','BASIC','PREMIUM','STANDARD'])->nullable();
+            $table->timestamps();
         });
     }
 

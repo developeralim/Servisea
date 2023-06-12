@@ -28,23 +28,27 @@ use App\Models\Category;
 
 //USER PAGE
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
-Route::get('/user/profile', [UserController::class, 'viewProfile'])->name('viewProfileUser');
+Route::get('/user/profile',  [UserController::class, 'viewProfile'])->name('viewProfileUser');
 Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
 //User Get Job Page and Post Job
-Route::get('/user/postJob=1', [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
+Route::get('/user/postJob=1',  [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
 Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPageA');
 //View Job
 Route::get('/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
 
 //FREELANCER PAGE
 //Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
-Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
+Route::get('/freelancer/becomeSeller',  [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
 Route::post('/freelancer/becomeSeller', [FreelancerController::class, 'createFreelancer'])->name('switchToSeller');
-Route::get('/freelancer/becomeBuyer', [FreelancerController::class, 'switchToBuyer'])->name('switchToBuyer');
+Route::get('/freelancer/becomeBuyer',   [FreelancerController::class, 'switchToBuyer'])->name('switchToBuyer');
 
 Route::get('/freelancer/postService/overview', [FreelancerController::class, 'viewOverviewPage'])->name('viewOverviewPage');
 Route::post('/freelancer/postService/package', [FreelancerController::class, 'viewPackagePage'])->name('viewPackagePage');
 
+Route::post('/freelancer/postService/package/standard',    [FreelancerController::class, 'postBasicGig'])->name('postBasicPackagePage');
+Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
+
+Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewGig');
 
 
 //Index Page

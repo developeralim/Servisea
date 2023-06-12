@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('GIG_REQUIREMENTS')->nullable();
 
             $table->enum('GIG_STATUS',['DRAFT','PENDING','COMPLETED','SUSPENDED'])->default('PENDING');
+            $table->timestamps();
         });
     }
 

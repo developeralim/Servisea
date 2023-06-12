@@ -9,7 +9,7 @@ class Freelancer extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public $timestamps = true;
     protected $table = 'freelancer';
     protected $fillable = [
         'USER_ID',

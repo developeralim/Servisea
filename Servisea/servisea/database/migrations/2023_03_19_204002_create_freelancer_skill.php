@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->unsignedInteger('FREELANCER_ID');
             $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
-
+            $table->timestamps();
         });
     }
 

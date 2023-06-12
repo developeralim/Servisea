@@ -66,7 +66,7 @@
                             @if (Session::get('user.USER_ROLE') == 2 )
                             <li><a class="dropdown-item" href="{{route('switchToBuyer')}}">Switch to Buyer</a></li>
                             <li><a class="dropdown-item" href="{{route('viewOverviewPage')}}">Post a gig</a></li>
-                            <li><a class="dropdown-item" href="#">View all Gig</a></li>
+                            <li><a class="dropdown-item" href="{{route('viewGig')}}">View all Gig</a></li>
                             @else
                             <li><a class="dropdown-item" href="{{route('switchToSeller')}}">Become a Seller</a></li>
                             @endif

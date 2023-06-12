@@ -36,7 +36,7 @@
               </div>
               <div class="col-md-9 pe-5">
 
-                <input type="text" class="form-control form-control-lg" placeholder="Gig Title" />
+                <input type="text" name="Title" class="form-control form-control-lg" placeholder="Gig Title" />
 
               </div>
             </div>
@@ -50,11 +50,23 @@
 
               </div>
               <div class="col-md-9 pe-5">
-
-                <input type="text" class="form-control form-control-lg"  placeholder="Gig Description" />
-
+                <textarea type="text" name="Description" class="form-control form-control-lg"  placeholder="Gig Description" ></textarea>
               </div>
             </div>
+
+            <hr class="mx-n3">
+
+            <div class="row align-items-center pt-4 pb-3">
+              <div class="col-md-3 ps-5">
+
+                <h6 class="mb-0">Gig Requirements</h6>
+
+              </div>
+              <div class="col-md-9 pe-5">
+                <textarea type="text" name="Requirements" class="form-control form-control-lg"  placeholder="Input the requirements needed to start this service" ></textarea>
+              </div>
+            </div>
+
 
             <hr class="mx-n3">
 

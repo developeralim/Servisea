@@ -20,12 +20,13 @@
 
 <!-- Default switch -->
 <div class="form-check form-switch">
-  <input class="form-check-input" type="checkbox" role="switch" onclick="myFunction()" id="myCheck">
-  <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+  <input class="form-check-input" type="checkbox" role="switch" onclick="myFunction()" id="myCheck" checked>
+  <label class="form-check-label" for="flexSwitchCheckDefault">Switch to offer only one package</label>
 </div>
 
 
-<form method="POST" action="{{ route('viewPackagePage')}}" class="package-form" id="package-form">
+<form method="POST" action="{{ route('postMultiPackagePage')}}" class="package-form" id="package-form">
+@csrf
 <div class="table-responsive">
 <table id="table" class="table table-bordered">
   <thead>
@@ -40,71 +41,76 @@
     <tr>
       <th scope="row">Package Title</th>
       <td >
-        <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+        <input type="text" class="form-control" name='PT_B' placeholder="Title">
       </td>
-      <td name='PT_S' class='c'>
-        <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+        <input type="text" class="form-control" name='PT_S' placeholder="Title">
       </td>
-      <td name='PT_P' class='c'>
-        <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+        <input type="text" class="form-control" name='PT_P' placeholder="Title">
       </td>
     </tr>
 
     <tr>
       <th scope="row">Package Description</th>
-      <td name='PS_B' >
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td>
+      <input type="text" class="form-control" name='PD_B' placeholder="Description">
       </td>
-      <td name='PS_S'class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+      <input type="text" class="form-control" name='PD_S' placeholder="Description">
       </td>
-      <td name='PS_P' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+      <input type="text" class="form-control" name='PD_P' placeholder="Description">
       </td>
     </tr>
 
     <tr>
       <th scope="row">Delivery Days</th>
-      <td name='DD_B' >
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td  >
+      <input type="text" class="form-control" name='DD_B' placeholder="Delivery Days">
       </td>
-      <td name='DD_S' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td  class='c'>
+      <input type="text" class="form-control" name='DD_S' placeholder="Delivery Days">
       </td>
-      <td name='DD_P' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td  class='c'>
+      <input type="text" class="form-control" name='DD_P' placeholder="Delivery Days">
       </td>
     </tr>
 
     <tr>
       <th scope="row">Revision</th>
-      <td name='R_B' >
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td>
+      <input type="text" class="form-control" name='R_B'  placeholder="Revision">
       </td>
-      <td name='R_S' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+      <input type="text" class="form-control" name='R_S'  placeholder="Revision">
       </td>
-      <td name='R_P' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td  class='c'>
+      <input type="text" class="form-control" name='R_P' placeholder="Revision">
       </td>
     </tr>
 
     <tr>
       <th scope="row">Price</th>
-      <td name='P_B' >
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td >
+      <input type="text" class="form-control" name='P_B' placeholder="Price">
       </td>
-      <td name='P_S' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+      <input type="text" class="form-control" name='P_S' placeholder="Price">
       </td>
-      <td name='P_P' class='c'>
-      <input type="text" class="form-control" value="H" name='PT_B' placeholder="Enter Username">
+      <td class='c'>
+      <input type="text" class="form-control" name='P_P' placeholder="Price">
       </td>
     </tr>
 
 </tbody>
 </table>
 </div>
+
+<div class="d-grid gap-2 col-6 mx-auto">
+  <button class="btn btn-primary" type="Submit">Publish Gig</button>
+</div>
+
 </form>
 @stop
 
@@ -122,12 +128,16 @@
         function myFunction() {
         // Get the checkbox
         var checkBox = document.getElementById("myCheck");
-
         // If the checkbox is checked, display the output text
-        if (checkBox.checked == true){
-            $(".c").hide();
+        if (checkBox.checked == false){
+
+          document.getElementById("package-form").action = "{{ route('postBasicPackagePage')}}";
+
+          $(".c").hide();
+
         } else {
 
+          document.getElementById("package-form").action = "{{ route('postMultiPackagePage')}}";
             $(".c").show();
         }
         }
