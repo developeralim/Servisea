@@ -22,7 +22,7 @@
 
 <div class="row">
     @foreach ($gigs as $gig)
-
+    <hr class="mx-n3">
     <div class="col-sm-3">
       <form method="POST" class="register-form" id="register-form">
       @csrf
@@ -36,6 +36,7 @@
         </form>
       </div>
    </div>
+   <hr class="mx-n3">
    @endforeach
 
    <div class="col-sm-3">
