@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\custom;
 
 use App\Http\Controllers\Controller;
+use ArrayObject;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Freelancer;
 use App\Models\Category;
 use App\Models\Gig;
 use App\Models\Package;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
 
 use function Pest\Laravel\get;
@@ -227,20 +229,52 @@ class FreelancerController extends Controller
     public function viewAllGig(Request $request){
         $session= $request->session()->get('user');
 
-        $gigs = Gig::where('GIG_STATUS','COMPLETED')->get();
+        $gigs = DB::select(
+        'SELECT GIG.GIG_ID,GIG_NAME,reviews.RATING,package.PRICE,users.USERNAME
+        FROM GIG
+        RIGHT JOIN PACKAGE
+        ON gig.GIG_ID = package.GIG_ID
+        RIGHT JOIN freelancer
+        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+        RIGHT JOIN users
+        ON FREELANCER.USER_ID = users.USER_ID
+        LEFT OUTER JOIN REVIEWS
+        ON gig.GIG_ID = reviews.GIG_ID
+        WHERE package.GIG_ID =  gig.GIG_ID
+        AND gig.GIG_STATUS = "COMPLETED"
+        AND package.PACKAGE_ID = (
+            SELECT package.PACKAGE_ID
+            FROM package
+            WHERE package.GIG_ID =  gig.GIG_ID
+            AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+            ORDER BY PRICE ASC
+            LIMIT 1)');
+
+        $gigsCounter = DB::select(
+            'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
+        FROM GIG
+        RIGHT JOIN PACKAGE
+        ON gig.GIG_ID = package.GIG_ID
+        RIGHT JOIN freelancer
+        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+        RIGHT JOIN users
+        ON FREELANCER.USER_ID = users.USER_ID
+        LEFT OUTER JOIN REVIEWS
+        ON gig.GIG_ID = reviews.GIG_ID
+        WHERE package.GIG_ID =  gig.GIG_ID
+        AND gig.GIG_STATUS = "COMPLETED"
+        AND package.PACKAGE_ID = (
+            SELECT package.PACKAGE_ID
+            FROM package
+            WHERE package.GIG_ID =  gig.GIG_ID
+            AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+            ORDER BY PRICE ASC
+            LIMIT 1)');
+            $freelancer = json_decode(json_encode($gigsCounter[0]), true);
+            return $freelancer['TOTAL'];
         //reviews
-        $gigCounter = Gig::where('GIG_STATUS','COMPLETED')->count();
 
-        foreach ($gigs as $gig) {
-            $package = package::where('GIG_ID',$gig['GIG_ID'])->orderBy('PRICE', 'asc')->first();
-
-        };
-
-        $obj_merged = (object) array_merge((array) $gig, (array) $package);
-
-        return $obj_merged;
-
-        if(isset($gigCounter)&& $gigCounter > 0){
+        if(isset($gigsCounter['TOTAL'])){
             return view('freelancer.viewAllGig')->with('gigs',$gigs);
         }else{
             return redirect('index');
