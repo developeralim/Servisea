@@ -228,7 +228,17 @@ class FreelancerController extends Controller
         $session= $request->session()->get('user');
 
         $gigs = Gig::where('GIG_STATUS','COMPLETED')->get();
+        //reviews
         $gigCounter = Gig::where('GIG_STATUS','COMPLETED')->count();
+
+        foreach ($gigs as $gig) {
+            $package = package::where('GIG_ID',$gig['GIG_ID'])->orderBy('PRICE', 'asc')->first();
+
+        };
+
+        $obj_merged = (object) array_merge((array) $gig, (array) $package);
+
+        return $obj_merged;
 
         if(isset($gigCounter)&& $gigCounter > 0){
             return view('freelancer.viewAllGig')->with('gigs',$gigs);
@@ -244,7 +254,7 @@ class FreelancerController extends Controller
         $gigCounter = Gig::where('GIG_STATUS','COMPLETED')->count();
 
         if(isset($gigCounter) && $gigCounter > 0){
-            return view('freelancer.viewAllGig')->with('gigs',$gigs);
+            return view('freelancer.viewGig')->with('gigs',$gigs);
         }else{
             return redirect('index');
         };

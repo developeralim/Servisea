@@ -63,7 +63,7 @@
                 <img src="..." class="card-img-top" alt="gig media.">
                 <div class="card-body">
                     <h5 class="card-title">seller</h5>
-                    <a class="card-text" href="{{route('viewJob')}}" >
+                    <a class="card-text" href="{{route('viewGig')}}" >
                     <h6 class="card-title">{{$gig->GIG_NAME}}</h6>
                     </a>
                     <h6 class="card-title">Reviews From Review Table</h6>
