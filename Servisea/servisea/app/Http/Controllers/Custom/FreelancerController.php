@@ -270,11 +270,11 @@ class FreelancerController extends Controller
             AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
             ORDER BY PRICE ASC
             LIMIT 1)');
-            $freelancer = json_decode(json_encode($gigsCounter[0]), true);
-            return $freelancer['TOTAL'];
+            $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+
         //reviews
 
-        if(isset($gigsCounter['TOTAL'])){
+        if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
             return view('freelancer.viewAllGig')->with('gigs',$gigs);
         }else{
             return redirect('index');
