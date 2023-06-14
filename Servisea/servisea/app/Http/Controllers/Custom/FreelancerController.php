@@ -227,10 +227,16 @@ class FreelancerController extends Controller
     public function viewAllGig(Request $request){
         $session= $request->session()->get('user');
 
-        //$gigs = Gig::where('GIG_STATUS','COMPLETED')->Get();
-        $gigs = Gig::all();
+        $gigs = Gig::where('GIG_STATUS','COMPLETED')->get();
+        $gigCounter = Gig::where('GIG_STATUS','COMPLETED')->count();
 
-        return view('freelancer.viewAllGig')->with('gigs',$gigs);
+        if(isset($gigCounter)&& $gigCounter > 0){
+            return view('freelancer.viewAllGig')->with('gigs',$gigs);
+        }else{
+            return redirect('index');
+        };
+
+
     }
 
 

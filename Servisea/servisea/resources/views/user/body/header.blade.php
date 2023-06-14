@@ -62,11 +62,19 @@
                             <li><a class="dropdown-item" href="#">Orders</a></li>
                             <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li>
                             <li><a class="dropdown-item" href="#">Chat</a></li>
+                            <li><a class="dropdown-item" href="#">Dispute</a></li>
                             <li><a class="dropdown-item" href="{{route('clearSession')}}">Log Out</a></li>
                             @if (Session::get('user.USER_ROLE') == 2 )
                             <li><a class="dropdown-item" href="{{route('switchToBuyer')}}">Switch to Buyer</a></li>
                             <li><a class="dropdown-item" href="{{route('viewOverviewPage')}}">Post a gig</a></li>
                             <li><a class="dropdown-item" href="{{route('viewGig')}}">View all Gig</a></li>
+                            <li><a class="dropdown-item" href="">View Created Gigs</a></li>
+                            <li><a class="dropdown-item" href="">Apply Jobs</a></li>
+                            <li><a class="dropdown-item" href="">View Freelancer Profile</a></li>
+                            <li><a class="dropdown-item" href="">View orders</a></li>
+                            <li><a class="dropdown-item" href="">View Earnings</a></li>
+
+
                             @else
                             <li><a class="dropdown-item" href="{{route('switchToSeller')}}">Become a Seller</a></li>
                             @endif
