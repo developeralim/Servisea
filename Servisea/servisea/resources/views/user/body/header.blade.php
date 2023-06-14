@@ -58,6 +58,7 @@
                             <li><a class="dropdown-item" href="{{route('viewProfileUser')}}">Profile</a></li>
                             <li><a class="dropdown-item" href="{{route('viewRequestJobPage') }}">Post a request</a></li>
                             <li><a class="dropdown-item" href="#">Billing and Payments</a></li>
+                            <li><a class="dropdown-item" href="{{route('viewAllGig')}}">View all Gig</a></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li><a class="dropdown-item" href="#">Orders</a></li>
                             <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li>
@@ -67,7 +68,7 @@
                             @if (Session::get('user.USER_ROLE') == 2 )
                             <li><a class="dropdown-item" href="{{route('switchToBuyer')}}">Switch to Buyer</a></li>
                             <li><a class="dropdown-item" href="{{route('viewOverviewPage')}}">Post a gig</a></li>
-                            <li><a class="dropdown-item" href="{{route('viewAllGig')}}">View all Gig</a></li>
+
                             <li><a class="dropdown-item" href="">View Created Gigs</a></li>
                             <li><a class="dropdown-item" href="">Apply Jobs</a></li>
                             <li><a class="dropdown-item" href="">View Freelancer Profile</a></li>

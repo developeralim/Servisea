@@ -50,24 +50,35 @@
                                 </div>
                             </div>
                         </form>
-
+                        @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
 
 <div class="row">
     @foreach ($gigs as $gig)
 
     <div class="col-sm-3">
     <hr class="mx-n3">
-        <form method="POST" class="gig-id" id="gig-id">
+        <form method="POST" action="{{route('viewGig')}}" class="gig-id" id="gig-id">
          @csrf
             <div class="card" style="margin: auto;width: 18rem;">
+            <input name="gig_id" value="{{$gig->GIG_ID}}" hidden>
                 <img src="..." class="card-img-top" alt="gig media.">
                 <div class="card-body">
-                    <h5 class="card-title">seller</h5>
-                    <a class="card-text" href="{{route('viewGig')}}" >
+                    <h5 class="card-title">{{$gig->USERNAME}}</h5>
+                    <button type="submit">
+                    <a class="card-text" >
                     <h6 class="card-title">{{$gig->GIG_NAME}}</h6>
                     </a>
-                    <h6 class="card-title">Reviews From Review Table</h6>
-                    <h6 class="card-title">Price From Package Table</h6>
+                    </button>
+                    @if($gig->RATING != null)
+                     <h6 class="card-title">{{$gig->RATING}}</h6>
+                    @else
+                     <h6 class="card-title">No reviews yet</h6>
+                    @endif
+
+                    <h6 class="card-title">$ {{$gig->PRICE}}</h6>
+
                     <!-- <button type="submit" class="btn btn-primary">Order</button> -->
                 </div>
             </div>

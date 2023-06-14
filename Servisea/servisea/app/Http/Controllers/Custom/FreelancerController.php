@@ -85,9 +85,6 @@ class FreelancerController extends Controller
         $freelancer= $request->session()->get('freelancer');
 
         $gigId =  Gig::where('FREELANCER_ID', $freelancer['FREELANCER_ID'])->latest()->first('GIG_ID');
-
-
-
         #validation
         $PackageInput = $request->validate([
             'PT_B'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
@@ -284,14 +281,109 @@ class FreelancerController extends Controller
     public function viewGig(Request $request){
         $session= $request->session()->get('user');
 
-        $gigs = Gig::where('GIG_STATUS','COMPLETED')->get();
-        $gigCounter = Gig::where('GIG_STATUS','COMPLETED')->count();
+        $input_gigID = $request->validate([
+            'gig_id'  => 'required|integer|regex:/^[0-9]+$/',
+       ]);
 
-        if(isset($gigCounter) && $gigCounter > 0){
-            return view('freelancer.viewGig')->with('gigs',$gigs);
+       $gig = DB::select(
+        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,reviews.RATING,package.PRICE,users.USERNAME
+        FROM GIG
+        RIGHT JOIN PACKAGE
+        ON gig.GIG_ID = package.GIG_ID
+        RIGHT JOIN freelancer
+        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+        RIGHT JOIN users
+        ON FREELANCER.USER_ID = users.USER_ID
+        LEFT OUTER JOIN REVIEWS
+        ON gig.GIG_ID = reviews.GIG_ID
+        WHERE package.GIG_ID =  gig.GIG_ID
+        AND gig.GIG_STATUS = "COMPLETED"
+        AND gig.GIG_ID = '.$input_gigID['gig_id'].'
+        AND package.PACKAGE_ID = (
+            SELECT package.PACKAGE_ID
+            FROM package
+            WHERE package.GIG_ID =  gig.GIG_ID
+            AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+            ORDER BY PRICE ASC
+            LIMIT 1)');
+
+       //convert into json
+       $gigsCounter = DB::select(
+        'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
+        FROM GIG
+        RIGHT JOIN PACKAGE
+        ON gig.GIG_ID = package.GIG_ID
+        RIGHT JOIN freelancer
+        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+        RIGHT JOIN users
+        ON FREELANCER.USER_ID = users.USER_ID
+        LEFT OUTER JOIN REVIEWS
+        ON gig.GIG_ID = reviews.GIG_ID
+        WHERE package.GIG_ID =  gig.GIG_ID
+        AND gig.GIG_STATUS = "COMPLETED"
+        AND gig.GIG_ID = '.$input_gigID['gig_id'].'
+        AND package.PACKAGE_ID = (
+        SELECT package.PACKAGE_ID
+        FROM package
+        WHERE package.GIG_ID =  gig.GIG_ID
+        AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+        ORDER BY PRICE ASC
+        LIMIT 1)');
+
+        $basic = package::where('GIG_ID',$input_gigID['gig_id'])
+        ->where('PACKAGE_STATUS','BASIC')
+        ->get();
+
+        $standard = package::where('GIG_ID',$input_gigID['gig_id'])
+        ->where('PACKAGE_STATUS','STANDARD')
+        ->get();
+
+        $premium = package::where('GIG_ID',$input_gigID['gig_id'])
+        ->where('PACKAGE_STATUS','PREMIUM')
+        ->get();
+
+        $basic = json_decode($basic[0]);
+
+        $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+
+        $gig = json_decode(json_encode($gig[0]), true);
+
+        if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
+
+            if(count($standard) === 0){
+
+                return view('freelancer.viewGig')
+                ->with('gig',$gig)
+                ->with('basic',$basic);
+
+            }else{
+                $standard = json_decode($standard[0]);
+                $premium  = json_decode($premium[0]);
+                return view('freelancer.viewGig')
+                ->with('gig',$gig)
+                ->with('basic',$basic)
+                ->with('standard',$standard)
+                ->with('premium',$premium);
+            };
+
         }else{
             return redirect('index');
         };
+
+
+
+
+    }
+
+    public function Order(Request $request){
+        $session= $request->session()->get('user');
+        if(isset($session)!=null){
+            $category = Category::all();
+            $request->session()->put('categoryList',$category);
+            return view("freelancer.overview");
+        }else{
+            return redirect('login_user');
+        }
     }
 
 

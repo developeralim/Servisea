@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="job-tittle">
                                     <a href="#">
-                                        <h4>Digital Marketer</h4>
+                                        <h4>{{$gig["GIG_NAME"]}}</h4>
                                     </a>
                                     <ul>
                                         <li>Creative Agency</li>
@@ -81,7 +81,12 @@
                                 <div class="small-section-tittle">
                                     <h4>Job Description</h4>
                                 </div>
-                                <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
+                                @if(isset($gig["GIG_DESCRIPTION"]))
+                                    <p>{{$gig["GIG_DESCRIPTION"]}}</p>
+                                    @else
+                                    <p>No Description</p>
+                                    @endif
+
                             </div>
                             <div class="post-details2  mb-50">
                                  <!-- Small Section Tittle -->
@@ -116,22 +121,81 @@
                     <div class="col-xl-4 col-lg-4">
                         <div class="post-details3  mb-50">
                             <!-- Small Section Tittle -->
-                           <div class="small-section-tittle">
-                               <h4>Job Overview</h4>
-                           </div>
-                          <ul>
-                              <li>Posted date : <span>12 Aug 2019</span></li>
-                              <li>Location : <span>New York</span></li>
-                              <li>Vacancy : <span>02</span></li>
-                              <li>Job nature : <span>Full time</span></li>
-                              <li>Salary :  <span>$7,800 yearly</span></li>
-                              <li>Application date : <span>12 Sep 2020</span></li>
-                          </ul>
-                         <div class="apply-btn2">
-                            @if (Session::get('user.USER_ROLE') == 1 )
-                            <a href="#" class="btn">Apply Now</a>
-                            @endif
-                         </div>
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active link-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Basic</a>
+                                        @if ( isset($standard)  )
+                                        <a class="nav-item nav-link link-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Standard</a>
+                                        <a class="nav-item nav-link link-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Premium</a>
+                                        @endif
+                                    </div>
+                                </nav>
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                                        <form method="POST" action="{{ route('viewPackagePage')}}">
+                                            @csrf
+                                            <ul>
+                                                <li>                      <span>                                </span></li>
+                                                <li>Name:                 <span>{{$basic->PACKAGE_NAME}}        </span></li>
+                                                <li>Revision :            <span>{{$basic->REVISION}}            </span></li>
+                                                <li>Delivery Days :       <span>{{$basic->DELIVERY_DAYS}}       </span></li>
+                                                <li>Price :               <span>{{$basic->PRICE}}               </span></li>
+                                                <li>Description :         <span>{{$basic->PACKAGE_DESCRIPTION}} </span></li>
+                                            </ul>
+                                            <div class="apply-btn2">
+                                                @if (Session::get('user.USER_ROLE') == 1 )
+                                                <button type="submit" class="btn">Order</button>
+                                                @endif
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                @if ( isset($standard) )
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                                        <form method="POST" action="{{ route('viewPackagePage')}}">
+                                            @csrf
+                                            <ul>
+                                                <li>                      <span>                                </span></li>
+                                                <li>Name:                 <span>{{$standard->PACKAGE_NAME}}        </span></li>
+                                                <li>Revision :            <span>{{$standard->REVISION}}            </span></li>
+                                                <li>Delivery Days :       <span>{{$standard->DELIVERY_DAYS}}       </span></li>
+                                                <li>Price :               <span>{{$standard->PRICE}}               </span></li>
+                                                <li>Description :         <span>{{$standard->PACKAGE_DESCRIPTION}} </span></li>
+
+                                            </ul>
+                                            <div class="apply-btn2">
+                                                @if (Session::get('user.USER_ROLE') == 1 )
+                                                <button type="submit" class="btn">Order</button>
+                                                @endif
+                                            </div>
+                                        </form>
+
+                                </div>
+
+                                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                        <form method="POST" action="{{ route('viewPackagePage')}}">
+                                            @csrf
+                                            <ul>
+                                            <li>                      <span>                                </span></li>
+                                                <li>Name:                 <span>{{$premium->PACKAGE_NAME}}        </span></li>
+                                                <li>Revision :            <span>{{$premium->REVISION}}            </span></li>
+                                                <li>Delivery Days :       <span>{{$premium->DELIVERY_DAYS}}       </span></li>
+                                                <li>Price :               <span>{{$premium->PRICE}}               </span></li>
+                                                <li>Description :         <span>{{$premium->PACKAGE_DESCRIPTION}} </span></li>
+
+                                            </ul>
+                                            <div class="apply-btn2">
+                                                @if (Session::get('user.USER_ROLE') == 1 )
+                                                <button type="submit" class="btn">Order</button>
+                                                @endif
+                                            </div>
+                                        </form>
+                                </div>
+                                @endif
+                             </div>
                        </div>
                         <div class="post-details4  mb-50">
                             <!-- Small Section Tittle -->
@@ -151,7 +215,6 @@
             </div>
         </div>
         <!-- job post company End -->
-
     </main>
 
 

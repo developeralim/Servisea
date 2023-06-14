@@ -49,7 +49,7 @@ Route::post('/freelancer/postService/package/standard',    [FreelancerController
 Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
-Route::get('/servisea/viewgig', [FreelancerController::class, 'viewGig'])->name('viewGig');
+Route::post('/servisea/viewgig', [FreelancerController::class, 'viewGig'])->name('viewGig');
 
 
 

@@ -14,8 +14,8 @@ class UserController extends Controller
 {
     public function viewRegisterPage(Request $request){
         $sessionAdmin= $request->session()->get('adminDetails');
-        $sessionUser= $request->session()->get('userDetails');
-        if(isset($sessionAdmin)==null&&isset($sessionUser)==null){
+        $session= $request->session()->get('user');
+        if(isset($sessionAdmin)==null&&isset($session)==null){
             return view("user.register");
         }else{
             return redirect('login_user');
