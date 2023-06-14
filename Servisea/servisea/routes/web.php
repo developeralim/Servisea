@@ -50,6 +50,9 @@ Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewGig');
 
+Route::get('/test', function (request $request) {
+    return view('freelancer.viewGig');
+});
 
 //Index Page
 Route::get('/index', function (request $request) {
