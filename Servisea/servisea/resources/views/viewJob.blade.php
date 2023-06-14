@@ -128,9 +128,7 @@
                               <li>Application date : <span>12 Sep 2020</span></li>
                           </ul>
                          <div class="apply-btn2">
-                            @if (Session::get('user.USER_ROLE') == 1 )
                             <a href="#" class="btn">Apply Now</a>
-                            @endif
                          </div>
                        </div>
                         <div class="post-details4  mb-50">

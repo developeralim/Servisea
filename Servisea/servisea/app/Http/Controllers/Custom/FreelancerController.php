@@ -235,8 +235,19 @@ class FreelancerController extends Controller
         }else{
             return redirect('index');
         };
+    }
 
+    public function viewGig(Request $request){
+        $session= $request->session()->get('user');
 
+        $gigs = Gig::where('GIG_STATUS','COMPLETED')->get();
+        $gigCounter = Gig::where('GIG_STATUS','COMPLETED')->count();
+
+        if(isset($gigCounter) && $gigCounter > 0){
+            return view('freelancer.viewAllGig')->with('gigs',$gigs);
+        }else{
+            return redirect('index');
+        };
     }
 
 

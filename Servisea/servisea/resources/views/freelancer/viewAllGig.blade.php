@@ -57,14 +57,13 @@
 
     <div class="col-sm-3">
     <hr class="mx-n3">
-        <form method="POST" action="" class="gig-id" id="{{$gig->GIG_ID}}">
+        <form method="POST" class="gig-id" id="gig-id">
          @csrf
             <div class="card" style="margin: auto;width: 18rem;">
                 <img src="..." class="card-img-top" alt="gig media.">
                 <div class="card-body">
                     <h5 class="card-title">seller</h5>
-
-                    <a class="card-text" href="" >
+                    <a class="card-text" href="{{route('viewJob')}}" >
                     <h6 class="card-title">{{$gig->GIG_NAME}}</h6>
                     </a>
                     <h6 class="card-title">Reviews From Review Table</h6>
