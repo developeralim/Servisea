@@ -65,11 +65,17 @@
             <input name="gig_id" value="{{$gig->GIG_ID}}" hidden>
                 <img src="..." class="card-img-top" alt="gig media.">
                 <div class="card-body">
-                    <h5 class="card-title">{{$gig->USERNAME}}</h5>
+                <button  type="button" onclick="viewFreelancer()">
+
+                        <h5 class="card-title">{{$gig->USERNAME}}</h5>
+                        <input name="freelancer_id" value="{{$gig->FREELANCER_ID}}" hidden ></input>
+
+                    </button>
+
                     <button type="submit">
-                    <a class="card-text" >
-                    <h6 class="card-title">{{$gig->GIG_NAME}}</h6>
-                    </a>
+                        <a class="card-text" >
+                        <h6 class="card-title">{{$gig->GIG_NAME}}</h6>
+                        </a>
                     </button>
                     @if($gig->RATING != null)
                      <h6 class="card-title">{{$gig->RATING}}</h6>
@@ -105,6 +111,14 @@
     return "your changes will be lost.  Are you sure you want to exit this page?";
   }
 </script> -->
+
+<script type="text/javascript">
+   function viewFreelancer()
+  {
+    document.getElementById("gig-id").action = "{{route('viewFreelancer')}}";
+    document.forms["gig-id"].submit();
+  }
+</script>
 
     <!-- JS -->
     <script src="{{asset('backend/USER_ASSET/vendor/jquery/jquery.min.js')}}"></script>

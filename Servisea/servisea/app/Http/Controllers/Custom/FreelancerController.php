@@ -227,7 +227,7 @@ class FreelancerController extends Controller
         $session= $request->session()->get('user');
 
         $gigs = DB::select(
-        'SELECT GIG.GIG_ID,GIG_NAME,reviews.RATING,package.PRICE,users.USERNAME
+        'SELECT GIG.GIG_ID,GIG_NAME,reviews.RATING,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
         FROM GIG
         RIGHT JOIN PACKAGE
         ON gig.GIG_ID = package.GIG_ID
@@ -370,10 +370,33 @@ class FreelancerController extends Controller
             return redirect('index');
         };
 
+    }
 
+    public function viewFreelancer(Request $request){
+        $session= $request->session()->get('user');
 
+        $freelancerID = $request->validate([
+            'freelancer_id'  => 'required|integer|regex:/^[0-9]+$/',
+       ]);
+
+        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])
+        ->get();
+
+        $freelancer = json_decode($freelancer[0],true);
+
+        $user = user::where('USER_ID',$freelancer["USER_ID"])
+        ->get();
+
+        $user = json_decode($user[0]);
+
+        if(isset($session)!=null){
+            return view("freelancer.freelancerSingle")->with('freelancer',$freelancer)->with('userfree',$user);
+        }else{
+            return redirect('index');
+        }
 
     }
+
 
     public function Order(Request $request){
         $session= $request->session()->get('user');
