@@ -27,8 +27,13 @@ class UserController extends Controller
     {
         $session= $request->session()->get('user');
         if(isset($session)){
-            $addressDetails = Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->get();
-            return view('user.profile')->with('addressDetails',$addressDetails);
+
+            if(Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->exists()){
+                $addressDetails = Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->get();
+                $addressDetails = json_decode($addressDetails[0]);
+                return view('user.profile')->with('addressDetails',$addressDetails);
+            }
+            return view('user.profile');
         }else{
             return redirect('login_user');
         }
@@ -57,7 +62,6 @@ class UserController extends Controller
             'USERNAME'        => 'required|string|max:255|unique:users|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
             'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
             'USER_PASSWORD'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
-
        ]);
 
        $messages = array(
@@ -67,8 +71,8 @@ class UserController extends Controller
        //DB::insert('Insert into users(USERNAME,USER_EMAIL,USER_PASSWORD) values(?,?,?)', [$userInput['USERNAME'],$userInput['USER_EMAIL'],Hash::make($userInput['USER_PASSWORD'])]);
 
         User::Create(array('USERNAME' => $userInput['USERNAME'],
-                       'USER_EMAIL' => $userInput['USER_EMAIL'],
-                       'USER_PASSWORD' => Hash::make($userInput['USER_PASSWORD'])));
+                           'USER_EMAIL' => $userInput['USER_EMAIL'],
+                           'USER_PASSWORD' => Hash::make($userInput['USER_PASSWORD'])));
 
        $user = User::where('USER_EMAIL', $userInput['USER_EMAIL'])->get();
        $user = json_decode(json_encode($user[0]), true);
@@ -103,9 +107,9 @@ class UserController extends Controller
                     'USERNAME'        => 'required|string|max:255||unique:admin,ADMIN_USERNAME|unique:users,USERNAME,'.$session['USER_ID'].',USER_ID|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
                     'USER_EMAIL'      => 'required|email|unique:admin,ADMIN_EMAIL|unique:users,USER_EMAIL,'.$session['USER_ID'].',USER_ID',
                     'USER_PASSWORD'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
-                    'ADDRESS_STREET'  => 'required|string|max:255|regex:/^[a-zA-Z-]+$/'  ,
-                    'ADDRESS_CITY'    => 'required|string|max:255|regex:/^[a-zA-Z-]+$/'  ,
-                    'ADDRESS_STATE'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/'  ,
+                    'ADDRESS_STREET'  => 'required|string|max:255|regex:/^[a-zA-Z-  ]+$/'  ,
+                    'ADDRESS_CITY'    => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/'  ,
+                    'ADDRESS_STATE'   => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/'  ,
                     // 'ADDRESS_DISTRICT' => 'required|string|max:255|regex:/^[a-zA-Z-]+$/' ,
                     // 'ADDRESS_POSTALCODE'=> 'required|string|max:255|regex:/^[0-9]+$/',
                     // 'ADDRESS_COUNTRY'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
@@ -127,7 +131,7 @@ class UserController extends Controller
 
                }else{
 
-                User::Create(array(
+                address::Create(array(
                     'ADDRESS_STREET' => $userInput['ADDRESS_STREET'],
                     'ADDRESS_CITY' => $userInput['ADDRESS_CITY'],
                     'ADDRESS_STATE' => $userInput['ADDRESS_STREET'],
@@ -185,7 +189,8 @@ class UserController extends Controller
                $user = User::where('USER_ID', $session['USER_ID'])->get();
                $user = json_decode(json_encode($user[0]), true);
                $request->session()->put('user',$user);
-               return redirect('user.profile');
+
+               return redirect('index');
     }
 
 

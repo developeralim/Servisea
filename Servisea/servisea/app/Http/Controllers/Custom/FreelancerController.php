@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\custom;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use ArrayObject;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Models\Freelancer;
 use App\Models\Category;
 use App\Models\Gig;
 use App\Models\Package;
+use App\Models\reviews;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
 
@@ -286,7 +288,7 @@ class FreelancerController extends Controller
        ]);
 
        $gig = DB::select(
-        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,reviews.RATING,package.PRICE,users.USERNAME
+        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,reviews.RATING,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
         FROM GIG
         RIGHT JOIN PACKAGE
         ON gig.GIG_ID = package.GIG_ID
@@ -352,14 +354,14 @@ class FreelancerController extends Controller
 
             if(count($standard) === 0){
 
-                return view('freelancer.viewGig')
+                return view('freelancer.gigSingle')
                 ->with('gig',$gig)
                 ->with('basic',$basic);
 
             }else{
                 $standard = json_decode($standard[0]);
                 $premium  = json_decode($premium[0]);
-                return view('freelancer.viewGig')
+                return view('freelancer.gigSingle')
                 ->with('gig',$gig)
                 ->with('basic',$basic)
                 ->with('standard',$standard)
@@ -379,15 +381,19 @@ class FreelancerController extends Controller
             'freelancer_id'  => 'required|integer|regex:/^[0-9]+$/',
        ]);
 
-        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])
-        ->get();
+       if (Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])->exists()) {
 
-        $freelancer = json_decode($freelancer[0],true);
+        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])->get();
 
-        $user = user::where('USER_ID',$freelancer["USER_ID"])
-        ->get();
+        $freelancer = json_decode($freelancer[0]);
+
+        $user = user::where('USER_ID',$freelancer->USER_ID)->get();
 
         $user = json_decode($user[0]);
+
+        if (Address::where('ADDED_BY_USER_ID',$freelancer->USER_ID)->exists()){
+
+        }
 
         if(isset($session)!=null){
             return view("freelancer.freelancerSingle")->with('freelancer',$freelancer)->with('userfree',$user);
@@ -395,11 +401,16 @@ class FreelancerController extends Controller
             return redirect('index');
         }
 
+       }
+
+
     }
 
 
     public function Order(Request $request){
+        
         $session= $request->session()->get('user');
+
         if(isset($session)!=null){
             $category = Category::all();
             $request->session()->put('categoryList',$category);

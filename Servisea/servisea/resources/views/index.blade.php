@@ -70,208 +70,1326 @@
 
 <!-- Start Banner Hero -->
 
-@if (Session::get('user') !== null)
- <h1>{{Session('user.USER_ID')}} </h1>
- @endif
-
-
-    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
-            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
-            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container">
-                    <div class="row p-5">
-                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/banner_img_01.jpg" alt="">
+<div class="body_content">
+    <!-- Home Banner Style V1 -->
+    <section class="hero-home10 bdrs24 p-0 overflow-hidden">
+      <div class="container-fluid p-0">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-banner-wrapper home10-hero-content">
+              <div class="navi_pagi_bottom_center dots_nav_light banner-style-one slider-1-grid owl-theme owl-carousel">
+                <div class="slide slide-one" style="background-image: url(images/home/home-3.jpg);">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-xl-7 mx-auto text-center">
+                        <h3 class="banner-title">With talented freelancers <br class="d-none d-lg-block">ando more work.</h3>
+                        <p class="banner-text text-white ff-heading mb30">Millions of people use freeio.com to turn their ideas into reality.</p>
+                        <div class="d-sm-flex justify-content-center banner-btn">
+                          <a href="page-project-v1.html" class="ud-btn btn-white me-0 me-sm-3">Find Work</a>
+                          <a href="page-freelancer-v1.html" class="ud-btn btn-dark">Find Talent</a>
                         </div>
-                        <div class="col-lg-6 mb-0 d-flex align-items-center">
-                            <div class="text-align-left align-self-center">
-                                <h1 class="h1 text-success"><b>Zay</b> eCommerce</h1>
-                                <h3 class="h2">Tiny and Perfect eCommerce Template</h3>
-                                <p>
-                                    Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5 (beta 1).
-                                    This template is 100% free provided by <a rel="sponsored" class="text-success" href="https://templatemo.com" target="_blank">TemplateMo</a> website.
-                                    Image credits go to <a rel="sponsored" class="text-success" href="https://stories.freepik.com/" target="_blank">Freepik Stories</a>,
-                                    <a rel="sponsored" class="text-success" href="https://unsplash.com/" target="_blank">Unsplash</a> and
-                                    <a rel="sponsored" class="text-success" href="https://icons8.com/" target="_blank">Icons 8</a>.
-                                </p>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <div class="row p-5">
-                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/banner_img_02.jpg" alt="">
+                <div class="slide slide-one" style="background-image: url(images/home/home-2.jpg);">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-xl-7 mx-auto text-center">
+                        <h3 class="banner-title">Freelance Services For <br class="d-none d-lg-block">Your Business</h3>
+                        <p class="banner-text text-white ff-heading mb30">Millions of people use freeio.com to turn their ideas into reality.</p>
+                        <div class="d-sm-flex justify-content-center banner-btn">
+                          <a href="page-project-v1.html" class="ud-btn btn-white me-0 me-sm-3">Find Work</a>
+                          <a href="page-freelancer-v1.html" class="ud-btn btn-dark">Find Talent</a>
                         </div>
-                        <div class="col-lg-6 mb-0 d-flex align-items-center">
-                            <div class="text-align-left">
-                                <h1 class="h1">Proident occaecat</h1>
-                                <h3 class="h2">Aliquip ex ea commodo consequat</h3>
-                                <p>
-                                    You are permitted to use this Zay CSS template for your commercial websites.
-                                    You are <strong>not permitted</strong> to re-distribute the template ZIP file in any kind of template collection websites.
-                                </p>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <div class="row p-5">
-                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="./assets/img/banner_img_03.jpg" alt="">
+                <div class="slide slide-one" style="background-image: url(images/home/home-1.jpg);">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-xl-7 mx-auto text-center">
+                        <h3 class="banner-title">With talented freelancers <br class="d-none d-lg-block">ando more work.</h3>
+                        <p class="banner-text text-white ff-heading mb30">Millions of people use freeio.com to turn their ideas into reality.</p>
+                        <div class="d-sm-flex justify-content-center banner-btn">
+                          <a href="page-project-v1.html" class="ud-btn btn-white me-0 me-sm-3">Find Work</a>
+                          <a href="page-freelancer-v1.html" class="ud-btn btn-dark">Find Talent</a>
                         </div>
-                        <div class="col-lg-6 mb-0 d-flex align-items-center">
-                            <div class="text-align-left">
-                                <h1 class="h1">Repr in voluptate</h1>
-                                <h3 class="h2">Ullamco laboris nisi ut </h3>
-                                <p>
-                                    We bring you 100% free CSS templates for your websites.
-                                    If you wish to support TemplateMo, please make a small contribution via PayPal or tell your friends about our website. Thank you.
-                                </p>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <!-- /.carousel-btn-block banner-carousel-btn -->
             </div>
+            <!-- /.main-banner-wrapper -->
+          </div>
         </div>
-        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
-            <i class="fas fa-chevron-left"></i>
-        </a>
-        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
-            <i class="fas fa-chevron-right"></i>
-        </a>
-    </div>
-    <!-- End Banner Hero -->
+      </div>
+    </section>
 
-
-    <!-- Start Categories of The Month -->
-    <section class="container py-5">
-        <div class="row text-center pt-3">
-            <div class="col-lg-6 m-auto">
-                <h1 class="h1">Categories of The Month</h1>
-                <p>
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                </p>
+    <!-- Trending Services -->
+    <section class="pb-0 pb30-md">
+      <div class="container">
+        <div class="row align-items-center wow fadeInUp">
+          <div class="col-lg-9">
+            <div class="main-title">
+              <h2 class="title">Trending Services</h2>
+              <p class="paragraph">Most viewed and all-time top-selling services</p>
             </div>
+          </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-        </div>
-    </section>
-    <!-- End Categories of The Month -->
-
-
-    <!-- Start Featured Product -->
-    <section class="bg-light">
-        <div class="container py-5">
-            <div class="row text-center py-3">
-                <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Featured Product</h1>
-                    <p>
-                        Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident.
-                    </p>
+          <div class="col-lg-12">
+            <div class="navi_pagi_top_right slider-4-grid owl-carousel owl-theme">
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-1.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Web & App Design</p>
+                    <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma or adobe xd</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle wa" src="images/team/fl-s-1.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 default-box-shadow1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-2.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Art & Illustration</p>
+                    <h5 class="list-title"><a href="page-services-single.html">I will create modern flat design illustration</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle wa" src="images/team/fl-s-2.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Ali Tufan</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-3.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Design & Creative</p>
+                    <h5 class="list-title line-clamp2"><a href="page-services-single.html">I will build a fully responsive design in HTML,CSS, bootstrap, and javascript</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle" src="images/team/fl-s-3.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-4.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Web & App Design</p>
+                    <h5 class="list-title line-clamp2"><a href="page-services-single.html">I will do mobile app development for ios and android</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle" src="images/team/fl-s-4.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-5.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Web & App Design</p>
+                    <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma or adobe xd</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle" src="images/team/fl-s-1.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-6.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Web & App Design</p>
+                    <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma or adobe xd</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle" src="images/team/fl-s-2.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-7.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Design & Creative</p>
+                    <h5 class="list-title line-clamp2"><a href="page-services-single.html">I will build a fully responsive design in HTML,CSS, bootstrap, and javascript</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle" src="images/team/fl-s-3.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-1.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Web & App Design</p>
+                    <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma or adobe xd</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle wa" src="images/team/fl-s-1.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Wanda Runo</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="listing-style1 bdrs16">
+                  <div class="list-thumb">
+                    <img class="w-100" src="images/listings/g-2.jpg" alt="">
+                    <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                  </div>
+                  <div class="list-content">
+                    <p class="list-text body-color fz14 mb-1">Art & Illustration</p>
+                    <h5 class="list-title"><a href="page-services-single.html">I will create modern flat design illustration</a></h5>
+                    <div class="review-meta d-flex align-items-center">
+                      <i class="fas fa-star fz10 review-color me-2"></i>
+                      <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="list-meta d-flex justify-content-between align-items-center mt15">
+                      <a class="d-flex" href="">
+                        <span class="position-relative mr10">
+                          <img class="rounded-circle wa" src="images/team/fl-s-2.png" alt="Freelancer Photo">
+                          <span class="online-badges"></span>
+                        </span>
+                        <span class="fz14">Ali Tufan</span>
+                      </a>
+                      <div class="budget">
+                        <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="text-center mt20">
+              <a class="ud-btn2" href="page-service-single.html">All Services<i class="fal fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Talent by category -->
+    <section class="pb40-md">
+      <div class="container">
+        <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
+          <div class="col-lg-9">
+            <div class="main-title2">
+              <h2 class="title">Browse talent by category</h2>
+              <p class="paragraph">Get some Inspirations from 1800+ skills</p>
+            </div>
+          </div>
+        </div>
+        <div class="row wow fadeInUp">
+          <div class="col-lg-12">
+            <div class="category-slider-home10 navi_pagi_top_right slider-7-grid owl-carousel owl-theme wow fadeInUp">
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-developer"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Development & IT</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-web-design-1"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Design & Creative</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-digital-marketing"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Digital Marketing</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-translator"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Writing & Translation</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-microphone"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Music & Audio</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-video-file"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Video & Animation</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-ruler"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Engineering & Architecture</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="iconbox-style1 bdr1 bdrs16">
+                  <div class="icon"><span class="flaticon-goal"></span></div>
+                  <div class="details mt20">
+                    <p class="text mb5">1.853 skills</p>
+                    <h5 class="title">Finance & Accounting</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt10">
+              <a class="ud-btn2" href="page-service-single.html">All Categories<i class="fal fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Jobs -->
+    <section class="hover-bgc-color pb90 pb30-md bdrs24">
+      <div class="container">
+        <div class="row align-items-center wow fadeInUp">
+          <div class="col-lg-9">
+            <div class="main-title">
+              <h2 class="title">Our Latest Jobs</h2>
+              <p class="paragraph">Know your worth and find the job that qualify your life</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-start text-lg-end mb-4 mb-lg-2">
+              <a class="ud-btn2" href="page-job-list-v1.html">Browse All<i class="fal fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-2.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-1.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-6.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-3.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-4.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-5.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-8.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-7.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-4">
+            <div class="job-list-style1 default-box-shadow1 bdrs16 bdr1">
+              <div class="d-xl-flex align-items-start">
+                <div class="icon d-flex align-items-center mb20">
+                  <img class="wa" src="images/team/client-2.png" alt="">
+                  <span class="fav-icon flaticon-star"></span>
+                </div>
+                <div class="details ml20 ml0-xl">
+                  <h5>Website Designer Required For Directory Theme</h5>
+                  <h6 class="mb-3 text-thm">Mailchimp</h6>
+                </div>
+              </div>
+              <p class="list-inline-item mb-0">$125k-$135k Hourly</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">1-5 Days</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Expensive</p>
+              <p class="list-inline-item mb-0 bdrl1 pl10">Remote</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Highest Rated Freelancers -->
+    <section class="">
+      <div class="container">
+        <div class="row align-items-center wow fadeInUp">
+          <div class="col-lg-9">
+            <div class="main-title">
+              <h2 class="title">Highest Rated Freelancers</h2>
+              <p class="paragraph">Lorem ipsum dolor sit amet, consectetur.</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="text-start text-lg-end mb-4 mb-lg-2">
+              <a class="ud-btn2" href="page-freelancer-v1.html">All Freelancers<i class="fal fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="team-slider-home10 navi_pagi_bottom_center slider-4-grid owl-carousel owl-theme">
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-1.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Robert Fox</h5>
+                    <p class="mb-0">Nursing Assistant</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-2.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Kristin Watson</h5>
+                    <p class="mb-0">Dog Trainer</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-3.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Darrell Steward</h5>
+                    <p class="mb-0">Medical Assistant</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-4.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Theresa Webb</h5>
+                    <p class="mb-0">Marketing Coordinator</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-1.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Robert Fox</h5>
+                    <p class="mb-0">Nursing Assistant</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-2.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Kristin Watson</h5>
+                    <p class="mb-0">Dog Trainer</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="freelancer-style1 text-center bdr1 hover-box-shadow mb60">
+                  <div class="thumb w90 mb25 mx-auto position-relative rounded-circle">
+                    <img class="rounded-circle mx-auto" src="images/team/fl-3.png" alt="">
+                    <span class="online"></span>
+                  </div>
+                  <div class="details">
+                    <h5 class="title mb-1">Darrell Steward</h5>
+                    <p class="mb-0">Medical Assistant</p>
+                    <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                    <div class="skill-tags d-flex align-items-center justify-content-center mb5">
+                      <span class="tag">Figma</span>
+                      <span class="tag mx10">Sketch</span>
+                      <span class="tag">HTML5</span>
+                    </div>
+                    <hr class="opacity-100 mt20 mb15">
+                    <div class="fl-meta d-flex align-items-center justify-content-between">
+                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
+                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
+                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+                    </div>
+                    <div class="d-grid mt15">
+                      <a href="page-freelancer-single.html" class="ud-btn btn-white2">View Profile<i class="fal fa-arrow-right-long"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner-about2 at-home10-2 mx-auto position-relative pt60-lg pb60-lg">
+      <div class="container">
+        <div class="row align-items-center wow fadeInDown" data-wow-delay="400ms">
+          <div class="col-lg-7 col-xl-5 offset-xl-1 wow fadeInRight mb60-xs mb100-md">
+            <div class="mb30">
+              <div class="main-title">
+                <h2 class="title">A whole world of freelance <br class="d-none d-xl-block"> talent at your fingertips</h2>
+              </div>
+            </div>
+            <div class="why-chose-list">
+              <div class="list-one d-flex align-items-start mb30">
+                <span class="list-icon flex-shrink-0 flaticon-badge"></span>
+                <div class="list-content flex-grow-1 ml20">
+                  <h4 class="mb-1">Proof of quality</h4>
+                  <p class="text mb-0 fz15">Check any pro’s work samples, client reviews, and identity <br class="d-none d-lg-block"> verification.</p>
+                </div>
+              </div>
+              <div class="list-one d-flex align-items-start mb30">
+                <span class="list-icon flex-shrink-0 flaticon-money"></span>
+                <div class="list-content flex-grow-1 ml20">
+                  <h4 class="mb-1">No cost until you hire</h4>
+                  <p class="text mb-0 fz15">Interview potential fits for your job, negotiate rates, and only pay <br class="d-none d-lg-block"> for work you approve.</p>
+                </div>
+              </div>
+              <div class="list-one d-flex align-items-start mb30">
+                <span class="list-icon flex-shrink-0 flaticon-security"></span>
+                <div class="list-content flex-grow-1 ml20">
+                  <h4 class="mb-1">Safe and secure</h4>
+                  <p class="text mb-0 fz15">Focus on your work knowing we help protect your data and privacy. We’re here with 24/7 support if you need it.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-xl-4 wow fadeInLeft">
+            <div class="listbox-style1 px30 py-5 bdrs16 bgc-dark position-relative">
+              <div class="list-style1">
+                <ul class="mb-0">
+                  <li class="text-white fw500"><i class="far fa-check dark-color bgc-white"></i>The best for every budget</li>
+                  <li class="text-white fw500"><i class="far fa-check dark-color bgc-white"></i>Quality work done quickly</li>
+                  <li class="text-white fw500"><i class="far fa-check dark-color bgc-white"></i>Protected payments, every time</li>
+                  <li class="text-white fw500 mb-0"><i class="far fa-check dark-color bgc-white"></i>24/7 support</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img class="home10-cta-img bdrs24" src="images/about/about-10.jpg" alt="">
+    </section>
+
+    <!-- Our Testimonials -->
+    <section class="our-testimonial">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mx-auto wow fadeInUp" data-wow-delay="300ms">
+            <div class="main-title text-center">
+              <h2>Testimonials</h2>
+              <p class="paragraph">Interdum et malesuada fames ac ante ipsum</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 m-auto wow fadeInUp" data-wow-delay="500ms">
+            <div class="testimonial-style2">
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade" id="pills-1st" role="tabpanel" aria-labelledby="pills-1st-tab">
+                  <div class="testi-content text-md-center">
+                    <span class="icon fas fa-quote-left"></span>
+                    <h4 class="testi-text">"Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic. "</h4>
+                    <h6 class="name">Ali Tufan</h6>
+                    <p class="design">Product Manager, Apple Inc</p>
+                  </div>
+                </div>
+                <div class="tab-pane fade show active" id="pills-2nd" role="tabpanel" aria-labelledby="pills-2nd-tab">
+                  <div class="testi-content text-md-center">
+                    <span class="icon fas fa-quote-left"></span>
+                    <h4 class="testi-text">"Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic. "</h4>
+                    <h6 class="name">Ali Tufan</h6>
+                    <p class="design">Product Manager, Apple Inc</p>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-3rd" role="tabpanel" aria-labelledby="pills-3rd-tab">
+                  <div class="testi-content text-md-center">
+                    <span class="icon fas fa-quote-left"></span>
+                    <h4 class="testi-text">"Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic. "</h4>
+                    <h6 class="name">Ali Tufan</h6>
+                    <p class="design">Product Manager, Apple Inc</p>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-4th" role="tabpanel" aria-labelledby="pills-4th-tab">
+                  <div class="testi-content text-md-center">
+                    <span class="icon fas fa-quote-left"></span>
+                    <h4 class="testi-text">"Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic. "</h4>
+                    <h6 class="name">Ali Tufan</h6>
+                    <p class="design">Product Manager, Apple Inc</p>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-5th" role="tabpanel" aria-labelledby="pills-5th-tab">
+                  <div class="testi-content text-md-center">
+                    <span class="icon fas fa-quote-left"></span>
+                    <h4 class="testi-text">"Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic. "</h4>
+                    <h6 class="name">Ali Tufan</h6>
+                    <p class="design">Product Manager, Apple Inc</p>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-list position-relative">
+                <ul class="nav nav-pills justify-content-md-center" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link ps-0" id="pills-1st-tab" data-bs-toggle="pill" data-bs-target="#pills-1st" type="button" role="tab" aria-controls="pills-1st" aria-selected="true"><img src="images/testimonials/testi-1.png" alt=""></button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-2nd-tab" data-bs-toggle="pill" data-bs-target="#pills-2nd" type="button" role="tab" aria-controls="pills-2nd" aria-selected="false"><img src="images/testimonials/testi-2.png" alt=""></button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-3rd-tab" data-bs-toggle="pill" data-bs-target="#pills-3rd" type="button" role="tab" aria-controls="pills-3rd" aria-selected="false"><img src="images/testimonials/testi-3.png" alt=""></button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-4th-tab" data-bs-toggle="pill" data-bs-target="#pills-4th" type="button" role="tab" aria-controls="pills-4th" aria-selected="false"><img src="images/testimonials/testi-4.png" alt=""></button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link pe-0" id="pills-5th-tab" data-bs-toggle="pill" data-bs-target="#pills-5th" type="button" role="tab" aria-controls="pills-5th" aria-selected="false"><img src="images/testimonials/testi-5.png" alt=""></button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner-about2 at-home10 mx-auto position-relative pt60-lg pb30-lg">
+      <img class="cta-about2-img at-home10 bdrs24 d-none d-xl-block" src="images/about/about-9.jpg" alt="">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-5 offset-xl-6 wow fadeInUp" data-wow-delay="200ms">
+            <div class="main-title">
+              <h2 class="title text-capitalize">Need something done?</h2>
+              <p class="text">Most viewed and all-time top-selling services</p>
+            </div>
+          </div>
+        </div>
+        <div class="row wow fadeInDown" data-wow-delay="400ms">
+          <div class="col-xl-9 offset-xl-3">
             <div class="row">
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/feature_prod_01.jpg" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$240.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Gym Weight</a>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
-                            </p>
-                            <p class="text-muted">Reviews (24)</p>
-                        </div>
-                    </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="iconbox-style9 default-box-shadow1 bgc-white p40 bdrs12 position-relative mb30">
+                  <span class="icon fz40 flaticon-cv"></span>
+                  <h4 class="iconbox-title mt20">Post a job</h4>
+                  <p class="text mb-0">It’s free and easy to post a job.<br class="d-none d-md-block"> Simply fill in a title, description.</p>
                 </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/feature_prod_02.jpg" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$480.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cloud Nike Shoes</a>
-                            <p class="card-text">
-                                Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.
-                            </p>
-                            <p class="text-muted">Reviews (48)</p>
-                        </div>
-                    </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="iconbox-style9 default-box-shadow1 bgc-white p40 bdrs12 position-relative mb30">
+                  <span class="icon fz40 flaticon-web-design"></span>
+                  <h4 class="iconbox-title mt20">Choose freelancers</h4>
+                  <p class="text mb-0">It’s free and easy to post a job.<br class="d-none d-md-block"> Simply fill in a title, description.</p>
                 </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/feature_prod_03.jpg" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$360.00</li>
-                            </ul>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
-                            <p class="card-text">
-                                Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.
-                            </p>
-                            <p class="text-muted">Reviews (74)</p>
-                        </div>
-                    </div>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <div class="iconbox-style9 default-box-shadow1 bgc-white p40 bdrs12 position-relative mb30">
+                  <span class="icon fz40 flaticon-secure"></span>
+                  <h4 class="iconbox-title mt20">Pay safely</h4>
+                  <p class="text mb-0">It’s free and easy to post a job.<br class="d-none d-md-block"> Simply fill in a title, description.</p>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
-    <!-- End Featured Product -->
+
+    <!-- Pricing Table -->
+    <section class="our-pricing pb90 pb30-md">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 m-auto wow fadeInUp">
+            <div class="main-title text-center mb30">
+              <h2 class="title">Membership Plans</h2>
+              <p class="paragraph mt10">Give your visitor a smooth online experience with a solid UX design</p>
+            </div>
+          </div>
+        </div>
+        <div class="row wow fadeInUp" data-wow-delay="200ms">
+          <div class="col-lg-12">
+            <div class="pricing_packages_top d-flex align-items-center justify-content-center mb60">
+              <div class="toggle-btn">
+                <span class="pricing_save1 dark-color ff-heading">Billed Monthly</span>
+                <label class="switch">
+                  <input type="checkbox" id="checbox" onclick="check()"/>
+                  <span class="pricing_table_switch_slide round"></span>
+                </label>
+                <span class="pricing_save2 dark-color ff-heading">Billed Yearly</span>
+                <span class="pricing_save3">Save 20%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row wow fadeInUp" data-wow-delay="300ms">
+          <div class="col-sm-6 col-xl-3">
+            <div class="pricing_packages text-center bdrs16 overflow-hidden">
+              <div class="heading mb10">
+                <h1 class="text2">$29 <small>/ monthly</small></h1>
+                <h1 class="text1">$39 <small>/ monthly</small></h1>
+                <h4 class="package_title mt-2">Basic Plan</h4>
+              </div>
+              <div class="details">
+                <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
+                <div class="pricing-list mb40">
+                  <ul class="px-0">
+                    <li>1 Listing</li>
+                    <li>30 Days Visibility</li>
+                    <li>Highlighted in Search Results</li>
+                    <li>4 Revisions</li>
+                    <li>9 days Delivery Time</li>
+                    <li>Products Support</li>
+                  </ul>
+                </div>
+                <div class="d-grid">
+                  <a href="" class="ud-btn btn-dark-border">Buy Now<i class="fal fa-arrow-right-long"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="pricing_packages active text-center bdrs16 overflow-hidden">
+              <div class="heading mb10">
+                <h1 class="text2">$49 <small>/ monthly</small></h1>
+                <h1 class="text1">$59 <small>/ monthly</small></h1>
+                <h4 class="package_title mt-2">Standard Plan</h4>
+              </div>
+              <div class="details">
+                <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
+                <div class="pricing-list mb40">
+                  <ul class="px-0">
+                    <li>1 Listing</li>
+                    <li>30 Days Visibility</li>
+                    <li>Highlighted in Search Results</li>
+                    <li>4 Revisions</li>
+                    <li>9 days Delivery Time</li>
+                    <li>Products Support</li>
+                  </ul>
+                </div>
+                <div class="d-grid">
+                  <a href="" class="ud-btn btn-dark-border">Buy Now<i class="fal fa-arrow-right-long"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="pricing_packages text-center bdrs16 overflow-hidden">
+              <div class="heading mb10">
+                <h1 class="text2">$89 <small>/ monthly</small></h1>
+                <h1 class="text1">$99 <small>/ monthly</small></h1>
+                <h4 class="package_title mt-2">Extended Plan</h4>
+              </div>
+              <div class="details">
+                <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
+                <div class="pricing-list mb40">
+                  <ul class="px-0">
+                    <li>1 Listing</li>
+                    <li>30 Days Visibility</li>
+                    <li>Highlighted in Search Results</li>
+                    <li>4 Revisions</li>
+                    <li>9 days Delivery Time</li>
+                    <li>Products Support</li>
+                  </ul>
+                </div>
+                <div class="d-grid">
+                  <a href="" class="ud-btn btn-dark-border">Buy Now<i class="fal fa-arrow-right-long"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="pricing_packages text-center bdrs16 overflow-hidden">
+              <div class="heading mb10">
+                <h1 class="text2">$129 <small>/ monthly</small></h1>
+                <h1 class="text1">$139 <small>/ monthly</small></h1>
+                <h4 class="package_title mt-2">Enterprise Plan</h4>
+              </div>
+              <div class="details">
+                <p class="text mb30">One time fee for one listing or task highlighted in search results.</p>
+                <div class="pricing-list mb40">
+                  <ul class="px-0">
+                    <li>1 Listing</li>
+                    <li>30 Days Visibility</li>
+                    <li>Highlighted in Search Results</li>
+                    <li>4 Revisions</li>
+                    <li>9 days Delivery Time</li>
+                    <li>Products Support</li>
+                  </ul>
+                </div>
+                <div class="d-grid">
+                  <a href="" class="ud-btn btn-dark-border">Buy Now<i class="fal fa-arrow-right-long"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our CTA -->
+    <section class="our-cta cta-home3-last pt90 pb90 pt60-md pb60-md mt150 mt0-lg bdrs24">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-md-6 col-lg-7 col-xl-5 wow fadeInLeft">
+            <div class="cta-style3">
+              <h2 class="cta-title mb-3">Find the talent needed to get your business growing.</h2>
+              <p class="cta-text mb-4">Advertise your jobs to millions of monthly users and search 15.8 million CVs</p>
+              <a href="page-contact.html" class="ud-btn btn-dark">Get Started <i class="fal fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-5 col-xl-5 position-relative wow zoomIn">
+            <div class="cta-img">
+              <img class="w-100" src="images/about/about-5.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Partners -->
+    <section class="our-partners">
+      <div class="container">
+        <div class="row wow fadeInUp">
+          <div class="col-lg-12">
+            <div class="main-title text-center">
+              <h6>Trusted by the world’s best</h6>
+            </div>
+          </div>
+        </div>
+        <div class="row wow fadeInUp">
+          <div class="col-6 col-md-4 col-xl-2">
+            <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/1.png" alt="1.png"></div>
+          </div>
+          <div class="col-6 col-md-4 col-xl-2">
+            <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/2.png" alt="2.png"></div>
+          </div>
+          <div class="col-6 col-md-4 col-xl-2">
+            <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/3.png" alt="3.png"></div>
+          </div>
+          <div class="col-6 col-md-4 col-xl-2">
+            <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/4.png" alt="4.png"></div>
+          </div>
+          <div class="col-6 col-md-4 col-xl-2">
+            <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/5.png" alt="5.png"></div>
+          </div>
+          <div class="col-6 col-md-4 col-xl-2">
+            <div class="partner_item text-center mb30-lg"><img class="wa m-auto" src="images/partners/6.png" alt="6.png"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Footer -->
+    <section class="footer-style1 at-home10 pt25 pb-0">
+      <div class="container">
+        <div class="row bb-white-light pb10 mb60">
+          <div class="col-md-7">
+            <div class="d-block text-center text-md-start justify-content-center justify-content-md-start d-md-flex align-items-center mb-3 mb-md-0">
+              <a class="fz17 fw500 text-white mr15-md mr30" href="">Terms of Service</a>
+              <a class="fz17 fw500 text-white mr15-md mr30" href="">Privacy Policy</a>
+              <a class="fz17 fw500 text-white" href="">Site Map</a>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="social-widget text-center text-md-end">
+              <div class="social-style1">
+                <a class="text-white me-2 fw500 fz17" href="">Follow us</a>
+                <a href=""><i class="fab fa-facebook-f list-inline-item"></i></a>
+                <a href=""><i class="fab fa-twitter list-inline-item"></i></a>
+                <a href=""><i class="fab fa-instagram list-inline-item"></i></a>
+                <a href=""><i class="fab fa-linkedin-in list-inline-item"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-lg-3">
+            <div class="link-style1 mb-4 mb-sm-5">
+              <h5 class="text-white mb15">About</h5>
+              <div class="link-list">
+                <a href="">Careers</a>
+                <a href="">Press & News</a>
+                <a href="">Partnerships</a>
+                <a href="">Privacy Policy</a>
+                <a href="">Terms of Service</a>
+                <a href="">Investor Relations</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="link-style1 mb-4 mb-sm-5">
+              <h5 class="text-white mb15">Categories</h5>
+              <ul class="ps-0">
+                <li><a href="">Graphics & Design</a></li>
+                <li><a href="">Digital Marketing</a></li>
+                <li><a href="">Writing & Translation</a></li>
+                <li><a href="">Video & Animation</a></li>
+                <li><a href="">Music & Audio</a></li>
+                <li><a href="">Programming & Tech</a></li>
+                <li><a href="">Data</a></li>
+                <li><a href="">Business</a></li>
+                <li><a href="">Lifestyle</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="link-style1 mb-4 mb-sm-5">
+              <h5 class="text-white mb15">Support</h5>
+              <ul class="ps-0">
+                <li><a href="">Help & Support</a></li>
+                <li><a href="">Trust & Safety</a></li>
+                <li><a href="">Selling on Freeio</a></li>
+                <li><a href="">Buying on Freeio</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="footer-widget">
+              <div class="footer-widget mb-4 mb-sm-5">
+                <div class="mailchimp-widget">
+                  <h5 class="title text-white mb20">Subscribe</h5>
+                  <div class="mailchimp-style1">
+                    <input type="email" class="form-control" placeholder="Your email address">
+                    <button type="submit">Send</button>
+                  </div>
+                </div>
+              </div>
+              <div class="app-widget mb-4 mb-sm-5">
+                <h5 class="title text-white mb20">Apps</h5>
+                <div class="row mb-4 mb-lg-5">
+                  <div class="col-lg-12">
+                    <a class="app-list d-flex align-items-center mb10" href="">
+                      <i class="fab fa-apple fz17 mr15"></i>
+                      <h6 class="app-title fz15 fw400 mb-0">iOS App</h6>
+                    </a>
+                    <a class="app-list d-flex align-items-center" href="">
+                      <i class="fab fa-google-play fz15 mr15"></i>
+                      <h6 class="app-title fz15 fw400 mb-0">Android App</h6>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container white-bdrt1 py-4">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="text-center text-lg-start">
+              <p class="copyright-text mb-2 mb-md-0 text-white-light ff-heading">© Freeio. 2023 CreativeLayers. All rights reserved.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="footer_bottom_right_btns text-center text-lg-end">
+              <ul class="p-0 m-0">
+                <li class="list-inline-item">
+                  <select class="selectpicker show-tick">
+                    <option>US$ USD</option>
+                    <option>Euro</option>
+                    <option>Pound</option>
+                  </select>
+                </li>
+                <li class="list-inline-item">
+                  <select class="selectpicker show-tick">
+                    <option>English</option>
+                    <option>French</option>
+                    <option>Italian</option>
+                    <option>Spanish</option>
+                    <option>Turkey</option>
+                  </select>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+  </div>
+<!-- End Featured Product -->
  @stop

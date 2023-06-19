@@ -145,27 +145,24 @@
             </div>
             <div class="service-about">
               <h4>Description</h4>
-              <p class="text mb30">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-              <p class="text mb30">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+              <p class="text mb30">{{$freelancer->F_DESCRIPTION}}</p>
               <hr class="opacity-100 mb60 mt60">
               <h4 class="mb30">Education</h4>
-              <div class="educational-quality">
-                <div class="m-circle text-thm">M</div>
-                <div class="wrapper mb40">
-                  <span class="tag">2012 - 2014</span>
-                  <h5 class="mt15">Bachlors in Fine Arts</h5>
-                  <h6 class="text-thm">Modern College</h6>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                <div class="educational-quality">
+                    @If(isset($awards))
+                    <div class="m-circle text-thm">M</div>
+                    <div class="wrapper mb40">
+                    <span class="tag">2012 - 2014</span>
+                    <h5 class="mt15">Bachlors in Fine Arts</h5>
+                    <h6 class="text-thm">Modern College</h6>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                    </div>
+                    @Else
+                    <h5 class="mt15">No Education uploaded yet</h5>
+                    @Endif
                 </div>
-                <div class="m-circle before-none text-thm">M</div>
-                <div class="wrapper mb60">
-                  <span class="tag">2008 - 2012</span>
-                  <h5 class="mt15">Computer Science</h5>
-                  <h6 class="text-thm">Harvartd University</h6>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-                </div>
-              </div>
               <hr class="opacity-100 mb60">
+              @If(isset($wrkExp))
               <h4 class="mb30">Work & Experience</h4>
               <div class="educational-quality">
                 <div class="m-circle text-thm">M</div>
@@ -184,7 +181,10 @@
                 </div>
               </div>
               <hr class="opacity-100 mb60">
-              <h4 class="mb30">Awards adn Certificates</h4>
+              @Endif
+
+              @if(isset($awards))
+              <h4 class="mb30">Awards and Certificates</h4>
               <div class="educational-quality ps-0">
                 <div class="wrapper mb40">
                   <span class="tag">2012 - 2014</span>
@@ -200,6 +200,7 @@
                 </div>
               </div>
               <hr class="opacity-100 mb60">
+              @endif
               <h4 class="mb30">Featured Services</h4>
               <div class="row mb35">
                 <div class="col-sm-6 col-xl-4">
@@ -424,7 +425,6 @@
           <div class="col-lg-4">
             <div class="blog-sidebar ms-lg-auto">
               <div class="price-widget pt25 widget-mt-minus bdrs8">
-                <h3 class="widget-title">$29 <small class="fz15 fw500">/per hour</small></h3>
                 <div class="category-list mt20">
                   <a class="d-flex align-items-center justify-content-between bdrb1 pb-2" href="">
                     <span class="text"><i class="flaticon-place text-thm2 pe-2 vam"></i>Location</span> <span class="">London, UK</span>

@@ -16,16 +16,23 @@ class CustomController extends Controller
 
 function login(Request $request){
     //REQUEST INPUT FROM FORM
-    $data = $request->input();
+    $data = $request->validate([
+        'email'      => 'required|email',
+        'password'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
+   ]);
+
     $email = $data['email'];
-    $password = Hash::make($data['password']);
     $password = $data['password'];
+
     //CHECK IF USER
     $user = User::where('USER_EMAIL', $email)->get();
 
+
     if($user->isEmpty()){
+
+        return $user;
         //CHECK IF ADMIN
-     $admin = admin::where('ADMIN_EMAIL', $email)->get();
+       $admin = admin::where('ADMIN_EMAIL', $email)->get();
 
         if($admin->isEmpty()){
             $noUser = 1;
@@ -48,23 +55,29 @@ function login(Request $request){
             }
         }
     }else{
+
         $user = json_decode(json_encode($user[0]), true);
-        if($user['ACCOUNT_STATUS'] == 1){
-            $request->Session()->put('user',$user);
 
-            if($user['USER_ROLE']==2){
-                $freelancer = Freelancer::where('USER_ID', $user['USER_ID'])->get();
-                $freelancer = json_decode(json_encode($freelancer[0]), true);
-                $request->Session()->put('freelancer',$freelancer);
-            }
 
-            return redirect('index');
+        if(Hash::check($password,$user['USER_PASSWORD'])){
+            if($user['ACCOUNT_STATUS'] == 1){
+                $request->Session()->put('user',$user);
 
-            //$session = $request->session()->get('user');
+                if($user['USER_ROLE']==2){
+                    $freelancer = Freelancer::where('USER_ID', $user['USER_ID'])->get();
+                    $freelancer = json_decode(json_encode($freelancer[0]), true);
+                    $request->Session()->put('freelancer',$freelancer);
+                }
 
-         }else{
-              return redirect('login');
-         }
+                return redirect('index');
+
+             }else{
+                return redirect('login');
+             }
+
+        }else{
+            return 'password no match';
+        }
     }
 }
 

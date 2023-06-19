@@ -1,94 +1,127 @@
-<!-- Start Footer -->
-<footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            123 Consectetur at ligula 10660
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Home</a></li>
-                        <li><a class="text-decoration-none" href="#">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
-                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
-                    </ul>
-                </div>
-
+    <!-- Our Footer -->
+    <section class="footer-style1 pt25 pb-0">
+      <div class="container">
+        <div class="row bb-white-light pb10 mb60">
+          <div class="col-md-7">
+            <div class="d-block text-center text-md-start justify-content-center justify-content-md-start d-md-flex align-items-center mb-3 mb-md-0">
+              <a class="fz17 fw500 text-white mr15-md mr30" href="">Terms of Service</a>
+              <a class="fz17 fw500 text-white mr15-md mr30" href="">Privacy Policy</a>
+              <a class="fz17 fw500 text-white" href="">Site Map</a>
             </div>
-
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
-                </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Email address</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
-                        <div class="input-group-text btn-success text-light">Subscribe</div>
-                    </div>
-                </div>
+          </div>
+          <div class="col-md-5">
+            <div class="social-widget text-center text-md-end">
+              <div class="social-style1">
+                <a class="text-white me-2 fw500 fz17" href="">Follow us</a>
+                <a href=""><i class="fab fa-facebook-f list-inline-item"></i></a>
+                <a href=""><i class="fab fa-twitter list-inline-item"></i></a>
+                <a href=""><i class="fab fa-instagram list-inline-item"></i></a>
+                <a href=""><i class="fab fa-linkedin-in list-inline-item"></i></a>
+              </div>
             </div>
+          </div>
         </div>
-
-        <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name
-                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
-                        </p>
-                    </div>
-                </div>
+        <div class="row">
+          <div class="col-sm-6 col-lg-3">
+            <div class="link-style1 mb-4 mb-sm-5">
+              <h5 class="text-white mb15">About</h5>
+              <div class="link-list">
+                <a href="">Careers</a>
+                <a href="">Press & News</a>
+                <a href="">Partnerships</a>
+                <a href="">Privacy Policy</a>
+                <a href="">Terms of Service</a>
+                <a href="">Investor Relations</a>
+              </div>
             </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="link-style1 mb-4 mb-sm-5">
+              <h5 class="text-white mb15">Categories</h5>
+              <ul class="ps-0">
+                <li><a href="">Graphics & Design</a></li>
+                <li><a href="">Digital Marketing</a></li>
+                <li><a href="">Writing & Translation</a></li>
+                <li><a href="">Video & Animation</a></li>
+                <li><a href="">Music & Audio</a></li>
+                <li><a href="">Programming & Tech</a></li>
+                <li><a href="">Data</a></li>
+                <li><a href="">Business</a></li>
+                <li><a href="">Lifestyle</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="link-style1 mb-4 mb-sm-5">
+              <h5 class="text-white mb15">Support</h5>
+              <ul class="ps-0">
+                <li><a href="">Help & Support</a></li>
+                <li><a href="">Trust & Safety</a></li>
+                <li><a href="">Selling on Freeio</a></li>
+                <li><a href="">Buying on Freeio</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="footer-widget">
+              <div class="footer-widget mb-4 mb-sm-5">
+                <div class="mailchimp-widget">
+                  <h5 class="title text-white mb20">Subscribe</h5>
+                  <div class="mailchimp-style1">
+                    <input type="email" class="form-control" placeholder="Your email address">
+                    <button type="submit">Send</button>
+                  </div>
+                </div>
+              </div>
+              <div class="app-widget mb-4 mb-sm-5">
+                <h5 class="title text-white mb20">Apps</h5>
+                <div class="row mb-4 mb-lg-5">
+                  <div class="col-lg-12">
+                    <a class="app-list d-flex align-items-center mb10" href="">
+                      <i class="fab fa-apple fz17 mr15"></i>
+                      <h6 class="app-title fz15 fw400 mb-0">iOS App</h6>
+                    </a>
+                    <a class="app-list d-flex align-items-center" href="">
+                      <i class="fab fa-google-play fz15 mr15"></i>
+                      <h6 class="app-title fz15 fw400 mb-0">Android App</h6>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-    </footer>
-    <!-- End Footer -->
+      </div>
+      <div class="container white-bdrt1 py-4">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="text-center text-lg-start">
+              <p class="copyright-text mb-2 mb-md-0 text-white-light ff-heading">© Freeio. 2023 CreativeLayers. All rights reserved.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="footer_bottom_right_btns text-center text-lg-end">
+              <ul class="p-0 m-0">
+                <li class="list-inline-item">
+                  <select class="selectpicker show-tick">
+                    <option>US$ USD</option>
+                    <option>Euro</option>
+                    <option>Pound</option>
+                  </select>
+                </li>
+                <li class="list-inline-item">
+                  <select class="selectpicker show-tick">
+                    <option>English</option>
+                    <option>Frenc</option>
+                    <option>Italian</option>
+                    <option>Spanish</option>
+                    <option>Turkey</option>
+                  </select>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>

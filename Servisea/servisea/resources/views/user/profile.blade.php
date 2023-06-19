@@ -178,37 +178,37 @@ body {
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="Country">Country</label>
-                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_COUNTRY']}}" name="ADDRESS_COUNTRY" id="ADDRESS_COUNTRY" placeholder="Enter District">
+                        <input type="text" class="form-control" value="{{$addressDetails->ADDRESS_COUNTRY}}" name="ADDRESS_COUNTRY" id="ADDRESS_COUNTRY" placeholder="Enter District">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="Street">Street</label>
-                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_STREET']}}" name="ADDRESS_STREET" id="ADDRESS_STREET" placeholder="Enter Street">
+                        <input type="text" class="form-control" value="{{$addressDetails->ADDRESS_STREET}}" name="ADDRESS_STREET" id="ADDRESS_STREET" placeholder="Enter Street">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="City">City</label>
-                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_CITY']}}" name="ADDRESS_CITY" id="ADDRESS_CITY" placeholder="Enter City">
+                        <input type="text" class="form-control" value="{{$addressDetails->ADDRESS_CITY}}" name="ADDRESS_CITY" id="ADDRESS_CITY" placeholder="Enter City">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="State">State</label>
-                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_STATE']}}" name="ADDRESS_STATE" id="ADDRESS_STATE" placeholder="Enter State">
+                        <input type="text" class="form-control" value="{{$addressDetails->ADDRESS_STATE}}" name="ADDRESS_STATE" id="ADDRESS_STATE" placeholder="Enter State">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="State">District</label>
-                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_DISTRICT']}}" name="ADDRESS_DISTRICT" id="ADDRESS_DISTRICT" placeholder="Enter District">
+                        <input type="text" class="form-control" value="{{$addressDetails->ADDRESS_DISTRICT}}" name="ADDRESS_DISTRICT" id="ADDRESS_DISTRICT" placeholder="Enter District">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="Zip">Postal/Zip Code</label>
-                        <input type="text" class="form-control" value="{{$addressDetails[0]['ADDRESS_POSTALCODE']}}" name="ADDRESS_POSTALCODE" id="ADDRESS_POSTALCODE" placeholder="Enter District">
+                        <input type="text" class="form-control" value="{{$addressDetails->ADDRESS_POSTALCODE}}" name="ADDRESS_POSTALCODE" id="ADDRESS_POSTALCODE" placeholder="Enter District">
                     </div>
                 </div>
 

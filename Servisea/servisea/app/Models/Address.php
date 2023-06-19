@@ -23,6 +23,6 @@ class Address extends Model
         'ADDRESS_COUNTRY',
         'ADDED_BY_USER_ROLE',
         'ADDED_BY_USER_ID',
-        ];
+    ];
 
 }

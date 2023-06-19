@@ -83,9 +83,9 @@
                                 </div>
                                 @if(isset($gig["GIG_DESCRIPTION"]))
                                     <p>{{$gig["GIG_DESCRIPTION"]}}</p>
-                                    @else
+                                @else
                                     <p>No Description</p>
-                                    @endif
+                                @endif
 
                             </div>
                             <div class="post-details2  mb-50">
@@ -124,7 +124,7 @@
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <a class="nav-item nav-link active link-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Basic</a>
-                                        @if ( isset($standard)  )
+                                        @if (isset($standard))
                                         <a class="nav-item nav-link link-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Standard</a>
                                         <a class="nav-item nav-link link-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Premium</a>
                                         @endif

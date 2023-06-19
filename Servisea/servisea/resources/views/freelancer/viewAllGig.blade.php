@@ -52,7 +52,7 @@
                         </form>
                         @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
-                            @endforeach
+                        @endforeach
 
 <div class="row">
     @foreach ($gigs as $gig)
