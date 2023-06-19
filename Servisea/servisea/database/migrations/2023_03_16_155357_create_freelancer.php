@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('F_DESCRIPTION')->nullable();
             $table->dateTime('F_SINCE')->nullable();
             $table->string('F_LANGUAGE')->nullable();
+            $table->timestamps();
         });
     }
 
