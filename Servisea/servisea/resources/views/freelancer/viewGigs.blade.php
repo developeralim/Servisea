@@ -24,9 +24,9 @@
           <div class="col-lg-12">
             <div class="listings_category_nav_list_menu">
               <ul class="mb0 d-flex ps-0">
-                <li><a href="#">All Categories</a></li>
+                <li><a class="active" href="#">All Categories</a></li>
                 <li><a href="#">Graphics & Design</a></li>
-                <li><a class="active" href="#">Digital Marketing</a></li>
+                <li><a href="#">Digital Marketing</a></li>
                 <li><a href="#">Writing & Translation</a></li>
                 <li><a href="#">Video & Animation</a></li>
                 <li><a href="#">Music & Audio</a></li>
@@ -56,29 +56,7 @@
         </div>
       </div>
     </section>
-    <!-- Breadcumb Sections -->
-    <section class="breadcumb-section pt-0">
-      <div class="cta-service-v1 cta-banner mx-auto maxw1700 pt120 pb120 bdrs16 position-relative overflow-hidden d-flex align-items-center mx20-lg px30-lg">
-        <img class="left-top-img wow zoomIn" src="images/vector-img/left-top.png" alt="">
-        <img class="right-bottom-img wow zoomIn" src="images/vector-img/right-bottom.png" alt="">
-        <img class="service-v1-vector bounce-y d-none d-lg-block" src="images/vector-img/vector-service-v1.png" alt="">
-        <div class="container">
-          <div class="row wow fadeInUp">
-            <div class="col-xl-5">
-              <div class="position-relative">
-                <h2>Design & Creative</h2>
-                <p class="text mb30">Give your visitor a smooth online experience with a solid UX design</p>
-                <div class="d-flex align-items-center">
-                  <a class="video-btn mr10 popup-iframe popup-youtube" href="https://www.youtube.com/watch?v=7EHnQ0VM4KY"><i class="fal fa-play"></i></a>
-                  <h6 class="mb-0">How Freeio Works</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    @if(isset($gigs))
     <!-- Listings All Lists -->
     <section class="pt30 pb90">
       <div class="container">
@@ -209,6 +187,8 @@
         </div>
 
         <div class="row">
+
+
         @foreach ($gigs as $gig)
           <div class="col-sm-6 col-xl-3">
           <div class="listing-style1">
@@ -241,12 +221,12 @@
                 </div>
                 <hr class="my-2">
                 <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                  <a href="">
+                  <a href="{{route('viewFreelancer',$gig->FREELANCER_ID)}}">
                     <span class="position-relative mr10">
                       <img class="rounded-circle" src="images/team/fl-s-1.png" alt="Freelancer Photo">
                       <span class="online-badge"></span>
                     </span>
-                    <span class="fz14"><a href="{{route('viewFreelancer',$gig->FREELANCER_ID)}}" >{{$gig->USERNAME}}</span>
+                    <span class="fz14">{{$gig->USERNAME}}</span>
                   </a>
                   <div class="budget">
                     <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$ {{$gig->PRICE}}</span></p>
@@ -266,9 +246,9 @@
               <li class="page-item">
                 <a class="page-link" href="#"> <span class="fas fa-angle-left"></span></a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item " aria-current="page">
+                <a class="page-link" href="#">2</span></a>
               </li>
               <li class="page-item"><a class="page-link" href="#">3</a></li>
               <li class="page-item"><a class="page-link" href="#">4</a></li>
@@ -283,6 +263,15 @@
             <p class="mt10 mb-0 pagination_page_count text-center">1 – 20 of 300+ property available</p>
           </div>
         </div>
+
+        @else
+        <div class="row">
+            <h5 style="text-align: center;">No gigs to show</h5>
+        </div>
+
+
+          @endif
+
 
       </div>
     </section>

@@ -228,65 +228,71 @@ class FreelancerController extends Controller
     public function viewAllGig(Request $request){
         $session= $request->session()->get('user');
 
-        $gigs = DB::select(
-        'SELECT GIG.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
-        FROM GIG
-        RIGHT JOIN PACKAGE
-        ON gig.GIG_ID = package.GIG_ID
-        RIGHT JOIN freelancer
-        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
-        RIGHT JOIN users
-        ON FREELANCER.USER_ID = users.USER_ID
-        WHERE package.GIG_ID =  gig.GIG_ID
-        AND gig.GIG_STATUS = "COMPLETED"
-        AND package.PACKAGE_ID = (
-            SELECT package.PACKAGE_ID
-            FROM package
-            WHERE package.GIG_ID =  gig.GIG_ID
-            AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
-            ORDER BY PRICE ASC
-            LIMIT 1)');
+        if(gig::where('GIG_STATUS','COMPLETED')->exists()){
 
-        $reviews = DB::select(
-        'SELECT GIG_ID , AVG(RATING) AS RATING
-        FROM reviews
-        GROUP BY GIG_ID;
-        ');
+            $gigs = DB::select(
+                'SELECT GIG.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
+                FROM GIG
+                RIGHT JOIN PACKAGE
+                ON gig.GIG_ID = package.GIG_ID
+                RIGHT JOIN freelancer
+                ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+                RIGHT JOIN users
+                ON FREELANCER.USER_ID = users.USER_ID
+                WHERE package.GIG_ID =  gig.GIG_ID
+                AND gig.GIG_STATUS = "COMPLETED"
+                AND package.PACKAGE_ID = (
+                    SELECT package.PACKAGE_ID
+                    FROM package
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                    ORDER BY PRICE ASC
+                    LIMIT 1)');
 
-        $gigMedia = DB::select('
-        SELECT media_id ,GIG_ID, media_path
-        FROM gig_media
-        GROUP BY media_id ,GIG_ID, MEDIA_PATH
-        LIMIT 1');
+                $reviews = DB::select(
+                'SELECT GIG_ID , AVG(RATING) AS RATING
+                FROM reviews
+                GROUP BY GIG_ID;
+                ');
 
-        $gigsCounter = DB::select(
-            'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
-        FROM GIG
-        RIGHT JOIN PACKAGE
-        ON gig.GIG_ID = package.GIG_ID
-        RIGHT JOIN freelancer
-        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
-        RIGHT JOIN users
-        ON FREELANCER.USER_ID = users.USER_ID
-        WHERE package.GIG_ID =  gig.GIG_ID
-        AND gig.GIG_STATUS = "COMPLETED"
-        AND package.PACKAGE_ID = (
-            SELECT package.PACKAGE_ID
-            FROM package
-            WHERE package.GIG_ID =  gig.GIG_ID
-            AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
-            ORDER BY PRICE ASC
-            LIMIT 1)');
+                $gigMedia = DB::select('
+                SELECT media_id ,GIG_ID, media_path
+                FROM gig_media
+                GROUP BY media_id ,GIG_ID, MEDIA_PATH
+                LIMIT 1');
+
+                $gigsCounter = DB::select(
+                    'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
+                FROM GIG
+                RIGHT JOIN PACKAGE
+                ON gig.GIG_ID = package.GIG_ID
+                RIGHT JOIN freelancer
+                ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+                RIGHT JOIN users
+                ON FREELANCER.USER_ID = users.USER_ID
+                WHERE package.GIG_ID =  gig.GIG_ID
+                AND gig.GIG_STATUS = "COMPLETED"
+                AND package.PACKAGE_ID = (
+                    SELECT package.PACKAGE_ID
+                    FROM package
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                    ORDER BY PRICE ASC
+                    LIMIT 1)');
 
 
-            $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+                    $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
 
-        if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
-            // return view('freelancer.viewAllGig')->with('gigs',$gigs);
-            return view('freelancer.viewGigs',['test'=> 1])->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
+                if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
+                    // return view('freelancer.viewAllGig')->with('gigs',$gigs);
+                    return view('freelancer.viewGigs',['test'=> 1])->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
+                }else{
+                    return redirect('index');
+                };
+
         }else{
-            return redirect('index');
-        };
+            return view('freelancer.viewGigs');
+        }
     }
 
     public function viewGig(){
@@ -357,11 +363,22 @@ class FreelancerController extends Controller
 
                     if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
 
+                        $review = DB::select(
+                            'SELECT GIG_ID , AVG(RATING) AS RATING
+                            FROM reviews
+                            WHERE GIG_ID = '.$input_gigID.'
+                            GROUP BY GIG_ID;
+                            ');
+
+                            $review = json_decode(json_encode($review[0]), true);
+
+
                         if(count($standard) === 0){
 
                             return view('freelancer.gigSingle')
                             ->with('gig',$gig)
-                            ->with('basic',$basic);
+                            ->with('basic',$basic)
+                            ->with('avgRate',$review);
 
                         }else{
                             $standard = json_decode($standard[0]);
@@ -400,8 +417,6 @@ class FreelancerController extends Controller
         $user = user::where('USER_ID',$freelancer->USER_ID)->get();
 
         $user = json_decode($user[0]);
-
-        return $user;
 
         if (Address::where('ADDED_BY_USER_ID',$freelancer->USER_ID)->exists()){
 

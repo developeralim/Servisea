@@ -42,28 +42,7 @@
 
 <div class="wrapper ovh">
 <div class="body_content">
-    <section class="categories_list_section overflow-hidden">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="listings_category_nav_list_menu">
-              <ul class="mb0 d-flex ps-0">
-                <li><a href="#">All Categories</a></li>
-                <li><a href="#">Graphics & Design</a></li>
-                <li><a class="active" href="#">Digital Marketing</a></li>
-                <li><a href="#">Writing & Translation</a></li>
-                <li><a href="#">Video & Animation</a></li>
-                <li><a href="#">Music & Audio</a></li>
-                <li><a href="#">Programming & Tech</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Trending</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
     <!-- Breadcumb Sections -->
     <section class="breadcumb-section">
       <div class="container">
@@ -95,30 +74,27 @@
     <!-- Breadcumb Sections -->
     <section class="breadcumb-section pt-0">
       <div class="cta-service-single cta-banner mx-auto maxw1700 pt120 pt60-sm pb120 pb60-sm bdrs16 position-relative overflow-hidden d-flex align-items-center mx20-lg px30-lg">
-        <img class="left-top-img wow zoomIn" src="images/vector-img/left-top.png" alt="">
-        <img class="right-bottom-img wow zoomIn" src="images/vector-img/right-bottom.png" alt="">
-        <img class="service-v1-vector bounce-y d-none d-xl-block" src="images/vector-img/vector-service-v1.png" alt="">
+        <img class="left-top-img wow zoomIn" src="{{asset('backend/THEME/images/vector-img/left-top.png')}}" alt="">
+        <img class="right-bottom-img wow zoomIn" src="{{asset('backend/THEME/images/vector-img/vector-service-v1.png')}}" alt="">
+        <img class="service-v1-vector bounce-y d-none d-xl-block" src="{{asset('backend/THEME/images/vector-img/vector-service-v1.png')}}" alt="">
         <div class="container">
           <div class="row wow fadeInUp">
             <div class="col-xl-7">
               <div class="position-relative">
                 <h2>{{$gig["GIG_NAME"]}}</h2>
                 <div class="list-meta mt30">
-
-                <button type="submit">
                 <a class="list-inline-item mb5-sm">
                     <input name="freelancer_id" value="{{$gig['FREELANCER_ID']}}" hidden />
                     <span class="position-relative mr10">
-                      <img class="rounded-circle" src="images/team/fl-d-1.png" alt="Freelancer Photo">
+                      <img class="rounded-circle" src="{{asset('backend/THEME/images/team/fl-d-1.png')}}" alt="Freelancer Photo">
                       <span class="online-badge"></span>
                     </span>
                     <span class="fz14">{{$gig["USER_FNAME"]}} {{$gig["USER_LNAME"]}}</span>
                 </a>
-                </button>
 
-                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="fas fa-star vam fz10 review-color me-2"></i> 4.82 94 reviews</p>
+
+                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="fas fa-star vam fz10 review-color me-2"></i> {{$avgRate['RATING']}} 94 reviews</p>
                   <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-file-1 vam fz20 me-2"></i> 2 Order in Queue</p>
-                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-website vam fz20 me-2"></i> 902 Views</p>
                 </div>
               </div>
             </div>
@@ -407,7 +383,6 @@
                           </ul>
                           <div class="list-style1">
                             <ul class="">
-                              <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
                               <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
                             </ul>
                           </div>
@@ -451,7 +426,6 @@
                           </ul>
                           <div class="list-style1">
                             <ul class="">
-                              <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
                               <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
                             </ul>
                           </div>
