@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreign('JR_ID')->references('JR_ID')->on('job')->onDelete('cascade')->cascadeOnUpdate();
 
 
-            $table->dateTime('JA_DATEAPPLIED')->nullable();
-            $table->string('JA_DESCRIPTION');
+            $table->dateTime('JA_DATEAPPLIED');
+            $table->string('JA_DESCRIPTION')->nullable();
             $table->decimal('JA_PRICE',8,2);
             $table->enum('JA_STATUS',['PENDING','ACCEPTED']);
 

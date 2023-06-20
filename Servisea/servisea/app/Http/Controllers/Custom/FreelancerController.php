@@ -4,12 +4,14 @@ namespace App\Http\Controllers\custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Job_Request;
 use ArrayObject;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Freelancer;
 use App\Models\Category;
 use App\Models\Gig;
+use App\Models\Job_Application;
 use App\Models\Package;
 use App\Models\reviews;
 use Illuminate\Support\Facades\DB;
@@ -34,6 +36,33 @@ class FreelancerController extends Controller
             $category = Category::all();
             $request->session()->put('categoryList',$category);
             return view("freelancer.overview");
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function applyJob(Request $request){
+        $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
+        $jr_id = $request->route('jobid');
+
+        if(isset($session)!=null){
+
+                $job =  Job_Request::where('JR_ID', $jr_id)->get();
+
+
+                Job_Application::create([
+                    'FREELANCER_ID' => $freelancer['FREELANCER_ID'],
+                    'JA_DATEAPPLIED' => now(),
+                    'JR_ID'       => $jr_id,
+                    'JA_PRICE'    => $job[0]['JR_REMUNERATION'],
+                    'JA_STATUS'   => 'PENDING',
+                ]);
+
+                return redirect("/user/job/list");
+
+
         }else{
             return redirect('login_user');
         }
@@ -227,6 +256,8 @@ class FreelancerController extends Controller
 
     public function viewAllGig(Request $request){
         $session= $request->session()->get('user');
+
+
 
         if(gig::where('GIG_STATUS','COMPLETED')->exists()){
 

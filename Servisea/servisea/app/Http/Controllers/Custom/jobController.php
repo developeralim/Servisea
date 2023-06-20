@@ -4,9 +4,11 @@ namespace App\Http\Controllers\custom;
 //require_once 'vendor/autoload.php';
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Job_Application;
 use App\Models\Job_Request;
 use Illuminate\Http\Request;
 use App\Helpers\AppHelper;
+use Illuminate\Support\Facades\DB;
 
 class jobController extends Controller
 {
@@ -25,9 +27,69 @@ class jobController extends Controller
 
     public function viewRequestJobList(Request $request){
         $session= $request->session()->get('user');
-        $jobs =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->get();
-        $jobs = json_decode(json_encode($jobs), true);
-        return view("user.jobList")->with('jobList',$jobs);
+
+        if(Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->exists()){
+            $jobs =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->where('JR_STATUS','CONFIRMED')->get();
+            $category =  DB::table('CATEGORY')->get();
+
+            return view("user.jobList")->with(['jobList'=>$jobs,'category'=>$category]);
+        }else{
+            return view("user.jobList");
+        }
+
+    }
+
+
+    public function viewJobList(Request $request){
+        $session= $request->session()->get('user');
+
+        if(Job_Request::where('JR_STATUS', 'CONFIRMED')->exists()){
+            $jobs =  Job_Request::where('JR_STATUS', 'CONFIRMED')->get();
+            $category =  DB::table('CATEGORY')->get();
+
+            return view("user.jobList")->with(['jobList'=>$jobs,'category'=>$category]);
+        }else{
+            return view("user.jobList");
+        }
+
+    }
+
+    public function viewJob(Request $request){
+        $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
+        $jr_id = $request->route('jobid');
+        if(Job_Request::where('JR_ID',$jr_id)->exists()){
+            $job =  Job_Request::where('JR_ID', $jr_id)->get();
+            $category =  DB::table('CATEGORY')->get();
+
+            if(isset($freelancer)){
+                if(Job_Application::where(['JR_ID'=>$jr_id,'FREELANCER_ID'=>$freelancer['FREELANCER_ID']])->exists()){
+                    return view("user.jrSingle")->with(['job'=>$job,'category'=>$category,'order'=>1]);
+                }
+            }
+            return view("user.jrSingle")->with(['job'=>$job,'category'=>$category,'freelancer',$freelancer]);
+
+        }else{
+            return redirect("index");
+        }
+
+    }
+
+    public function pauseJob(Request $request){
+        $jr_id = $request->route('jobid');
+        Job_Request::where('JR_ID',$jr_id)
+           ->update(['JR_STATUS' => 'DRAFT']);
+        return redirect("/user/job/list");
+    }
+
+    public function deleteJob(Request $request){
+        $session= $request->session()->get('user');
+        $jr_id = $request->route('jobid');
+        Job_Request::where('JR_ID',$jr_id)
+           ->delete();
+        return redirect("/user/job/list");
+
     }
 
     public function CreateJob(Request $request){

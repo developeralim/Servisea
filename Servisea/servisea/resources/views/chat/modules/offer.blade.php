@@ -2,11 +2,11 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form class="modal-content" id="offer-send-form"  method="POST">
             @csrf
-            @if ( $gigs->count() == 0 ) 
+            @if ( $gigs->count() == 0 )
                 <h1 class="section-title">
                     Please create a gig first
                 </h1>
-            @else 
+            @else
                 <div class="modal-body">
                     <div class="gigs">
                         <h1 class="section-title">
@@ -17,13 +17,13 @@
                                 <li>
                                     <label for="gig-{{ $index }}" class="d-block d-flex align-items-center gig-item">
                                         <input value="{{ $gig->GIG_ID }}" required type="radio" name="gig" class="form-check-input" id="gig-{{ $index }}">
-                                        <!-- 
+                                        <!--
                                             here $gig->media[0] refers to the main thumbnail of gig
                                         -->
                                         <img src="{{ $gig->media[0]->MEDIA_PATH }}" alt="{{ $gig->GIG_NAME }}">
                                         <h4 class="gig-title">{{ $gig->GIG_NAME }}</h4>
                                     </label>
-                                </li>  
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -42,7 +42,7 @@
                                             <p class="text-muted p-0 m-0">{{ $type->SHORT_DESC }}</p>
                                         </div>
                                     </label>
-                                </li>  
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -63,7 +63,7 @@
                                                 for ($x = 1; $x <= 20; $x++) {
                                                    echo "<option value=".$x.">$x</option>";
                                                 }
-                                            ?> 
+                                            ?>
                                             <option value="100000">unlimited</option>
                                         </select>
                                     </div>
@@ -74,7 +74,7 @@
                                                 for ($x = 1; $x <= 100; $x++) {
                                                    echo "<option value=".$x.">$x</option>";
                                                 }
-                                            ?> 
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                     for ($x = 0; $x <= 30; $x++) {
                                         echo "<option value=".$x.">$x</option>";
                                     }
-                                ?> 
+                                ?>
                                 <option value="0">Never expired</option>
                             </select>
                         </div>

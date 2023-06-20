@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Freelancer;
+use App\Models\Job_Application;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +41,49 @@ class UserController extends Controller
 
         }else{
             return redirect('login_user');
+        }
+    }
+
+    public function acceptApplicant(Request $request)
+    {
+        $ja_id = $request->route('jaid');
+
+        $session= $request->session()->get('user');
+        if(isset($session)){
+
+            Job_Application::where('JA_ID',$ja_id)
+           ->update(['JA_STATUS' => 'CONFIRMED']);
+
+           
+
+        }else{
+            return redirect('index');
+        }
+    }
+
+
+    public function listApplicants(Request $request)
+    {
+
+        $jr_id = $request->route('jobid');
+
+        $session= $request->session()->get('user');
+        if(isset($session)){
+            if(Job_Application::where(['JA_STATUS'=>'PENDING','JR_ID'=>$jr_id])->exists()){
+
+                $Applicants = Freelancer::select('*')
+                ->join('JOB_APPLICATION', 'FREELANCER.FREELANCER_ID', '=', 'JOB_APPLICATION.FREELANCER_ID')
+                ->join('USERS', 'FREELANCER.USER_ID', '=', 'USERS.USER_ID')
+                ->where(['JA_STATUS'=>'PENDING','JOB_APPLICATION.JR_ID'=>$jr_id])
+                ->get();
+
+                return view('user.applicantList',['applicants'=>$Applicants]);
+            }else{
+                return view('index');
+            }
+
+        }else{
+            return redirect('index');
         }
     }
 

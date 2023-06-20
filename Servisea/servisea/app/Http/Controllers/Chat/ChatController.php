@@ -70,6 +70,7 @@ class ChatController extends Controller
     {
         $freelancer = Freelancer::where('USER_ID',$loggedIn->USER_ID)->first();
 
+
         //check if user is freelancer or not
 
         if ( ! $freelancer ) {
@@ -119,17 +120,17 @@ class ChatController extends Controller
                 $query->where('sent_by',$loggedIn->USER_ID);
                 $query->where('replied_to',$user->USER_ID);
             });
-        
-        
+
+
         //change reading status to read
         foreach( (clone $query)->get() as $collection ) {
-            
+
             if ( $collection->sent_by == $user->USER_ID ) {
                 $collection->update(['unread' => 0]);
             }
 
         }
-        
+
 
 
         return $query->limit(4000)
@@ -140,7 +141,7 @@ class ChatController extends Controller
     /**
      * Store chats
      */
-    public function store( Request $request ){       
+    public function store( Request $request ){
 
         $loggedIn = session()->get('user');
 
@@ -177,10 +178,10 @@ class ChatController extends Controller
         $loggedIn = session()->get('user');
         $user     = session()->get('active_user');
 
-        //get senders 
+        //get senders
         $senders       = $this->senders( $loggedIn );
         $conversations = $this->conversations($loggedIn,$user);
-        
+
         return [
             'senderLists'   => view('chat.modules.senders',compact('senders'))->render(),
             'conversations' => view('chat.modules.conversations',compact('conversations'))->render(),
@@ -210,7 +211,7 @@ class ChatController extends Controller
      */
 
     public function chatMedia( Request $request )
-    {   
+    {
         if ($request->hasFile('file')) {
 
             try {
@@ -248,7 +249,7 @@ class ChatController extends Controller
                 $media->SIZE         = $size;
                 $media->UPLOADED_AT  = Carbon::now();
                 $media->save();
-                
+
                 return response()->json([
                     'message' => 'Files uploaded successfully',
                     'id'      => $media->MEDIA_ID,
@@ -268,15 +269,15 @@ class ChatController extends Controller
     }
 
     /**
-     * Delete Media 
+     * Delete Media
      */
 
     public function deleteMedia( Request $request )
     {
         if ( $request->ajax() ) {
             try {
-                
-                
+
+
                 $deleteClouser = function( $id ) {
                     $toDelete = ChatMedia::where('MEDIA_ID', $id )->first();
 
@@ -312,7 +313,7 @@ class ChatController extends Controller
                     'status'  => 'error',
                     'message' => $e->getMessage()
                 ];
-            }   
+            }
         }
     }
 
@@ -324,13 +325,13 @@ class ChatController extends Controller
         if ( $request->ajax() ) {
 
             try {
-                
+
                 $request->validate([
                     'name'           => 'required',
                     'quick_response' => 'required'
                 ]);
 
-                $user     = session()->get('active_user'); 
+                $user     = session()->get('active_user');
                 $loggedIn = session()->get('user');
 
                 $quick_response = $request->quick_response;
@@ -363,7 +364,7 @@ class ChatController extends Controller
                     ])->render()
                 ]);
 
-            } catch (\Exception $e) {   
+            } catch (\Exception $e) {
                 return response([
                     'status'  => 'error',
                     'message' => $e->getMessage()
@@ -379,9 +380,9 @@ class ChatController extends Controller
 
     public function deleteQuickResponse( Request $request,$id ) {
         if ( $request->ajax() ) {
-            
+
             QuickResponse::where('RESPONSE_ID',$id)->delete();
-            
+
             return response([
                 'status'  => 'success',
                 'message' => 'Quick response deleted'
@@ -423,7 +424,7 @@ class ChatController extends Controller
                 $offer->PRICE           = $request->price;
                 $offer->EXPIRES         = $request->expires;
                 $offer->REQUIREMENTS    = $request->requirements ?? 0;
-                
+
                 $offer->save();
 
                 //merge value with request
@@ -448,7 +449,7 @@ class ChatController extends Controller
                     'status'  => 'error'
                 ],300);
             }
-            
+
         }
     }
 
@@ -486,7 +487,7 @@ class ChatController extends Controller
     public function deleteConversation( Request $request )
     {
         if ( $request->ajax() ) {
-            
+
             $loggedIn = session()->get('user');
             $user     = session()->get('active_user');
 
@@ -510,7 +511,7 @@ class ChatController extends Controller
     public function changeReadingStatus(Request $request)
     {
         if ( $request->ajax() ) {
-            
+
             Chat::where('sent_by',$request->sender)
                 ->where('replied_to',session('user')->USER_ID)
                 ->update(['unread' => $request->unread]);

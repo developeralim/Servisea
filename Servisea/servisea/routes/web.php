@@ -34,7 +34,7 @@ Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('up
 Route::get('/user/postJob=1',  [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
 Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPageA');
 //View Job
-Route::get('/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewJobList');
+Route::get('/user/job/list', [jobController::class, 'viewJobList'])->name('viewJobList');
 
 //FREELANCER PAGE
 //Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
@@ -50,6 +50,17 @@ Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
 Route::post('/servisea/viewgig', [FreelancerController::class, 'viewGig'])->name('viewGig');
+Route::get('/servisea/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewReqJobList');
+
+
+Route::get('/servisea/view/job/{jobid}', [jobController::class, 'viewJob'])->name('viewJob');
+Route::get('/servisea/pause/job/{jobid}', [jobController::class, 'pauseJob'])->name('pauseJob');
+Route::get('/servisea/delete/job/{jobid}', [jobController::class, 'deleteJob'])->name('deleteJob');
+
+Route::get('/servisea/freelancer/apply/job/{jobid}', [FreelancerController::class, 'applyJob'])->name('applyJob');
+Route::get('/servisea/user/applicant/list/{jobid}', [userController::class, 'listApplicants'])->name('viewListApplicants');
+Route::get('/servisea/user/applicant/accept/{jaid}', [userController::class, 'AcceptApplicant'])->name('AcceptApplicants');
+
 
 Route::post('/servisea/view/freelancer', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
 
@@ -61,6 +72,21 @@ Route::get('/test', function (request $request) {
 });
 
 
+
+//Index Page
+Route::get('/order/requirement', function (request $request) {
+
+    echo '<h1>Submit order rquirements</h1>';
+
+})->name('order.requirements');
+
+//Index Page
+Route::get('/order/requirement', function (request $request) {
+
+    echo '<h1>Submit order rquirements</h1>';
+
+})->name('order.requirements');
+
 //Index Page
 Route::get('/index', function (request $request) {
 
@@ -69,6 +95,14 @@ Route::get('/index', function (request $request) {
 
     return view('index');
 });
+
+
+//Index Page
+Route::get('/order/viwe', function (request $request) {
+
+    echo '<h1>Your Order Here</h1>';
+
+})->name('order');
 
 //Login Page
 Route::get('/login_user', function () {

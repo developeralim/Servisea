@@ -67,7 +67,7 @@ class User extends Authenticatable
             'USER_ROLE',
             ];
 
-    public function address() : HasOne 
+    public function address() : HasOne
     {
         return $this->hasOne(Address::class,'ADDRESS_ID','ADDRESS_ID');
     }
@@ -105,7 +105,7 @@ class User extends Authenticatable
 
         // $message = Chat::where('sent_by',$this->USER_ID)
         //     ->where('replied_to',$loggedIn->USER_ID)
-          
+
 
         $message = Chat::where(function( $query ) use( $loggedIn ){
 
@@ -117,17 +117,17 @@ class User extends Authenticatable
             $query->where('sent_by',$loggedIn->USER_ID);
             $query->where('replied_to',$this->USER_ID);
 
-        })  
+        })
         ->orderBy('sent_at','desc')
         ->first();
 
         $text = strlen( $message->text ) > 30 ? substr( $message->text ,0,30) . '....' : $message->text;
-       
+
 
         $currentTime = Carbon::now(); // Current time
         $targetTime  = Carbon::parse($message->sent_at ); // Replace with your desired target time
 
-     
+
 
         $diff  = $currentTime->diff($targetTime);
         $time  = 'Just now';
@@ -146,8 +146,8 @@ class User extends Authenticatable
             $time = sprintf("%s Second ago",$diff->s);
         }
 
-        return (object) [ 
-            'message' => $message->sent_by == $loggedIn->USER_ID ? "Me:$text" : $text, 
+        return (object) [
+            'message' => $message->sent_by == $loggedIn->USER_ID ? "Me:$text" : $text,
             'time'    => $time
         ];
 
