@@ -1,1 +1,0 @@
-<?php /**PATH C:\xampp\htdocs\Servisea\servisea\resources\views/home.blade.php ENDPATH**/ ?>

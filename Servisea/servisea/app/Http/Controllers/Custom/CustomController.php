@@ -25,20 +25,18 @@ function login(Request $request){
     $password = $data['password'];
 
     //CHECK IF USER
-    $user = User::where('USER_EMAIL', $email)->get();
+    $user = User::where('USER_EMAIL', $email)->first();
 
+    if( ! $user ){
 
-    if($user->isEmpty()){
-
-        return $user;
         //CHECK IF ADMIN
-       $admin = admin::where('ADMIN_EMAIL', $email)->get();
+       $adminDetails = admin::where('ADMIN_EMAIL', $email)->first();
 
-        if($admin->isEmpty()){
+        if( ! $adminDetails ){
             $noUser = 1;
             return redirect('login',$noUser);
         }else{
-            $adminDetails = json_decode(json_encode($admin[0]), true);
+
             if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
                 if( $adminDetails['ADMIN_STATUS'] == 1){
                     //REDIRECT TO ADMIN DASHBOARD
@@ -56,13 +54,10 @@ function login(Request $request){
         }
     }else{
 
-        $user = json_decode(json_encode($user[0]), true);
-
-
         if(Hash::check($password,$user['USER_PASSWORD'])){
             if($user['ACCOUNT_STATUS'] == 1){
                 $request->Session()->put('user',$user);
-
+            
                 if($user['USER_ROLE']==2){
                     $freelancer = Freelancer::where('USER_ID', $user['USER_ID'])->get();
                     $freelancer = json_decode(json_encode($freelancer[0]), true);

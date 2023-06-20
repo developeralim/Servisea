@@ -211,8 +211,16 @@
         <div class="row">
         @foreach ($gigs as $gig)
           <div class="col-sm-6 col-xl-3">
+
           <div class="listing-style1">
+          <form method="POST" action="{{route('viewGig')}}" id="gig-id">
+           @csrf
+           @if(isset($gig))
+            <input name="gig_id" value="{{$gig->GIG_ID}}" hidden>
+            @endif
             <div class="list-thumb">
+
+
             @foreach ($gigMedia as $gigmed)
                     @if($gigmed->GIG_ID == $gig->GIG_ID)
                 <img class="w-100" src="{{asset('backend/USER_ASSET/images')}}" alt="">
@@ -228,7 +236,8 @@
                </div>
               <div class="list-content">
                 <p class="list-text body-color fz14 mb-1">{{$gig->GIG_NAME}}</p>
-                <h5 class="list-title"><a href="{{route('viewGig',$gig->GIG_ID)}}" >{{$gig->GIG_DESCRIPTION}}</a></h5>
+                <h5 class="list-title"><a onclick="submit()">{{$gig->GIG_DESCRIPTION}}</a></h5>
+                <input name="freelancer_id" value="{{$gig->FREELANCER_ID}}" hidden ></input>
                 <div class="review-meta d-flex align-items-center">
                   <i class="fas fa-star fz10 review-color me-2"></i>
                   @foreach ($reviews as $review)
@@ -246,14 +255,14 @@
                       <img class="rounded-circle" src="images/team/fl-s-1.png" alt="Freelancer Photo">
                       <span class="online-badge"></span>
                     </span>
-                    <span class="fz14"><a href="{{route('viewFreelancer',$gig->FREELANCER_ID)}}" >{{$gig->USERNAME}}</span>
+                    <span class="fz14">{{$gig->USERNAME}}</span>
                   </a>
                   <div class="budget">
                     <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$ {{$gig->PRICE}}</span></p>
                   </div>
                 </div>
               </div>
-            <!-- </form> -->
+            </form>
             </div>
           </div>
           @endforeach
@@ -293,6 +302,12 @@
 
 @section('user_script')
 
+<script type="text/javascript">
+   function submit()
+  {
+    document.forms["gig-id"].submit();
+  }
+</script>
 
 <script src="{{asset('backend/THEME/js/pricing-slider.js')}}"></script>
 <script src="{{asset('backend/THEME/js/isotop.js')}}"></script>

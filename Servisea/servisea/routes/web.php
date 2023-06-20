@@ -1,19 +1,19 @@
 <?php
 
+use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Demo\DemoController;
+use App\Http\Controllers\Custom\jobController;
+use App\Http\Controllers\Custom\UserController;
 use App\Http\Controllers\Custom\CustomController;
 use App\Http\Controllers\Custom\CategoryController;
-use App\Http\Controllers\Custom\UserController;
-use App\Http\Controllers\Admin;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Custom\jobController;
 use App\Http\Controllers\Custom\FreelancerController;
-use App\Models\Category;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,11 +49,9 @@ Route::post('/freelancer/postService/package/standard',    [FreelancerController
 Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
-// Route::post('/servisea/viewgig', [FreelancerController::class, 'viewGig'])->name('viewGig');
+Route::post('/servisea/viewgig', [FreelancerController::class, 'viewGig'])->name('viewGig');
 
-Route::get('/servisea/viewgig/{id}', [FreelancerController::class, 'viewGig'])->name('viewGig');
-
-Route::get('/servisea/view/freelancer/{id}', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
+Route::post('/servisea/view/freelancer', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
 
 
 //Index Page
@@ -141,7 +139,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 
 require __DIR__.'/auth.php';
