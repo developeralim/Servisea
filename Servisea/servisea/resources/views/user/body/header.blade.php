@@ -39,9 +39,8 @@
                             <li><a class="dropdown-item" href="{{route('viewAllGig')}}">View all Gig</a></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li><a class="dropdown-item" href="#">Orders</a></li>
-                            <li><a class="dropdown-item" href="{{route('viewReqJobList')}}">Requests List</a></li>
-                            <li><a class="dropdown-item" href="{{route('viewJobList')}}">Job List</a></li>
-                            <li><a class="dropdown-item" href="#">Chat</a></li>
+                            <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li>
+                            <li><a class="dropdown-item" href="{{route('chat.index',[session('user')->USERNAME])}}">Chat</a></li>
                             <li><a class="dropdown-item" href="#">Dispute</a></li>
                             <li><a class="dropdown-item" href="{{route('clearSession')}}">Log Out</a></li>
                             @if (Session::get('user.USER_ROLE') == 2 )
