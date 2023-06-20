@@ -32,8 +32,26 @@ class UserController extends Controller
                 $addressDetails = Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->get();
                 $addressDetails = json_decode($addressDetails[0]);
                 return view('user.profile')->with('addressDetails',$addressDetails);
+            }else{
+                return view('user.profile');
             }
-            return view('user.profile');
+
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function DeleteProfile(Request $request)
+    {
+        $session= $request->session()->get('user');
+        if(isset($session)){
+            if(User::where('USER_EMAIL', $session['USER_EMAIL'])->exists()){
+
+                return view('index');
+            }else{
+                return view('user.profile');
+            }
+
         }else{
             return redirect('login_user');
         }
@@ -104,29 +122,28 @@ class UserController extends Controller
 
                 #validation
                 $userInput = $request->validate([
-                    'USERNAME'        => 'required|string|max:255||unique:admin,ADMIN_USERNAME|unique:users,USERNAME,'.$session['USER_ID'].',USER_ID|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
-                    'USER_EMAIL'      => 'required|email|unique:admin,ADMIN_EMAIL|unique:users,USER_EMAIL,'.$session['USER_ID'].',USER_ID',
-                    'USER_PASSWORD'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
-                    'ADDRESS_STREET'  => 'required|string|max:255|regex:/^[a-zA-Z-  ]+$/'  ,
-                    'ADDRESS_CITY'    => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/'  ,
-                    'ADDRESS_STATE'   => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/'  ,
-                    // 'ADDRESS_DISTRICT' => 'required|string|max:255|regex:/^[a-zA-Z-]+$/' ,
-                    // 'ADDRESS_POSTALCODE'=> 'required|string|max:255|regex:/^[0-9]+$/',
-                    // 'ADDRESS_COUNTRY'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
+                    'USERNAME'          => 'required|string|max:255||unique:admin,ADMIN_USERNAME|unique:users,USERNAME,'.$session['USER_ID'].',USER_ID|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
+                    'USER_EMAIL'        => 'required|email|unique:admin,ADMIN_EMAIL|unique:users,USER_EMAIL,'.$session['USER_ID'].',USER_ID',
+                    'USER_PASSWORD'     => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
+                    'ADDRESS_STREET'    => 'required|string|max:255|regex:/^[a-zA-Z0-9-  ]+$/'  ,
+                    'ADDRESS_CITY'      => 'required|string|max:255|regex:/^[a-zA-Z0-9- ]+$/'  ,
+                    'ADDRESS_STATE'     => 'required|string|max:255|regex:/^[a-zA-Z0-9- ]+$/'  ,
+                    'ADDRESS_DISTRICT'  => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/' ,
+                    'ADDRESS_POSTALCODE'=> 'required|string|max:255|regex:/^[0-9]+$/',
+                    'ADDRESS_COUNTRY'   => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
                ]);
 
-               $addressDetails = Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->get();
 
-               if(isset($addressDetails)){
+               if(Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->exists()){
 
                 address::where('ADDED_BY_USER_ID',$session['USER_ID'])
                 ->update([
                  'ADDRESS_STREET' => $userInput['ADDRESS_STREET'],
                  'ADDRESS_CITY'   => $userInput['ADDRESS_CITY'],
                  'ADDRESS_STATE'  => $userInput['ADDRESS_STREET'],
-                //  'ADDRESS_DISTRICT' => $userInput['ADDRESS_DISTRICT'],
-                //  'ADDRESS_POSTALCODE' => $userInput['ADDRESS_POSTALCODE'],
-                //  'ADDRESS_COUNTRY' => $userInput['ADDRESS_COUNTRY'],
+                 'ADDRESS_DISTRICT' => $userInput['ADDRESS_DISTRICT'],
+                 'ADDRESS_POSTALCODE' => $userInput['ADDRESS_POSTALCODE'],
+                 'ADDRESS_COUNTRY' => $userInput['ADDRESS_COUNTRY'],
                 ]);
 
                }else{
@@ -141,6 +158,7 @@ class UserController extends Controller
                     'ADDED_BY_USER_ROLE' => $session['USER_ROLE'],
                     'ADDED_BY_USER_ID' => $session['USER_ID'],
                 ));
+
                }
 
                if($request->hasFile('USER_IMG')){
@@ -158,11 +176,6 @@ class UserController extends Controller
                             //   'USER_IMG' => $imageName,
                             //   'USER_DOB' => $userInput['USER_DOB'],
                             //   'USER_GENDER' => $userInput['USER_GENDER'],
-                            //   'ADMIN_CITY' => $admin['ADMIN_CITY'],
-                            //   'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
-                            //   'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
-                            //   'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
-                            //   'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
                         ]);
 
 
@@ -179,11 +192,6 @@ class UserController extends Controller
                         //   'USER_IMG' => $imageName,
                         //   'USER_DOB' => $userInput['USER_DOB'],
                         //   'USER_GENDER' => $userInput['USER_GENDER'],
-                        //  'ADMIN_CITY' => $admin['ADMIN_CITY'],
-                        //  'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
-                        //  'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
-                        //  'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
-                        //  'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
                      ]);
             }
                $user = User::where('USER_ID', $session['USER_ID'])->get();
