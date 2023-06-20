@@ -1,3 +1,724 @@
-/*
-Custom Css
-*/
+/* ===================== root css =====================================*/
+:root {
+    --border-color: #ddd;
+}
+
+/* ===================== Caht Page css =====================================*/
+.online-status {
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background: #00c600;
+    display: block;
+    border: 1px solid #fff;
+}
+.online-status.on-profile {
+	position: absolute;
+	bottom: 8px;
+	right: 0px;
+}
+.top-part {
+    background: #fff;
+    border: 1px solid var(--border-color);
+}
+
+.search-box {
+    display: none;
+}
+
+.left-senders {
+    height: 71vh;
+    overflow-y: auto;
+    padding-left: 0;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    padding-right: 0;
+}
+
+.sender-lists {
+    padding: 0;
+    margin: 0;
+}
+.back-to-bottom:hover,.back-to-bottom:focus {
+	background: transparent;
+}
+.back-to-bottom {
+	background: #fff;
+	position: absolute;
+	top: -65px;
+	right: 50px;
+	display: none;
+}
+.back-to-bottom svg {
+	pointer-events: none;
+}
+.middle-box{
+    position: relative;
+}
+li.active-reciepient {
+    background: #f5f5f5;
+}
+.loadmore button {
+	font-size: 9px;
+	background: #fff;
+}
+.loadmore {
+	text-align: center;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%);
+    display:none;
+}
+.sender-lists li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.sender-lists li a{
+    text-decoration:none;
+}
+
+.sender-lists li:hover {
+    background: #f5f5f5;
+    cursor: pointer;
+}
+
+.profile-pic {
+    height: 55px;
+    width: 55px;
+    border-radius: 100%;
+    border: 1px solid #ddd;
+    padding: 0;
+}
+
+.image-status {
+    position: relative;
+    margin-right: 10px;
+}
+
+.image-status .login {
+    position: absolute;
+    bottom: 6px;
+    right: 2px;
+}
+
+.u-name {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: capitalize;
+}
+
+.msg-time.text-muted {
+    font-size: 11px;
+    font-weight: 400;
+    color: #959595 !important;
+    margin-right: 10px;
+}
+
+.msg-count {
+    font-size: 8px;
+    font-weight: bold;
+    color: #fff;
+    background: green;
+    padding: 2px;
+    height: 17px;
+    width: 17px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.make-unread {
+    color: #777;
+    margin-left: 7px;
+}
+
+.make-unread i {
+	font-size: 16px;
+	pointer-events: none;
+}
+
+.favorite-icon i {
+    font-size: 15px;
+}
+
+.message-txt {
+	font-size: 13px;
+	font-weight: 400;
+	color: #666;
+}
+
+.conversation {
+    color: #666;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    cursor: pointer;
+}
+
+.conversation:hover {
+    color: #59ab6e !important;
+}
+
+.search {
+    cursor: pointer;
+}
+
+.search i {
+    font-size: 15px;
+    color: #666;
+    pointer-events: none;
+}
+
+.username a .name {
+    font-size: 17px !important;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin: 0 8px;
+    color: #333;
+}
+
+.user-name {
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.6;
+}
+
+.u-name {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: capitalize;
+    color: #222;
+    text-decoration: none;
+    margin-right: 4px;
+}
+
+.conversation-lists {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.name-date {
+    margin-bottom: 3px;
+}
+
+.name-date-text {
+    display: block;
+    width: 80%;
+    margin-left: 10px;
+}
+
+.text {
+    display: block;
+    width: 100%;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+}
+
+.action-btn {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: 24px;
+    width: 33px;
+    border: none;
+    font-size: 18px;
+    font-weight: 900;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.conversation-lists li {
+    padding: 10px 20px;
+}
+
+.conversation-lists li:hover {
+    background: #fafafa;
+}
+
+.conversation-lists li:hover .action-btn {
+    visibility: visible;
+    opacity: 1;
+}
+
+.chat-machine {
+    padding: 13px 20px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.machineries {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style: none;
+    margin-top: 14px;
+}
+
+.machineries li button {
+    background: transparent;
+    border: none;
+}
+
+.machineries li:last-child {
+    margin-left: auto;
+}
+
+.machineries li:last-child button {
+    font-weight: bold;
+    font-size: 15px;
+    color: #59ab6e !important;
+}
+
+.machineries li:last-child:hover button {
+    color: #59ab6e !important;
+}
+
+.machineries li:last-child:hover span svg {
+    fill: #59ab6e !important;
+}
+
+.machineries li:last-child span svg {
+    cursor: pointer;
+}
+
+.chat-machine textarea {
+    resize: none;
+}
+.no-conversations {
+	height: 50vh;
+	text-align: center;
+	color: #666;
+	font-weight: bold;
+	margin: 0;
+	border-right: 1px solid #ddd !important;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.chatbox {
+	max-height: 48vh;
+	overflow-y: auto;
+	min-height: 50vh;
+	border-right: 1px solid #ddd;
+}
+
+.about {
+    font-size: 19px;
+    color: #222 !important;
+}
+
+.about a {
+    color: #222;
+    font-weight: 900;
+}
+
+.info-table p[role="row"] span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #999;
+}
+
+.info-table p[role="row"] {
+	margin-bottom: 8px;
+}
+.info-table p[role="row"] strong {
+    font-size: 15px;
+    font-weight: 500;
+    color: #888;
+}
+
+.info-table p[role="row"] strong a {
+    color: #999;
+    font-weight: 800;
+    font-size: 14px !important;
+    margin-left: 4px;
+}
+.right-info{
+    max-height:71vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    border-top: none;
+}
+.middle-info-top {
+	border-left: 1px solid #ddd;
+}
+.left {
+	margin-left: 14px;
+	padding: 10px 0;
+}
+.status-text, .timestamp {
+	font-size: 14px;
+	font-weight: 400;
+	color: #666;
+    position: relative;
+}
+.timestamp{
+    margin-left: 10px;
+}
+.timestamp::before {
+	content: "";
+	height: 82%;
+	width: 1px;
+	position: absolute;
+	display: block;
+	background: #666;
+	top: 2px;
+	left: -7px;
+}
+.machineries li:nth-child(4) {
+	position: relative;
+	margin-left: 34px;
+}
+.machineries li:nth-child(4)::before,.machineries li:nth-child(4)::after {
+	content: "";
+	height: 100%;
+	width: 1px;
+	background: var(--border-color);
+	position: absolute;
+	left: -6px;
+}
+.machineries li:nth-child(4)::after {
+	right: -6px;
+	left: auto;
+}
+.button-groups button {
+	margin: 0 -4px;
+}
+.button-groups {
+	margin-right: 20px;
+}
+.favorite-icon svg,.make-unread svg {
+	pointer-events: none;
+}
+.all-cut-off-conv {
+	border-right: 1px solid #ddd;
+	padding: 10px 15px;
+}
+.machineries li {
+	position: relative;
+}
+.emoji-wraper, .quick-response-wrap {
+	height: 240px;
+	width: 312px;
+	background: #fff;
+	box-shadow: 0 0 5px rgba(0,0,0,.5);
+	border-radius: 5px;
+	padding: 10px;
+	position: absolute;
+	bottom: 41px;
+	left: 0;
+	display: none;
+	z-index: 99;
+}
+.media-item {
+	width: 126px;
+	height: 100px;
+	margin: 24px 6px;
+}
+.list-emojis {
+	margin-top: 7px;
+}
+.download-media {
+  font-size: 12px !important;
+  color: #000;
+  text-decoration: none;
+}
+.download-media:hover {
+  color: green;
+}
+.emoji-wraper::before,.quick-response-wrap::before {
+	content: "";
+	position: absolute;
+	bottom: -14px;
+	left: 6px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 14px 7px 0 7px;
+	border-color: #bdbdbd transparent transparent transparent;
+}
+button:focus{
+    outline: none;
+}
+.machineries li button * {
+	pointer-events: none;
+}
+.list-emojis {
+	margin-top: 7px;
+	max-height: 167px;
+	overflow-y: auto;
+}
+.list-emojis span {
+	font-size: 13px;
+	padding: 6px;
+	cursor: pointer;
+	border: 1px solid #ddd;
+	border-radius: 40%;
+	margin: 2px;
+	height: 30px;
+	width: 30px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+.preview {
+	display: flex;
+	flex-wrap: wrap;
+}
+.list-emojis {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+    flex-wrap: wrap;
+}
+#media {
+    height:0;width:0;opacity:0;visibility:hidden;
+}
+.abort {
+	position: absolute;
+	z-index: 9;
+	background: transparent;
+	border: none;
+	color: #8e8e8e;
+	font-size: 17px;
+	height: 20px;
+	width: 20px;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 6px;
+}
+.preview-item:hover {
+	background: rgba(0,0,0,.2);
+	color: #fff;
+}
+
+.preview-item {
+	height: 100px;
+	width: 100px;
+	background: #e1e1e1;
+	border: 1px solid #b6b6b6;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 2;
+	cursor: text;
+	font-size: 12px !important;
+	font-weight: bold !important;
+	flex-direction: column;
+}
+
+.preview .uploaded-media {
+	display: inline-block;
+	position: relative;
+	margin: 10px;
+}
+.progress span {
+	width: 0%;
+	height: 100%;
+	background: #2de32d;
+}
+.preview-item i {
+	display: block;
+	font-size: 30px;
+}
+.progress {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 90%;
+	transform: translate(-50%,-50%);
+	height: 8px;
+	z-index: 88;
+}
+.send-offer {
+	padding: 5px;
+	border: 1px solid #ddd !important;
+	color: #666;
+	font-size: 14px;
+	border-radius: 5px;
+}
+.responses {
+	max-height: 178px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.add-response {
+	color: #666;
+	font-size: 14px;
+	border-top: 1px solid #ddd !important;
+	width: 100%;
+	padding: 6px;
+	display: flex;
+	justify-content: space-between;
+}
+.responses ul li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 7px;
+	border-top: 1px solid #fefefe;
+	cursor: pointer;
+}
+.actions-btn {
+	visibility: hidden;
+    opacity: 0;
+}
+
+.responses ul li:hover .actions-btn {
+	visibility: visible;
+    opacity: 1;
+}
+
+.responses ul li a {
+	color: #666;
+	font-size: 14px !important;
+	text-decoration: none;
+	pointer-events: none;
+}
+.responses ul {
+	padding: 0;
+}
+
+.responses ul li:nth-child(4)::before {
+  display: none;
+}
+.responses ul li:nth-child(4) {
+  margin: 0;
+}
+.section-title {
+	font-size: 20px;
+	padding: 10px;
+	background: #fdfdfd;
+	border: 1px solid #e8e8e8;
+	border-radius: 5px;
+}
+
+.gig-item {
+  border: 1px solid #ddd;
+  padding: 13px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.gig-item img {
+  width: 92px;
+  height: 60px;
+  margin-right: 8px;
+}
+.gig-item h4 {
+  font-size: 17px;
+  color: #444;
+}
+.gig-item input {
+	margin-right: 5px;
+}
+.payment-type img {
+	width: 64px;
+	height: 66px;
+	border-radius: 100%;
+	padding: 5px;
+	border: 1px solid #ddd;
+}
+.input-group-text {
+	line-height: 1.7;
+}
+.previwe-wrap * {
+  width: 100%;
+  height: 100%;
+}
+.previwe-wrap {
+    width: 100%;
+  height: 100%;
+	padding: 4px;
+	border-radius: 2px;
+	border: 1px solid;
+}
+.media-wraper {
+	display: flex;
+	flex-wrap: wrap;
+}
+.blank {
+	font-size: 21px !important;
+	text-align: center;
+	display: grid;
+	place-items: center;
+	text-transform: uppercase;
+	font-weight: bold !important;
+	background: rgba(0,0,0,.5) url('https://png.pngtree.com/element_our/20190528/ourlarge/pngtree-file-icon-image_1128287.jpg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 16px;
+	background-blend-mode: overlay;
+	color: #fff;
+}
+.offer-bot {
+	width: 450px;
+	background: #fff;
+	margin-top: 45px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+.offer-title {
+	font-size: 17px !important;
+	margin: 0;
+	text-decoration: none;
+	color: #000;
+	font-weight: bold !important;
+}
+.title-price h4 {
+  margin: 0;
+}
+.offer-price {
+  font-size: 16px;
+}
+.incudes {
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-right: none;
+	border-left: none;
+	margin: 10px;
+}
+.incudes h4 {
+  color: #666;
+  font-size: 15px;
+}
+.text-muted.offer-desc {
+	font-size: 14px !important;
+	padding: 10px 14px;
+}
+.incudes span {
+  font-size: 13px;
+  margin-right: 14px;
+  font-weight: bold;
+}
+.title-price {
+	padding: 20px 13px;
+	background: #f2f2f2;
+}
+
+.incudes {
+  border: 1p;
+}
+.text-muted.offer-desc {
+  font-size: 14px !important;
+  padding: 10px 14px;
+}
+.offer-actions {
+  padding: 10px;
+}
+.offer-actions a {
+	color: #777;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 15px !important;
+	margin-right: 10px;
+}
+/* ===================== Caht Page css =====================================*/
