@@ -65,10 +65,7 @@
             <div class="text-center text-sm-start">
               <div class="dropdown-lists">
                 <ul class="p-0 mb-0 text-center text-sm-start">
-                  <li class="list-inline-item">
-                    <!-- Advance Features modal trigger -->
-                    <button type="button" class="open-btn filter-btn-left mb10"> <img class="me-2" src="images/icon/all-filter-icon.svg" alt=""> All Filter</button>
-                  </li>
+
                   <li class="list-inline-item position-relative d-none d-xl-inline-block">
                     <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Delivery Time <i class="fa fa-angle-down ms-2"></i></button>
                     <div class="dropdown-menu">
@@ -139,7 +136,8 @@
                       <button class="done-btn ud-btn btn-thm dropdown-toggle">Apply<i class="fal fa-arrow-right-long"></i></button>
                     </div>
                   </li>
-                  <li class="list-inline-item position-relative d-none d-xl-inline-block">
+
+                  <!-- <li class="list-inline-item position-relative d-none d-xl-inline-block">
                     <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Location <i class="fa fa-angle-down ms-2"></i></button>
                     <div class="dropdown-menu dd4 pb20">
                       <div class="widget-wrapper pr20">
@@ -168,7 +166,8 @@
                       </div>
                       <button class="done-btn ud-btn btn-thm drop_btn4">Apply<i class="fal fa-arrow-right-long"></i></button>
                     </div>
-                  </li>
+                  </li> -->
+
                 </ul>
               </div>
             </div>
@@ -193,7 +192,7 @@
           <div class="col-sm-6 col-xl-3">
 
           <div class="listing-style1">
-          <form method="POST" action="{{route('viewGig')}}" id="gig-id">
+          <form method="POST" action="{{route('viewGig',$gig->GIG_ID)}}" id="gig-id">
            @csrf
            @if(isset($gig))
             <input name="gig_id" value="{{$gig->GIG_ID}}" hidden>
@@ -216,7 +215,7 @@
                </div>
               <div class="list-content">
                 <p class="list-text body-color fz14 mb-1">{{$gig->GIG_NAME}}</p>
-                <h5 class="list-title"><a onclick="submit()">{{$gig->GIG_DESCRIPTION}}</a></h5>
+                <h5 class="list-title"><a href="{{route('viewGig',$gig->GIG_ID)}}">{{$gig->GIG_DESCRIPTION}}</a></h5>
                 <input name="freelancer_id" value="{{$gig->FREELANCER_ID}}" hidden ></input>
                 <div class="review-meta d-flex align-items-center">
                   <i class="fas fa-star fz10 review-color me-2"></i>
@@ -291,12 +290,6 @@
 
 @section('user_script')
 
-<script type="text/javascript">
-   function submit()
-  {
-    document.forms["gig-id"].submit();
-  }
-</script>
 
 <script src="{{asset('backend/THEME/js/pricing-slider.js')}}"></script>
 <script src="{{asset('backend/THEME/js/isotop.js')}}"></script>

@@ -49,7 +49,7 @@ Route::post('/freelancer/postService/package/standard',    [FreelancerController
 Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
-Route::post('/servisea/viewgig', [FreelancerController::class, 'viewGig'])->name('viewGig');
+Route::get('/servisea/viewgig/{gigid}', [FreelancerController::class, 'viewGig'])->name('viewGig');
 Route::get('/servisea/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewReqJobList');
 
 
@@ -62,7 +62,7 @@ Route::get('/servisea/user/applicant/list/{jobid}', [userController::class, 'lis
 Route::get('/servisea/user/applicant/accept/{jaid}', [userController::class, 'AcceptApplicant'])->name('AcceptApplicants');
 
 
-Route::post('/servisea/view/freelancer', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
+Route::get('/servisea/view/freelancer/{fid}', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
 
 
 //Index Page

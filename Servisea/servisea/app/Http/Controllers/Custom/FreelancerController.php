@@ -257,8 +257,6 @@ class FreelancerController extends Controller
     public function viewAllGig(Request $request){
         $session= $request->session()->get('user');
 
-
-
         if(gig::where('GIG_STATUS','COMPLETED')->exists()){
 
             $gigs = DB::select(
@@ -315,8 +313,8 @@ class FreelancerController extends Controller
                     $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
 
         if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
-            // return view('freelancer.viewAllGig')->with('gigs',$gigs);
-            return view('freelancer.viewGigs',['test'=> 1])->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
+
+            return view('freelancer.viewGigs')->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
         }else{
             return redirect('index');
         };
@@ -326,12 +324,10 @@ class FreelancerController extends Controller
     public function viewGig(Request $request){
         $session= $request->session()->get('user');
 
-        $input_gigID = $request->validate([
-            'gig_id'  => 'required|integer|regex:/^[0-9]+$/',
-       ]);
+        $input_gigID = $request->route('gigid');
 
        $gig = DB::select(
-        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,reviews.RATING,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
+        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
         FROM GIG
         RIGHT JOIN PACKAGE
         ON gig.GIG_ID = package.GIG_ID
@@ -341,7 +337,7 @@ class FreelancerController extends Controller
         ON FREELANCER.USER_ID = users.USER_ID
         WHERE package.GIG_ID =  gig.GIG_ID
         AND gig.GIG_STATUS = "COMPLETED"
-        AND gig.GIG_ID = '.$input_gigID['gig_id'].'
+        AND gig.GIG_ID = '.$input_gigID.'
         AND package.PACKAGE_ID = (
             SELECT package.PACKAGE_ID
             FROM package
@@ -364,7 +360,7 @@ class FreelancerController extends Controller
         ON gig.GIG_ID = reviews.GIG_ID
         WHERE package.GIG_ID =  gig.GIG_ID
         AND gig.GIG_STATUS = "COMPLETED"
-        AND gig.GIG_ID = '.$input_gigID['gig_id'].'
+        AND gig.GIG_ID = '.$input_gigID.'
         AND package.PACKAGE_ID = (
         SELECT package.PACKAGE_ID
         FROM package
@@ -373,15 +369,15 @@ class FreelancerController extends Controller
         ORDER BY PRICE ASC
         LIMIT 1)');
 
-        $basic = package::where('GIG_ID',$input_gigID['gig_id'])
+        $basic = package::where('GIG_ID',$input_gigID)
         ->where('PACKAGE_STATUS','BASIC')
         ->get();
 
-        $standard = package::where('GIG_ID',$input_gigID['gig_id'])
+        $standard = package::where('GIG_ID',$input_gigID)
         ->where('PACKAGE_STATUS','STANDARD')
         ->get();
 
-        $premium = package::where('GIG_ID',$input_gigID['gig_id'])
+        $premium = package::where('GIG_ID',$input_gigID)
         ->where('PACKAGE_STATUS','PREMIUM')
         ->get();
 
@@ -418,13 +414,11 @@ class FreelancerController extends Controller
     public function viewFreelancer(Request $request){
         $session= $request->session()->get('user');
 
-        $freelancerID = $request->validate([
-            'freelancer_id'  => 'required|integer|regex:/^[0-9]+$/',
-       ]);
+        $freelancerID = $request->route('fid');
 
-       if (Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])->exists()) {
+       if (Freelancer::where('FREELANCER_ID',$freelancerID)->exists()) {
 
-        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])->get();
+        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID)->get();
 
         $freelancer = json_decode($freelancer[0]);
 
