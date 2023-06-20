@@ -291,89 +291,98 @@ class FreelancerController extends Controller
 
     public function viewGig(){
         $session= request()->session()->get('user');
-
         $input_gigID =  request()->route('id');
 
-       $gig = DB::select(
-        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
-        FROM GIG
-        RIGHT JOIN PACKAGE
-        ON gig.GIG_ID = package.GIG_ID
-        RIGHT JOIN freelancer
-        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
-        RIGHT JOIN users
-        ON FREELANCER.USER_ID = users.USER_ID
-        WHERE package.GIG_ID =  gig.GIG_ID
-        AND gig.GIG_STATUS = "COMPLETED"
-        AND gig.GIG_ID = '.$input_gigID.'
-        AND package.PACKAGE_ID = (
-            SELECT package.PACKAGE_ID
-            FROM package
-            WHERE package.GIG_ID =  gig.GIG_ID
-            AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
-            ORDER BY PRICE ASC
-            LIMIT 1)');
 
-       //convert into json
-       $gigsCounter = DB::select(
-        'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
-        FROM GIG
-        RIGHT JOIN PACKAGE
-        ON gig.GIG_ID = package.GIG_ID
-        RIGHT JOIN freelancer
-        ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
-        RIGHT JOIN users
-        ON FREELANCER.USER_ID = users.USER_ID
-        WHERE package.GIG_ID =  gig.GIG_ID
-        AND gig.GIG_STATUS = "COMPLETED"
-        AND gig.GIG_ID = '.$input_gigID.'
-        AND package.PACKAGE_ID = (
-        SELECT package.PACKAGE_ID
-        FROM package
-        WHERE package.GIG_ID =  gig.GIG_ID
-        AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
-        ORDER BY PRICE ASC
-        LIMIT 1)');
+        if(is_numeric($input_gigID)==true){
 
-        $basic = package::where('GIG_ID',$input_gigID)
-        ->where('PACKAGE_STATUS','BASIC')
-        ->get();
+            $gig = DB::select(
+                'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
+                FROM GIG
+                RIGHT JOIN PACKAGE
+                ON gig.GIG_ID = package.GIG_ID
+                RIGHT JOIN freelancer
+                ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+                RIGHT JOIN users
+                ON FREELANCER.USER_ID = users.USER_ID
+                WHERE package.GIG_ID =  gig.GIG_ID
+                AND gig.GIG_STATUS = "COMPLETED"
+                AND gig.GIG_ID = '.$input_gigID.'
+                AND package.PACKAGE_ID = (
+                    SELECT package.PACKAGE_ID
+                    FROM package
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                    ORDER BY PRICE ASC
+                    LIMIT 1)');
 
-        $standard = package::where('GIG_ID',$input_gigID)
-        ->where('PACKAGE_STATUS','STANDARD')
-        ->get();
+                //convert into json
+                $gigsCounter = DB::select(
+                    'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
+                    FROM GIG
+                    RIGHT JOIN PACKAGE
+                    ON gig.GIG_ID = package.GIG_ID
+                    RIGHT JOIN freelancer
+                    ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+                    RIGHT JOIN users
+                    ON FREELANCER.USER_ID = users.USER_ID
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND gig.GIG_STATUS = "COMPLETED"
+                    AND gig.GIG_ID = '.$input_gigID.'
+                    AND package.PACKAGE_ID = (
+                    SELECT package.PACKAGE_ID
+                    FROM package
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                    ORDER BY PRICE ASC
+                    LIMIT 1)');
 
-        $premium = package::where('GIG_ID',$input_gigID)
-        ->where('PACKAGE_STATUS','PREMIUM')
-        ->get();
+                    $basic = package::where('GIG_ID',$input_gigID)
+                    ->where('PACKAGE_STATUS','BASIC')
+                    ->get();
 
-        $basic = json_decode($basic[0]);
+                    $standard = package::where('GIG_ID',$input_gigID)
+                    ->where('PACKAGE_STATUS','STANDARD')
+                    ->get();
 
-        $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+                    $premium = package::where('GIG_ID',$input_gigID)
+                    ->where('PACKAGE_STATUS','PREMIUM')
+                    ->get();
 
-        $gig = json_decode(json_encode($gig[0]), true);
+                    $basic = json_decode($basic[0]);
 
-        if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
+                    $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
 
-            if(count($standard) === 0){
+                    $gig = json_decode(json_encode($gig[0]), true);
 
-                return view('freelancer.gigSingle')
-                ->with('gig',$gig)
-                ->with('basic',$basic);
+                    if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
 
-            }else{
-                $standard = json_decode($standard[0]);
-                $premium  = json_decode($premium[0]);
-                return view('freelancer.gigSingle')
-                ->with('gig',$gig)
-                ->with('basic',$basic)
-                ->with('standard',$standard)
-                ->with('premium',$premium);
-            };
+                        if(count($standard) === 0){
+
+                            return view('freelancer.gigSingle')
+                            ->with('gig',$gig)
+                            ->with('basic',$basic);
+
+                        }else{
+                            $standard = json_decode($standard[0]);
+                            $premium  = json_decode($premium[0]);
+                            return view('freelancer.gigSingle')
+                            ->with('gig',$gig)
+                            ->with('basic',$basic)
+                            ->with('standard',$standard)
+                            ->with('premium',$premium);
+                        };
+
+                    }else{
+                        return redirect('index');
+                    }
 
         }else{
             return redirect('index');
-        };
+        }
+
+
+
 
     }
 
@@ -391,6 +400,8 @@ class FreelancerController extends Controller
         $user = user::where('USER_ID',$freelancer->USER_ID)->get();
 
         $user = json_decode($user[0]);
+
+        return $user;
 
         if (Address::where('ADDED_BY_USER_ID',$freelancer->USER_ID)->exists()){
 

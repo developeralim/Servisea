@@ -104,8 +104,7 @@
               <div class="position-relative">
                 <h2>{{$gig["GIG_NAME"]}}</h2>
                 <div class="list-meta mt30">
-                <form  method="POST" action="{{route('viewFreelancer')}}" id="freelancer-id">
-                @csrf
+
                 <button type="submit">
                 <a class="list-inline-item mb5-sm">
                     <input name="freelancer_id" value="{{$gig['FREELANCER_ID']}}" hidden />
@@ -116,7 +115,7 @@
                     <span class="fz14">{{$gig["USER_FNAME"]}} {{$gig["USER_LNAME"]}}</span>
                 </a>
                 </button>
-                </form>
+
                   <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="fas fa-star vam fz10 review-color me-2"></i> 4.82 94 reviews</p>
                   <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-file-1 vam fz20 me-2"></i> 2 Order in Queue</p>
                   <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-website vam fz20 me-2"></i> 902 Views</p>

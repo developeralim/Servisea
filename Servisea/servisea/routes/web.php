@@ -53,7 +53,7 @@ Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig']
 
 Route::get('/servisea/viewgig/{id}', [FreelancerController::class, 'viewGig'])->name('viewGig');
 
-Route::post('/servisea/view/freelancer/{id}', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
+Route::get('/servisea/view/freelancer/{id}', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
 
 
 //Index Page
