@@ -380,13 +380,11 @@ class FreelancerController extends Controller
     public function viewFreelancer(Request $request){
         $session= $request->session()->get('user');
 
-        $freelancerID = $request->validate([
-            'freelancer_id'  => 'required|integer|regex:/^[0-9]+$/',
-       ]);
+        $freelancerID = request()->route('id');
 
-       if (Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])->exists()) {
+       if (Freelancer::where('FREELANCER_ID',$freelancerID)->exists()) {
 
-        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID['freelancer_id'])->get();
+        $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID)->get();
 
         $freelancer = json_decode($freelancer[0]);
 
