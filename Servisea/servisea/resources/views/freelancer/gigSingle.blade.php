@@ -659,14 +659,6 @@
   }
 </script> -->
 
-<script type="text/javascript">
-   function viewFreelancer()
-  {
-    document.getElementById("gig-id").action = "{{route('viewGig')}}";
-    document.forms["gig-id"].submit();
-  }
-</script>
-
     <script src="{{asset('backend/THEME/js/jquery-3.6.4.min.js')}}"></script>
     <script src="{{asset('backend/THEME/js/jquery-migrate-3.0.0.min.js')}}"></script>
     <script src="{{asset('backend/THEME/js/popper.min.js')}}"></script>

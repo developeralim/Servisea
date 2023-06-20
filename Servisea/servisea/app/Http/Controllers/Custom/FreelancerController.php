@@ -283,21 +283,19 @@ class FreelancerController extends Controller
 
         if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
             // return view('freelancer.viewAllGig')->with('gigs',$gigs);
-            return view('freelancer.viewGigs')->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
+            return view('freelancer.viewGigs',['test'=> 1])->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
         }else{
             return redirect('index');
         };
     }
 
-    public function viewGig(Request $request){
-        $session= $request->session()->get('user');
+    public function viewGig(){
+        $session= request()->session()->get('user');
 
-        $input_gigID = $request->validate([
-            'gig_id'  => 'required|integer|regex:/^[0-9]+$/',
-       ]);
+        $input_gigID =  request()->route('id');
 
        $gig = DB::select(
-        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,reviews.RATING,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
+        'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
         FROM GIG
         RIGHT JOIN PACKAGE
         ON gig.GIG_ID = package.GIG_ID
@@ -307,7 +305,7 @@ class FreelancerController extends Controller
         ON FREELANCER.USER_ID = users.USER_ID
         WHERE package.GIG_ID =  gig.GIG_ID
         AND gig.GIG_STATUS = "COMPLETED"
-        AND gig.GIG_ID = '.$input_gigID['gig_id'].'
+        AND gig.GIG_ID = '.$input_gigID.'
         AND package.PACKAGE_ID = (
             SELECT package.PACKAGE_ID
             FROM package
@@ -326,11 +324,9 @@ class FreelancerController extends Controller
         ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
         RIGHT JOIN users
         ON FREELANCER.USER_ID = users.USER_ID
-        LEFT OUTER JOIN REVIEWS
-        ON gig.GIG_ID = reviews.GIG_ID
         WHERE package.GIG_ID =  gig.GIG_ID
         AND gig.GIG_STATUS = "COMPLETED"
-        AND gig.GIG_ID = '.$input_gigID['gig_id'].'
+        AND gig.GIG_ID = '.$input_gigID.'
         AND package.PACKAGE_ID = (
         SELECT package.PACKAGE_ID
         FROM package
@@ -339,15 +335,15 @@ class FreelancerController extends Controller
         ORDER BY PRICE ASC
         LIMIT 1)');
 
-        $basic = package::where('GIG_ID',$input_gigID['gig_id'])
+        $basic = package::where('GIG_ID',$input_gigID)
         ->where('PACKAGE_STATUS','BASIC')
         ->get();
 
-        $standard = package::where('GIG_ID',$input_gigID['gig_id'])
+        $standard = package::where('GIG_ID',$input_gigID)
         ->where('PACKAGE_STATUS','STANDARD')
         ->get();
 
-        $premium = package::where('GIG_ID',$input_gigID['gig_id'])
+        $premium = package::where('GIG_ID',$input_gigID)
         ->where('PACKAGE_STATUS','PREMIUM')
         ->get();
 

@@ -213,8 +213,7 @@
           <div class="col-sm-6 col-xl-3">
 
           <div class="listing-style1">
-          <form method="POST" action="{{route('viewGig')}}" id="gig-id">
-           @csrf
+
            @if(isset($gig))
             <input name="gig_id" value="{{$gig->GIG_ID}}" hidden>
             @endif
@@ -236,7 +235,7 @@
                </div>
               <div class="list-content">
                 <p class="list-text body-color fz14 mb-1">{{$gig->GIG_NAME}}</p>
-                <h5 class="list-title"><a onclick="submit()">{{$gig->GIG_DESCRIPTION}}</a></h5>
+                <h5 class="list-title"><a href="{{route('viewGig',$gig->GIG_ID)}}" >{{route('viewGig',$gig->GIG_ID)}} {{$gig->GIG_DESCRIPTION}}</a></h5>
                 <input name="freelancer_id" value="{{$gig->FREELANCER_ID}}" hidden ></input>
                 <div class="review-meta d-flex align-items-center">
                   <i class="fas fa-star fz10 review-color me-2"></i>
@@ -262,7 +261,7 @@
                   </div>
                 </div>
               </div>
-            </form>
+            <!-- </form> -->
             </div>
           </div>
           @endforeach
