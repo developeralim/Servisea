@@ -290,6 +290,7 @@ class FreelancerController extends Controller
             return redirect('index');
         };
     }
+}
 
     public function viewGig(Request $request){
         $session= $request->session()->get('user');
