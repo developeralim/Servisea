@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('FREELANCER_ID');
             $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
 
-            $table->unsignedInteger('PAYMENT_ID');
+            $table->unsignedInteger('PAYMENT_ID')->nullable();
             $table->foreign('PAYMENT_ID')->references('PAYMENT_ID')->on('payment')->onDelete('cascade')->cascadeOnUpdate();
 
             $table->decimal('ORDER_AMOUNT',8,2)->nullable();

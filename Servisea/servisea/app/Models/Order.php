@@ -12,6 +12,7 @@ class Order extends Model
     public $timestamps = false;
     protected $table = 'order';
     protected $fillable = [
+        'ORDER_ID',
         'PACKAGE_ID',
         'USER_ID',
         'FREELANCER_ID',

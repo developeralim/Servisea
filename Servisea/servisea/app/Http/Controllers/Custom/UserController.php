@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Custom;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Freelancer;
+use App\Models\Gig;
 use App\Models\Job_Application;
 use App\Models\Order;
+use App\Models\Package;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +47,36 @@ class UserController extends Controller
         }
     }
 
+    public function orderGig(Request $request)
+    {
+        $pid = $request->route('pid');
+
+        $session= $request->session()->get('user');
+        if(isset($session)&&$session['USER_ROLE']!=2){
+
+            $package = Package::where('PACKAGE_ID',$pid)->get();
+
+            $gig = Gig::where('GIG_ID',$package[0]->GIG_ID)->get();
+
+            $order = Order::create([
+                'PACKAGE_ID' => $pid,
+                'USER_ID' => $package[0]->GIG_ID,
+                'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
+                'ORDER_AMOUNT' => $package[0]->PRICE,
+                'ORDER_DATE' => now(),
+                'ORDER_DUE'=> date('Y-m-d', strtotime(now(). ' + '.$package[0]->DELIVERY_DAYS.'days')),
+                'ORDER_STATUS'=> 'IN PROGRESS',
+                ]);
+
+                $request->Session()->put('order',$order);
+
+            return view('user.checkout');
+
+        }else{
+            return redirect('index');
+        }
+    }
+
     public function acceptApplicant(Request $request)
     {
         $ja_id = $request->route('jaid');
@@ -53,8 +86,6 @@ class UserController extends Controller
 
             Job_Application::where('JA_ID',$ja_id)
            ->update(['JA_STATUS' => 'CONFIRMED']);
-
-           
 
         }else{
             return redirect('index');

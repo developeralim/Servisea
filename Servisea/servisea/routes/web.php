@@ -63,6 +63,7 @@ Route::get('/servisea/user/applicant/accept/{jaid}', [userController::class, 'Ac
 
 
 Route::get('/servisea/view/freelancer/{fid}', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
+Route::get('/servisea/user/order/{pid}', [UserController::class, 'orderGig'])->name('OrderGig');
 
 
 //Index Page
