@@ -41,7 +41,6 @@
           <div class="col-lg-12">
             <div class="main-title">
               <h2 class="title">Shop Checkout</h2>
-              <p class="text mb-0">Give your visitor a smooth online experience with a solid UX design</p>
             </div>
           </div>
         </div>
@@ -54,124 +53,48 @@
         <div class="row wow fadeInUp" data-wow-delay="300ms">
           <div class="col-md-7 col-lg-8">
             <div class="checkout_form">
+            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
               <h4 class="title mb30">Billing details</h4>
               <div class="checkout_coupon">
-                <form class="form2" id="coupon_form" name="contact_form" method="post">
-                  <div class="row">
+                <form class="form2" id="coupon_form" name="contact_form" action="{{route('checkout')}}" method="post">
+                @csrf
+                <div class="row">
                     <div class="col-sm-6">
                       <div class="mb25">
                         <h6 class="mb15">First Name</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
+                        <input class="form-control" type="text" name="First_Name"  placeholder="Ali">
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="mb25">
                         <h6 class="mb15">Last Name</h6>
-                        <input class="form-control" type="text" placeholder="Tufan">
+                        <input class="form-control" type="text" name="Last_Name" placeholder="Tufan">
                       </div>
                     </div>
-                    <div class="col-sm-12">
-                      <div class="mb25">
-                        <h6 class="mb15">Company Name</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
-                      </div>
-                    </div>
+
                     <div class="col-lg-12">
                       <div class="mb25">
-                        <h6 class="mb15">Country / Region *</h6>
-                        <div class="bootselect-multiselect">
-                          <select class="selectpicker">
-                            <option>Select</option>
-                            <option>Turkey</option>
-                            <option>United Kingdom</option>
-                            <option>United State</option>
-                            <option>Ukraine</option>
-                            <option>Uruguay</option>
-                            <option>UK</option>
-                            <option>Uzbekistan</option>
-                          </select>
-                        </div>
+                        <h6 class="mb15">Country</h6>
+                        <input class="form-control" type="text" name="Country" placeholder="Mauritius">
                       </div>
                     </div>
                     <div class="col-sm-12">
                       <div class="mb25">
-                        <h6 class="mb15">House number and street name</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
-                      </div>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="mb25">
-                        <h6 class="mb15">Apartment, suite, unit, etc. (optional)</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
-                      </div>
-                    </div>
-                    <div class="col-lg-12">
-                      <div class="mb25">
-                        <h6 class="mb15">Country / Region *</h6>
-                        <div class="bootselect-multiselect">
-                          <select class="selectpicker">
-                            <option>Turkey</option>
-                            <option>United Kingdom</option>
-                            <option>United State</option>
-                            <option>Ukraine</option>
-                            <option>Uruguay</option>
-                            <option>UK</option>
-                            <option>Uzbekistan</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-12">
-                      <div class="mb25">
-                        <h6 class="mb15">Town / City *</h6>
-                        <div class="bootselect-multiselect">
-                          <select class="selectpicker">
-                            <option data-tokens="California">California</option>
-                            <option data-tokens="Chicago">Chicago</option>
-                            <option data-tokens="LosAngeles">Los Angeles</option>
-                            <option data-tokens="Manhattan">Manhattan</option>
-                            <option data-tokens="NewJersey">New Jersey</option>
-                            <option data-tokens="NewYork">New York</option>
-                            <option data-tokens="SanDiego">San Diego</option>
-                            <option data-tokens="SanFrancisco">San Francisco</option>
-                            <option data-tokens="Texas">Texas</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="mb25">
-                        <h6 class="mb15">State *</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
-                      </div>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="mb25">
-                        <h6 class="mb15">ZIP *</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
-                      </div>
-                    </div>
-                    <div class="col-sm-12">
-                      <div class="mb25">
-                        <h6 class="mb15">Phone *</h6>
-                        <input class="form-control" type="text" placeholder="Ali">
+                        <h6 class="mb15">Phone</h6>
+                        <input class="form-control" type="text" name="Phone" placeholder="Ali">
                       </div>
                     </div>
                     <div class="col-sm-12">
                       <div class="mb25">
                         <h6 class="mb15">Email Address</h6>
-                        <input class="form-control" type="email" placeholder="Ali">
+                        <input class="form-control" type="email" name="Email" placeholder="Ali">
                       </div>
                     </div>
-                    <div class="col-sm-12">
-                      <div class="mb25">
-                        <h4 class="mb15" class="mb15">Additional information</h4>
-                        <h6>Order Notes (optional)</h6>
-                        <textarea name="form_message" class="" rows="7" placeholder="Description"></textarea>
-                      </div>
-                    </div>
+
                   </div>
-                </form>
+
               </div>
             </div>
           </div>
@@ -213,8 +136,9 @@
                 </div>
               </div>
               <div class="d-grid default-box-shadow2">
-                <button class="ud-btn btn-thm">Place Order<i class="fal fa-arrow-right-long"></i></button>
+                <button  class="ud-btn btn-thm" type="submit">Place Order<i class="fal fa-arrow-right-long"></i></button>
               </div>
+              </form>
             </div>
           </div>
         </div>

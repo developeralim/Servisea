@@ -38,7 +38,7 @@
                             <li><a class="dropdown-item" href="#">Billing and Payments</a></li>
                             <li><a class="dropdown-item" href="{{route('viewAllGig')}}">View all Gig</a></li>
                             <li><a class="dropdown-item" href="#">Setting</a></li>
-                            <li><a class="dropdown-item" href="#">Orders</a></li>
+                            <li><a class="dropdown-item" href="{{route('OrderList')}}">Orders</a></li>
                             <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li>
                             <li><a class="dropdown-item" href="{{route('chat.index',[session('user')->USERNAME])}}">Chat</a></li>
                             <li><a class="dropdown-item" href="#">Dispute</a></li>
@@ -195,8 +195,12 @@
                         <li><a href="page-freelancer-single.html">Freelancer Single</a></li>
                       </ul>
                     </li>
+                    @if (Session::get('freelancer') != null )
+                    <li> <a href="page-become-seller.html"><span class="title">Switch to Buyer</span></a></li>
+                    @else
                     <li> <a href="page-become-seller.html"><span class="title">Become Seller</span></a></li>
-                  </ul>
+                    @endif
+                </ul>
                 </li>
                 <li class="visible_list"> <a class="list-item" href="#"><span class="title">Pages</span></a>
                   <ul>
@@ -241,11 +245,15 @@
           </div>
           <div class="col-auto">
             <div class="d-flex align-items-center">
-              <a class="login-info mx15-lg mx30" href="page-become-seller.html"><span class="d-none d-xl-inline-block">Become a</span> Seller</a>
-                @if (Session::get('user') == null )
+            @if (Session::get('user') == null)
                     <a class="login-info mr15-lg mr30" href="{{route('login_user')}}">Sign in</a>
                     <a class="ud-btn btn-white2 add-joining at-home10" href="page-register.html">Join</a>
                 @else
+                @if (Session::get('freelancer') == null )
+                    <a class="login-info mx15-lg mx30" href="page-become-seller.html"><span class="d-none d-xl-inline-block">Become a</span> Seller</a>
+                @else
+                    <a class="login-info mx15-lg mx30" href="page-become-seller.html"><span class="d-none d-xl-inline-block">Switch to</span> Buyer</a>
+                @endif
                     <a class="ud-btn btn-white2 add-joining at-home10" href="page-register.html">Welcome {{Session('user.USERNAME')}}</a>
                 @endif
             </div>

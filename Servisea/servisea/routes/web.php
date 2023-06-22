@@ -13,6 +13,7 @@ use App\Http\Controllers\Custom\UserController;
 use App\Http\Controllers\Custom\CustomController;
 use App\Http\Controllers\Custom\CategoryController;
 use App\Http\Controllers\Custom\FreelancerController;
+use App\Http\Controllers\Custom\stripeController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
@@ -63,14 +64,23 @@ Route::get('/servisea/user/applicant/accept/{jaid}', [userController::class, 'Ac
 
 
 Route::get('/servisea/view/freelancer/{fid}', [FreelancerController::class, 'viewFreelancer'])->name('viewFreelancer');
+Route::get('/servisea/List/order', [UserController::class, 'orderList'])->name('OrderList');
 Route::get('/servisea/user/order/{pid}', [UserController::class, 'orderGig'])->name('OrderGig');
+
+
+Route::post('/servisea/user/checkout', [stripeController::class, 'session'])->name('checkout');
+Route::get('/servisea/user/success', [stripeController::class, 'success'])->name('success');
+
+Route::get('/servisea/user/order/details/{oid}', [userController::class, 'orderdetails'])->name('orderDetails');
+Route::post('/servisea/user/order/close/{oid}', [FreelancerController::class, 'closeOrder'])->name('closeOrder');
+
 
 
 //Index Page
 Route::get('/test', function (request $request) {
 
-    return view('freelancer.freelancerSingle');
-});
+    return view('user.orderList');
+})->name('indexs');
 
 
 

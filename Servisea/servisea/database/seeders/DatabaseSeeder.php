@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
 use App\Models\Freelancer;
+use App\Models\Gig;
+use App\Models\Package;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -42,10 +44,20 @@ class DatabaseSeeder extends Seeder
             ['USER_ID' => 2,  'F_LEVEL' => 1,   'F_DESCRIPTION' =>'Description of Freelancer',  'F_SINCE' => now(),    'F_LANGUAGE' => 'EN'],
         ];
 
+        $gig= [
+            ['CATEGORY_ID'=>1,  'FREELANCER_ID' => 1,   'GIG_NAME' =>'Name of gig',  'GIG_DESCRIPTION' => 'Description of Gig',    'GIG_REQUIREMENTS' => 'Requirements of Gig' , 'GIG_STATUS' => 'COMPLETED'],
+        ];
+
+        $package= [
+            ['PACKAGE_NAME'=>1,  'PRICE' => 1.00,   'GIG_ID' =>1,  'PACKAGE_DESCRIPTION' => 'Description of Package', 'DELIVERY_DAYS' => 2 ,'REVISION' => 'Unlimited' , 'PACKAGE_STATUS' => 'BASIC'],
+        ];
+
 
         Category::insert($category);
         User::insert($user);
         Freelancer::insert($freelancer);
+        Gig::insert($gig);
+        Package::insert($package);
 
 
     }

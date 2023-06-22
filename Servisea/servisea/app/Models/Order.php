@@ -20,6 +20,7 @@ class Order extends Model
         'ORDER_AMOUNT',
         'ORDER_DATE',
         'ORDER_DUE',
+        'ORDER_DELIVERABLES',
         'ORDER_STATUS',
     ];
 }

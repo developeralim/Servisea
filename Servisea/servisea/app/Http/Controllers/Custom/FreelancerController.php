@@ -41,6 +41,44 @@ class FreelancerController extends Controller
         }
     }
 
+    public function closeOrder(request $request){
+        $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
+        // if ($request->hasfile('order_deliverables')) {
+        //     foreach ($request->file('order_deliverables') as $file) {
+        //         $name = $file->getClientOriginalName();
+        //         //$file->move(public_path() . '/mytestfile/', $name);
+        //         $data[] = $name;
+        //     }
+        //     return back()->with('Success!','Data Added!');
+        // }
+
+                $files = $request->File('order_deliverables');
+                $a = array();
+                foreach($files as $file){
+
+                    $name = $file->getClientOriginalName();
+                    array_push($a,$name);
+                }
+
+                return $a;
+
+
+                // return $packageInput;
+
+            //    if($request->hasFile('order_deliverables')){
+            //     $fileName = $request->file('order_deliverables')->getClientOriginalName();
+            //     return $fileName;
+            //     //$request->file('USER_IMG')->storeAs('public/images/',$imageName);
+            //    }else{
+            //     return 'no file';
+            //    }
+
+    }
+
+
+
     public function applyJob(Request $request){
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
@@ -243,7 +281,6 @@ class FreelancerController extends Controller
 
     }
 
-
     public function switchToBuyer(Request $request){
         $session= $request->session()->get('user');
 
@@ -440,7 +477,6 @@ class FreelancerController extends Controller
 
 
     }
-
 
     public function Order(Request $request){
 

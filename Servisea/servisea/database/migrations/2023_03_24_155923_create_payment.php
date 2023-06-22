@@ -19,7 +19,16 @@ return new class extends Migration
             $table->enum('PAYMENT_METHOD',['CARDS','PAYPAL'])->nullable();
             $table->decimal('PAYMENT_AMOUNT',8,2)->nullable();
             $table->string('PAYMENT_CURRENCY')->nullable();
+            $table->string('PAYMENT_INTENT')->nullable();
+
+            $table->string('BILL_LNAME')->nullable();
+            $table->string('BILL_FNAME')->nullable();
+            $table->string('BILL_EMAIL')->nullable();
+            $table->String('BILL_TEL')->nullable();
+            $table->String('BILL_COUNTRY')->nullable();
+
             $table->enum('PAYMENT_STATUS',['PENDING','ACCEPTED','FAILED'])->nullable();
+            $table->timestamps();
         });
     }
 

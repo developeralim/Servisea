@@ -17,7 +17,12 @@ class Payment extends Model
         'PAYMENT_METHOD',
         'PAYMENT_AMOUNT',
         'PAYMENT_CURRENCY',
-        'PAYMENT_STATUS'
+        'PAYMENT_STATUS',
+        'PAYMENT_INTENT',
+        'BILL_LNAME',
+        'BILL_FNAME',
+        'BILL_TEL',
+        'BILL_COUNTRY'
     ];
 
 }

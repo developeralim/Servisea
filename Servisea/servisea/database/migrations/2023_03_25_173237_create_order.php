@@ -27,13 +27,12 @@ return new class extends Migration
             $table->foreign('PAYMENT_ID')->references('PAYMENT_ID')->on('payment')->onDelete('cascade')->cascadeOnUpdate();
 
             $table->decimal('ORDER_AMOUNT',8,2)->nullable();
-
             $table->dateTime('ORDER_DATE')->nullable();
-
             $table->date('ORDER_DUE')->nullable();
+            $table->string('ORDER_DELIVERABLES')->nullable();
 
             $table->enum('ORDER_STATUS',['CANCELLED','COMPLETED','IN PROGRESS'])->nullable();
-
+            $table->timestamps();
         });
     }
 

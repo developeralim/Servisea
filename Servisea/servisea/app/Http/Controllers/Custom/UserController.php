@@ -50,27 +50,24 @@ class UserController extends Controller
     public function orderGig(Request $request)
     {
         $pid = $request->route('pid');
-
         $session= $request->session()->get('user');
+
         if(isset($session)&&$session['USER_ROLE']!=2){
 
             $package = Package::where('PACKAGE_ID',$pid)->get();
-
             $gig = Gig::where('GIG_ID',$package[0]->GIG_ID)->get();
 
-            $order = Order::create([
-                'PACKAGE_ID' => $pid,
-                'USER_ID' => $package[0]->GIG_ID,
-                'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
-                'ORDER_AMOUNT' => $package[0]->PRICE,
+            $orderDetails = ['PACKAGE_ID' => $pid,
+                'USER_ID' => $session['USER_ID'],
+                 'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
+                 'ORDER_AMOUNT' => $package[0]->PRICE,
                 'ORDER_DATE' => now(),
-                'ORDER_DUE'=> date('Y-m-d', strtotime(now(). ' + '.$package[0]->DELIVERY_DAYS.'days')),
-                'ORDER_STATUS'=> 'IN PROGRESS',
-                ]);
+                'ORDER_DUE'=> date('Y-m-d', strtotime(now().' + '.$package[0]->DELIVERY_DAYS.'days')),
+                'ORDER_STATUS'=> 'IN PROGRESS'];
 
-                $request->Session()->put('order',$order);
+                $request->Session()->put('orderDetails',$orderDetails);
 
-            return view('user.checkout');
+                return view('user.checkout');
 
         }else{
             return redirect('index');
@@ -117,6 +114,86 @@ class UserController extends Controller
             return redirect('index');
         }
     }
+
+    public function orderList(Request $request)
+    {
+        $session= $request->session()->get('user');
+        if(isset($session)){
+
+
+            $session= $request->session()->get('freelancer');
+
+            if(order::where(['FREELANCER_ID'=>$session['FREELANCER_ID']])->exists()){
+
+                $orders = DB::select('SELECT *
+                FROM fms.order AS orders
+                RIGHT JOIN package
+                ON orders.PACKAGE_ID = package.PACKAGE_ID
+                RIGHT JOIN gig
+                ON gig.GIG_ID = package.GIG_ID
+                WHERE orders.FREELANCER_ID ='.$session['FREELANCER_ID'].';');
+
+                   return view('user.orderList',['orders'=>$orders]);
+               }else{
+                if(order::where(['USER_ID'=>$session['USER_ID']])->exists()){
+
+                    $orders = DB::select('SELECT *
+                    FROM fms.order AS orders
+                    RIGHT JOIN package
+                    ON orders.PACKAGE_ID = package.PACKAGE_ID
+                    RIGHT JOIN gig
+                    ON gig.GIG_ID = package.GIG_ID
+                    WHERE orders.USER_ID ='.$session['USER_ID'].';');
+
+                       return view('user.orderList',['orders'=>$orders]);
+                   }else{
+                       return view('user.orderList');
+                   }
+               }
+
+
+
+
+        }else{
+            return redirect('index');
+        }
+    }
+
+    public function orderdetails(Request $request)
+    {
+        $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+         $oid= $request->route('oid');
+
+        if(isset($session)||isset($freelancer)){
+
+            if(
+            order::where(['USER_ID'=>$session['USER_ID']])->exists()||
+            order::where(['FREELANCER_ID'=>$freelancer['FREELANCER_ID']])->exists()
+            ){
+
+             $orders = DB::select('SELECT *
+             FROM fms.order AS orders
+             RIGHT JOIN package
+             ON orders.PACKAGE_ID = package.PACKAGE_ID
+             RIGHT JOIN gig
+             ON gig.GIG_ID = package.GIG_ID
+             RIGHT JOIN freelancer
+             ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+             RIGHT JOIN users
+             ON users.USER_ID = freelancer.USER_ID
+             WHERE orders.ORDER_ID ='.$oid.';');
+
+                return view('user.orderDetails',['orders'=>$orders]);
+            }else{
+                return view('user.orderList');
+            }
+
+        }else{
+            return redirect('index');
+        }
+    }
+
 
     public function DeleteProfile(Request $request)
     {
