@@ -17,6 +17,7 @@ class reviews extends Model
         'GIG_ID',
         'RATING',
         'DESCRIPTION',
+        'ORDER_ID',
     ];
 
 }

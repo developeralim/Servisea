@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('RATING')->nullable();
             $table->string('DESCRIPTION')->nullable();
 
+            $table->unsignedInteger('ORDER_ID');
+            $table->foreign('ORDER_ID')->references('ORDER_ID')->on('order')->onDelete('cascade')->cascadeOnUpdate();
+
         });
     }
 

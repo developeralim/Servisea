@@ -31,7 +31,7 @@ return new class extends Migration
             $table->date('ORDER_DUE')->nullable();
             $table->string('ORDER_DELIVERABLES')->nullable();
 
-            $table->enum('ORDER_STATUS',['CANCELLED','COMPLETED','IN PROGRESS'])->nullable();
+            $table->enum('ORDER_STATUS',['CANCELLED','COMPLETED','READY','IN PROGRESS'])->nullable();
             $table->timestamps();
         });
     }

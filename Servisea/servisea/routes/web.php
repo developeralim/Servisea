@@ -15,6 +15,8 @@ use App\Http\Controllers\Custom\CategoryController;
 use App\Http\Controllers\Custom\FreelancerController;
 use App\Http\Controllers\Custom\stripeController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,16 @@ Route::get('/servisea/user/success', [stripeController::class, 'success'])->name
 
 Route::get('/servisea/user/order/details/{oid}', [userController::class, 'orderdetails'])->name('orderDetails');
 Route::post('/servisea/user/order/close/{oid}', [FreelancerController::class, 'closeOrder'])->name('closeOrder');
+
+//Download File
+Route::get('/servisea/download/file/{filename}', [UserController::class, 'dlFile'])->name('dlFile');
+
+//Confirm Order
+Route::get('/servisea/confirm/{oid}', [UserController::class, 'confirmOrder'])->name('confirmOrder');
+
+//Rate Gig
+Route::post('/servisea/rate/order/{oid}', [UserController::class, 'rateGig'])->name('rateGig');
+
 
 
 

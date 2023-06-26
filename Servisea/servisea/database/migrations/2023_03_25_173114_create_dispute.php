@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('USER_ID');
             $table->unsignedInteger('EMPLOYEE_ID');
             $table->unsignedInteger('DEPARTMENT_ID');
+            $table->unsignedInteger('FREELANCER_ID')->nullable();
             $table->string('DISPUTE_TITLE')->nullable();
             $table->string('DISPUTE_DESCRIPTION')->nullable();
             $table->string('DISPUTE_SOLUTION')->nullable();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->foreign('USER_ID')->references('USER_ID')->on('users')->onDelete('cascade')->cascadeOnUpdate();
             $table->foreign('EMPLOYEE_ID')->references('EMPLOYEE_ID')->on('employee')->onDelete('cascade')->cascadeOnUpdate();
             $table->foreign('DEPARTMENT_ID')->references('DEPARTMENT_ID')->on('department')->onDelete('cascade')->cascadeOnUpdate();
+            $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
 
         });
     }

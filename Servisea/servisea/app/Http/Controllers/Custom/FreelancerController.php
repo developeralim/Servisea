@@ -12,10 +12,16 @@ use App\Models\Freelancer;
 use App\Models\Category;
 use App\Models\Gig;
 use App\Models\Job_Application;
+use App\Models\Order;
+use App\Models\orderAttachment;
 use App\Models\Package;
 use App\Models\reviews;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Encryption\DecryptException;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 use function Pest\Laravel\get;
 
@@ -44,40 +50,48 @@ class FreelancerController extends Controller
     public function closeOrder(request $request){
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
+        $order_id = Crypt::decryptString( $request->route('oid'));
 
-        // if ($request->hasfile('order_deliverables')) {
-        //     foreach ($request->file('order_deliverables') as $file) {
-        //         $name = $file->getClientOriginalName();
-        //         //$file->move(public_path() . '/mytestfile/', $name);
-        //         $data[] = $name;
-        //     }
-        //     return back()->with('Success!','Data Added!');
-        // }
+            $files = $request->File('order_deliverables');
+            $a = array();
 
-                $files = $request->File('order_deliverables');
-                $a = array();
-                foreach($files as $file){
+            if(OrderAttachment::where('ORDER_ID',$order_id)->exists()){
+                $orderDeliverables = Order::where('ORDER_ID',$order_id)->get('ORDER_DELIVERABLES');
+                $names = explode("|", $orderDeliverables[0]['ORDER_DELIVERABLES']);
+                foreach($names as $name){
+                    Storage::delete(public_path('deliverables/'.$name));
+                    OrderAttachment::where(['ORDER_ID'=>$order_id,'MEDIA_PATH'=>$name])->delete();
+                }
+            }
 
-                    $name = $file->getClientOriginalName();
-                    array_push($a,$name);
+            foreach($files as $file){
+
+                $destination_path = 'public/deliverables';
+
+                orderAttachment::create([
+                    'ORDER_ID' => $order_id,
+                    'MEDIA_PATH' => str_replace(' ', '', $file->getClientOriginalName())
+                ]);
+
+                $file->storeAs($destination_path,str_replace(' ', '', $file->getClientOriginalName()));
+
+                $filename =str_replace(' ', '', $file->getClientOriginalName());
+
+                if(isset($filesname)){
+                    $filesname= $filesname.'|'.$filename;
+                }else{
+                    $filesname= $filename;
                 }
 
-                return $a;
 
+            }
 
-                // return $packageInput;
+            Order::where('ORDER_ID',$order_id)->update([
+                'ORDER_DELIVERABLES' => $filesname
+            ]);
 
-            //    if($request->hasFile('order_deliverables')){
-            //     $fileName = $request->file('order_deliverables')->getClientOriginalName();
-            //     return $fileName;
-            //     //$request->file('USER_IMG')->storeAs('public/images/',$imageName);
-            //    }else{
-            //     return 'no file';
-            //    }
-
+            return redirect(route("orderDetails",$order_id));
     }
-
-
 
     public function applyJob(Request $request){
         $session= $request->session()->get('user');

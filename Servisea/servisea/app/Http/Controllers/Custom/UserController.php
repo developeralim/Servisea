@@ -8,13 +8,17 @@ use App\Models\Freelancer;
 use App\Models\Gig;
 use App\Models\Job_Application;
 use App\Models\Order;
+use App\Models\orderAttachment;
 use App\Models\Package;
 use App\Models\Payment;
+use App\Models\reviews;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -89,6 +93,79 @@ class UserController extends Controller
         }
     }
 
+    public function dlFile(Request $request)
+    {
+        $filename = Crypt::decryptString( $request->route('filename'));
+
+        $session= $request->session()->get('user');
+        if(isset($session)&&isset($filename)){
+
+            if(Storage::disk('public')->exists("deliverables/$filename")) {
+
+                $absolutePath = Storage::disk('public')->path("deliverables/$filename");
+                $content = file_get_contents($absolutePath);
+                ob_end_clean();
+                return response($content)->withHeaders(['Content-Type' => mime_content_type($absolutePath)]);
+            }
+            return redirect('/404');
+
+        }else{
+            return redirect('index');
+        }
+    }
+
+
+    public function confirmOrder(Request $request)
+    {
+        $oid = Crypt::decryptString( $request->route('oid'));
+
+        $session= $request->session()->get('user');
+        if(isset($session)&&isset($oid)){
+
+            Order::where('ORDER_ID',$oid)
+           ->update([
+                    'ORDER_STATUS' => 'COMPLETED'
+                ]);
+
+            return redirect(route('orderDetails',$oid));
+
+        }else{
+            return redirect('index');
+        }
+    }
+
+
+    public function rateGig(Request $request)
+    {
+        $oid = Crypt::decryptString( $request->route('oid'));
+
+        $revInput = $request->validate([
+            'reviewDescription'      => 'required|min:8|regex:/^[@A-Za-z0-9_@ ]+$/',
+            'selected_rating'        => 'required|string|regex:/^[0-9]+$/',
+       ]);
+
+        $session= $request->session()->get('user');
+        if(isset($session)&&isset($oid)){
+
+            $gigID = Order::select('GIG_ID')
+            ->join('package', 'package.PACKAGE_ID', '=', 'order.PACKAGE_ID')
+            ->where('ORDER_ID',$oid)
+            ->get();
+
+            reviews::CREATE([
+                    "GIG_ID" => $gigID[0]['GIG_ID'],
+                    "RATING" => $revInput['selected_rating'],
+                    "DESCRIPTION" => $revInput['reviewDescription'],
+                    "ORDER_ID" => $oid,
+
+                ]);
+
+            return redirect(route('orderDetails',$oid));
+
+        }else{
+            return redirect('index');
+        }
+    }
 
     public function listApplicants(Request $request)
     {
@@ -120,22 +197,9 @@ class UserController extends Controller
         $session= $request->session()->get('user');
         if(isset($session)){
 
+            $freelancer = $request->session()->get('freelancer');
 
-            $session= $request->session()->get('freelancer');
-
-            if(order::where(['FREELANCER_ID'=>$session['FREELANCER_ID']])->exists()){
-
-                $orders = DB::select('SELECT *
-                FROM fms.order AS orders
-                RIGHT JOIN package
-                ON orders.PACKAGE_ID = package.PACKAGE_ID
-                RIGHT JOIN gig
-                ON gig.GIG_ID = package.GIG_ID
-                WHERE orders.FREELANCER_ID ='.$session['FREELANCER_ID'].';');
-
-                   return view('user.orderList',['orders'=>$orders]);
-               }else{
-                if(order::where(['USER_ID'=>$session['USER_ID']])->exists()){
+                if(isset($freelancer)){
 
                     $orders = DB::select('SELECT *
                     FROM fms.order AS orders
@@ -143,16 +207,26 @@ class UserController extends Controller
                     ON orders.PACKAGE_ID = package.PACKAGE_ID
                     RIGHT JOIN gig
                     ON gig.GIG_ID = package.GIG_ID
-                    WHERE orders.USER_ID ='.$session['USER_ID'].';');
+                    WHERE orders.FREELANCER_ID ='.$freelancer['FREELANCER_ID'].';');
 
                        return view('user.orderList',['orders'=>$orders]);
+
                    }else{
-                       return view('user.orderList');
+                    if(order::where(['USER_ID'=>$session['USER_ID']])->exists()){
+
+                        $orders = DB::select('SELECT *
+                        FROM fms.order AS orders
+                        RIGHT JOIN package
+                        ON orders.PACKAGE_ID = package.PACKAGE_ID
+                        RIGHT JOIN gig
+                        ON gig.GIG_ID = package.GIG_ID
+                        WHERE orders.USER_ID ='.$session['USER_ID'].';');
+
+                           return view('user.orderList',['orders'=>$orders]);
+                       }else{
+                           return view('user.orderList');
+                       }
                    }
-               }
-
-
-
 
         }else{
             return redirect('index');
@@ -163,7 +237,7 @@ class UserController extends Controller
     {
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
-         $oid= $request->route('oid');
+        $oid= $request->route('oid');
 
         if(isset($session)||isset($freelancer)){
 
@@ -172,7 +246,8 @@ class UserController extends Controller
             order::where(['FREELANCER_ID'=>$freelancer['FREELANCER_ID']])->exists()
             ){
 
-             $orders = DB::select('SELECT *
+             $orders = DB::select(
+            'SELECT *
              FROM fms.order AS orders
              RIGHT JOIN package
              ON orders.PACKAGE_ID = package.PACKAGE_ID
@@ -184,11 +259,20 @@ class UserController extends Controller
              ON users.USER_ID = freelancer.USER_ID
              WHERE orders.ORDER_ID ='.$oid.';');
 
+             if(orderAttachment::where('ORDER_ID',$oid)->exists()){
+                $attachment = orderAttachment::where('ORDER_ID',$oid)->get();
+
+                if(reviews::where('ORDER_ID',$oid)->exists()){
+                    $review = reviews::where('ORDER_ID',$oid)->get();
+                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review[0]]);
+                }else{
+                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment]);
+                }
+             }
                 return view('user.orderDetails',['orders'=>$orders]);
             }else{
                 return view('user.orderList');
             }
-
         }else{
             return redirect('index');
         }
