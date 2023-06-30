@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\custom;
 
 use App\Http\Controllers\Controller;
+use App\Mail\orderMail;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use \Stripe\StripeClient;
 
 class stripeController extends Controller
@@ -37,14 +39,15 @@ class stripeController extends Controller
                         'product_data' => [
                             'name' => $session['USERNAME'],
                         ],
-                        'unit_amount'  => $orderDetails['ORDER_AMOUNT'],
+                        'unit_amount'  => ($orderDetails['ORDER_AMOUNT']*100),
                     ],
                     'quantity'   => 1,
                 ],
             ],
             'mode'        => 'payment',
             'success_url' => route('success'),
-            'cancel_url'  => route('checkout'),
+
+        'cancel_url'  => route('index'),
         ]);
 
 
@@ -58,10 +61,12 @@ class stripeController extends Controller
     {
 
         $bill= $request->session()->get('bill');
-
         $stripe = new \Stripe\StripeClient('sk_test_51NLJEjJylGbEvkNuFMvA5PPqJMRjRhNtoywaYFYsMyWbKspT6ZXleUQTOvoMdLFKc80v5Z8QMuEYXUDfWVgRFNn200V3N2orct');
         $stripe = $stripe->checkout->sessions->retrieve($request->session()->get('id'),[]);
         $orderDetails= $request->session()->get('orderDetails');
+        $s_user= $request->session()->get('user');
+
+
 
         $payment = Payment::create([
             'PAYMENT_DATE' => now(),
@@ -77,8 +82,6 @@ class stripeController extends Controller
             'BILL_COUNTRY' => $bill['Country'],
             ]);
 
-            //return payment id
-
         $order = Order::create([
         'PACKAGE_ID' => $orderDetails['PACKAGE_ID'],
         'USER_ID' => $orderDetails['USER_ID'],
@@ -87,8 +90,10 @@ class stripeController extends Controller
         'ORDER_DATE' => now(),
         'ORDER_DUE'=>$orderDetails['ORDER_DUE'],
         'ORDER_STATUS'=> 'IN PROGRESS',
-        'PAYMENT' => $payment['id']]
+        'PAYMENT_ID' => $payment['id']]
         );
+
+        Mail::to($s_user['USER_EMAIL'])->send(new orderMail($order['id'],$order['ORDER_DATE'],$order['ORDER_AMOUNT'],$order['PAYMENT_ID'],$payment['PAYMENT_METHOD'],));
 
         return redirect('/servisea/List/order');
 

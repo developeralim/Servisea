@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreign('EMPLOYEE_ID')->references('EMPLOYEE_ID')->on('employee')->onDelete('cascade')->cascadeOnUpdate();
             $table->foreign('DEPARTMENT_ID')->references('DEPARTMENT_ID')->on('department')->onDelete('cascade')->cascadeOnUpdate();
             $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
-
+            $table->timestamps();
         });
     }
 

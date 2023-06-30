@@ -15,6 +15,7 @@ use App\Http\Controllers\Custom\CategoryController;
 use App\Http\Controllers\Custom\FreelancerController;
 use App\Http\Controllers\Custom\stripeController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Models\department;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 
@@ -85,14 +86,19 @@ Route::get('/servisea/confirm/{oid}', [UserController::class, 'confirmOrder'])->
 //Rate Gig
 Route::post('/servisea/rate/order/{oid}', [UserController::class, 'rateGig'])->name('rateGig');
 
+//Request Modifications
+Route::post('/servisea/modification/created/{oid}', [UserController::class, 'requestModifications'])->name('createModif');
+
+//Request Disputes
+Route::post('/servisea/dispute/created/{oid}', [UserController::class, 'requestDispute'])->name('createDispute');
 
 
 
 //Index Page
 Route::get('/test', function (request $request) {
 
-    return view('user.orderList');
-})->name('indexs');
+    return view('index');
+})->name('index');
 
 
 
@@ -114,7 +120,8 @@ Route::get('/order/requirement', function (request $request) {
 Route::get('/index', function (request $request) {
 
     $category = Category::all();
-    $request->session()->put('categoryList',$category);
+    $department = department::all();
+    $request->session()->put(['categoryList'=>$category,'departmentList'=>$department]);
 
     return view('index');
 });

@@ -87,7 +87,8 @@ class FreelancerController extends Controller
             }
 
             Order::where('ORDER_ID',$order_id)->update([
-                'ORDER_DELIVERABLES' => $filesname
+                'ORDER_DELIVERABLES' => $filesname,
+                'ORDER_STATUS' => 'READY',
             ]);
 
             return redirect(route("orderDetails",$order_id));

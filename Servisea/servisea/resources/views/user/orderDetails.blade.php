@@ -65,6 +65,36 @@
         <div class="col-lg-8">
         <div class="checkout_form">
 
+        @if (isset($modifications))
+        <div class="checkout_coupon">
+                <div class="form2">
+                <div class="row">
+                    <div class="col-sm-6">
+                      <div class="mb25">
+                        <div class="d-grid mt15">
+                        <div class="service-about">
+                            <h4 class="mb30">Modifications Requested:</h4>
+                            @foreach($modifications as $modification)
+                            <div class="educational-quality">
+                                <div class="m-circle text-thm">M</div>
+                                <div class="wrapper mb40">
+                                <span class="tag">{{date('d-m-Y', strtotime($modification->updated_at))}}</span>
+                                <h5 class="mt15">{{$modification->MODIF_REQUIREMENTS}}</h5>
+                                </div>
+                            </div>
+
+                            @endforeach
+                        </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="opacity-100 mb60">
+        @endif
+
             <h4 class="title mb30 ">Deliverable</h4>
               <div class="checkout_coupon">
                 <form class="form2" id="coupon_form"  enctype="multipart/form-data" action="{{route('closeOrder',Crypt::encryptString($order->ORDER_ID))}}" name="order_form" method="post">
@@ -77,7 +107,6 @@
                             @if ($order->ORDER_DELIVERABLES != null )
 
                             @if (isset($orderAttachment))
-                            <h5 class="title mb30 ">Please download deliverable here:</h5>
                             <div class="row">
                                 @foreach($orderAttachment as $attachment)
                                  {{$attachment->MEDIA_PATH}}
@@ -103,9 +132,7 @@
                         @else
                         <h3 class="title mb30 ">Please Find Attached your file here</h3>
                             @if ($order->ORDER_DELIVERABLES != null )
-
                             @if (isset($orderAttachment))
-                            <h5 class="title mb30 ">Please download deliverable here:</h5>
                             <div class="row">
                                 @foreach($orderAttachment as $attachment)
                                  {{$attachment->MEDIA_PATH}}
@@ -119,7 +146,15 @@
                                 @if($order->ORDER_STATUS != 'COMPLETED')
                                 <div class="d-grid gap-5 d-md-block mt15">
                                 <!-- Button trigger modal -->
+                                @if(isset($modifications))
+                                @if($order->REVISION == 'Unlimited' || $order->REVISION == 'UNLIMITED' )
                                 <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                @elseif((count($modifications)+1)<((int)$order->REVISION))
+                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                @endif
+                                @else
+                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                @endif
                                 <a href="{{route('confirmOrder',Crypt::encryptString($order->ORDER_ID))}}"><button type="button" href="#" class="ud-btn btn-light-thm no-border">Confirm Order</button></a>
                                 </div>
                                 @endif
@@ -140,6 +175,7 @@
                 @if($order->ORDER_STATUS == 'COMPLETED' && Session::get('freelancer') == null)
               <form class="bsp_reveiw_wrt" name="review-form" id="review-form" action="{{route('rateGig',Crypt::encryptString($order->ORDER_ID))}}" method="post">
               @csrf
+              <hr class="opacity-100 mb60">
               @if(isset($review))
               <h6 class="fz17">Review:</h6>
               @else
@@ -218,14 +254,20 @@
 
               <div class="d-grid mt40">
               @if (Session::get('freelancer') != null )
+              @if(!isset($dispute))
               <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
                 <br>
+               @license MIT
+              @endif
               <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Project Owner<i class="fal fa-arrow-right-long"></i></a>
               @else
+              @if(!isset($dispute))
               <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
                 <br>
+                @endif
                 <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Seller<i class="fal fa-arrow-right-long"></i></a>
-              @endif
+
+                @endif
             </div>
             </div>
           </div>
@@ -248,14 +290,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-
-        </form>
+        <form action="{{route('createModif',Crypt::encryptString($order->ORDER_ID))}}" method="POST">
+            @csrf
+        <div class="col-md-12">
+            <div class="mb10">
+                <label class="heading-color ff-heading fw500 mb10">New Modification</label>
+                <textarea cols="30" rows="6" name="modifications" placeholder="Description"></textarea>
+            </div>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -270,15 +318,44 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="{{route('createDispute',Crypt::encryptString($order->ORDER_ID))}}" method="POST">
+            @csrf
       <div class="modal-body">
-        <form>
-            
-        </form>
+        <div class="col-sm-12">
+            <div class="mb20">
+                <label class="heading-color ff-heading fw500 mb10">Dispute Title</label>
+                <input type="text" name="Dispute_Title" class="form-control" placeholder="i will">
+            </div>
+            </div>
+        <div class="col-md-12">
+            <div class="mb10">
+                <label class="heading-color ff-heading fw500 mb10">Dispute Detail</label>
+                <textarea cols="30" rows="6" name="Dispute_Description" placeholder="Description"></textarea>
+            </div>
+            </div>
+            <div class="col-sm-12">
+            <div class="mb20">
+                <div class="form-style1">
+                <label class="heading-color ff-heading fw500 mb10">Issue</label>
+                <div class="bootselect-multiselect">
+                    <select name="Department" class="selectpicker">
+                    @if(isset($departments))
+                    @foreach($departments as $department)
+                    <option value="{{$department->DEPARTMENT_ID}}">{{$department->DEPARTMENT_NAME}}</option>
+                    @endforeach
+                    @endif
+                    </select>
+                </div>
+                </div>
+            </div>
+            </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+      </form>
     </div>
   </div>
 </div>

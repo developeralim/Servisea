@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\department;
+use App\Models\dispute;
 use App\Models\Freelancer;
 use App\Models\Gig;
 use App\Models\Job_Application;
@@ -14,9 +16,12 @@ use App\Models\Payment;
 use App\Models\reviews;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Mail\orderMail;
+use App\Models\modification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,6 +34,79 @@ class UserController extends Controller
             return view("user.register");
         }else{
             return redirect('login_user');
+        }
+
+    }
+
+    public function requestDispute(Request $request){
+
+        $user= $request->session()->get('user');
+
+        $oid = Crypt::decryptString( $request->route('oid'));
+
+        $disputeInput = $request->validate([
+            'Dispute_Title'      => 'required|min:8|regex:/^[@A-Za-z0-9_@ ]+$/',
+            'Dispute_Description'      => 'required|min:8|regex:/^[@A-Za-z0-9_@ ]+$/',
+            'Department'      => 'required|regex:/^[@A-Za-z0-9_@ ]+$/',
+        ]);
+
+        if(isset($user)&&isset($oid)){
+
+            $orders = DB::select(
+                'SELECT *
+                 FROM fms.order AS orders
+                 RIGHT JOIN package
+                 ON orders.PACKAGE_ID = package.PACKAGE_ID
+                 RIGHT JOIN gig
+                 ON gig.GIG_ID = package.GIG_ID
+                 RIGHT JOIN freelancer
+                 ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                 RIGHT JOIN users
+                 ON users.USER_ID = freelancer.USER_ID
+                 WHERE orders.ORDER_ID ='.$oid.';');
+
+            dispute::create([
+                'USER_ID' => $user['USER_ID'],
+                'EMPLOYEE_ID' => 1,
+                'DEPARTMENT_ID'=> $disputeInput['Department'],
+                'DISPUTE_TITLE'=> $disputeInput['Dispute_Title'],
+                'FREELANCER_ID' => $orders[0]->FREELANCER_ID,
+                'DISPUTE_DESCRIPTION' => $disputeInput['Dispute_Description'],
+                'DISPUTE_SOLUTION'=> null,
+                'DISPUTE_DATECREATED' => now(),
+                'DISPUTE_STATUS' => 'PENDING',
+                'ORDER_ID' => $oid,
+                ]);
+
+            return view('user.Dispute.dispute',['oid'=>$oid]);
+
+        }else{
+            return redirect('index');
+        }
+
+    }
+
+    public function requestModifications(Request $request){
+
+        $user= $request->session()->get('user');
+
+        $oid = Crypt::decryptString( $request->route('oid'));
+
+        $modifInput = $request->validate([
+            'modifications'      => 'required|min:8|regex:/^[@A-Za-z0-9_@ ]+$/',
+       ]);
+
+        if(isset($user)&&isset($oid)){
+
+            modification::create([
+                    'MODIF_REQUIREMENTS' => $modifInput['modifications'],
+                    'ORDER_ID' => $oid
+                ]);
+
+            return view('user.modifications.modification',['oid'=>$oid]);
+
+        }else{
+            return redirect('index');
         }
 
     }
@@ -63,8 +141,8 @@ class UserController extends Controller
 
             $orderDetails = ['PACKAGE_ID' => $pid,
                 'USER_ID' => $session['USER_ID'],
-                 'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
-                 'ORDER_AMOUNT' => $package[0]->PRICE,
+                'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
+                'ORDER_AMOUNT' => $package[0]->PRICE,
                 'ORDER_DATE' => now(),
                 'ORDER_DUE'=> date('Y-m-d', strtotime(now().' + '.$package[0]->DELIVERY_DAYS.'days')),
                 'ORDER_STATUS'=> 'IN PROGRESS'];
@@ -121,6 +199,8 @@ class UserController extends Controller
 
         $session= $request->session()->get('user');
         if(isset($session)&&isset($oid)){
+
+            Order::where('ORDER_ID',$oid);
 
             Order::where('ORDER_ID',$oid)
            ->update([
@@ -239,6 +319,10 @@ class UserController extends Controller
         $freelancer= $request->session()->get('freelancer');
         $oid= $request->route('oid');
 
+        $department = department::all();
+
+
+
         if(isset($session)||isset($freelancer)){
 
             if(
@@ -264,12 +348,36 @@ class UserController extends Controller
 
                 if(reviews::where('ORDER_ID',$oid)->exists()){
                     $review = reviews::where('ORDER_ID',$oid)->get();
-                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review[0]]);
+
+                    if(modification::where('ORDER_ID',$oid)->exists()){
+
+                      $modification = modification::where('ORDER_ID',$oid)->get();
+                      $dispute = dispute::where('ORDER_ID',$oid)->get();
+
+                      return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review[0],'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute[0]]);
+
+                    }
+
+                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review[0],'departments'=>$department]);
+
                 }else{
-                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment]);
+
+                    if(modification::where('ORDER_ID',$oid)->exists()){
+
+                        $modification = modification::where('ORDER_ID',$oid)->get();
+
+                        $dispute = dispute::where('ORDER_ID',$oid)->get();
+
+                        return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute[0]]);
+
+                      }
+
+                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'departments'=>$department]);
+
                 }
              }
                 return view('user.orderDetails',['orders'=>$orders]);
+
             }else{
                 return view('user.orderList');
             }

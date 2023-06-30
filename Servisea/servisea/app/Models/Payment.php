@@ -21,6 +21,7 @@ class Payment extends Model
         'PAYMENT_INTENT',
         'BILL_LNAME',
         'BILL_FNAME',
+        'BILL_EMAIL',
         'BILL_TEL',
         'BILL_COUNTRY'
     ];
