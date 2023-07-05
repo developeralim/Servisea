@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('quotation', function (Blueprint $table) {
             $table->integerIncrements("QUOTE_ID");
 
-            $table->unsignedInteger('GIG_ID');
-            $table->foreign('GIG_ID')->references('GIG_ID')->on('gig')->onDelete('cascade')->cascadeOnUpdate();
+            $table->unsignedInteger('PACKAGE_ID');
+            $table->foreign('PACKAGE_ID')->references('PACKAGE_ID')->on('package')->onDelete('cascade')->cascadeOnUpdate();
 
             $table->unsignedInteger('FREELANCER_ID');
             $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
