@@ -23,16 +23,6 @@
 
 @section('user-main-content')
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -65,12 +55,22 @@
           <div class="form-outline mb-4">
             <input type="email" name="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" />
             <label class="form-label" for="form3Example3">Email address</label>
+            @if ($errors->any())
+                @error('email')
+                    <div class="error" style="color:#FF0000">{{ $message }}</div>
+                @enderror
+            @endif
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-3">
             <input type="password" name="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" />
             <label class="form-label" for="form3Example4">Password</label>
+            @if ($errors->any())
+                @error('password')
+                    <div class="error" style="color:#FF0000">{{ $message }}</div>
+                @enderror
+            @endif
           </div>
 
           <div class="d-flex justify-content-between align-items-center">
@@ -95,3 +95,8 @@
 </section>
 
  @stop
+
+@section('user_script')
+
+
+@stop

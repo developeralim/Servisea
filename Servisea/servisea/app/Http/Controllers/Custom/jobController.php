@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Job_Application;
 use App\Models\Job_Request;
+use App\Http\Controllers\custom\ClamAV;
 use Illuminate\Http\Request;
 use App\Helpers\AppHelper;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,7 @@ class jobController extends Controller
             $request->session()->put('categoryList',$category);
             return view("user.postJob");
         }else{
-            return redirect('login_user');
+            return redirect()-route('login_user');
         }
     }
 
@@ -94,53 +95,51 @@ class jobController extends Controller
 
     public function CreateJob(Request $request){
 
-        $session= $request->session()->get('user');
+        $user= $request->session()->get('user');
 
         #validation
         $jobInput = $request->validate([
-            'JR_TITLE'        => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'JR_DESCRIPTION'  => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'CATEGORY_ID'     => 'required|integer|regex:/^[0-9]+$/',
-            'JR_ATTACHMENT'   => 'nullable|mimes:pdf,docx,ppt,word,pptx',
-            'JR_REMUNERATION' => 'required|integer|regex:/^[0-9]+$/',
-            'JR_DELIVERYDATE' => 'required|after_or_equal:'.now()->toDateString(),
+            'Project_Title'   => 'required|string|max:255|regex:/^[a-zA-Z -.& ]+$/',
+            'Description'  => 'required|string|max:255|regex:/^[a-zA-Z -.& 0-9]+$/',
+            'Category'     => 'required',
+            'Attachment'   => 'nullable',
+            'Remuneration' => 'required|integer|regex:/^[0-9]+$/',
+            'Delivery_Date' => 'required|after_or_equal:'.now()->toDateString(),
        ]);
 
-       Job_Request::create([
-        'CATEGORY_ID'     => $jobInput['CATEGORY_ID'],
-        'POSTED_BY_USER'  => $session['USER_ID'],
-        'JR_TITLE'        => $jobInput['JR_TITLE'],
-        'JR_REMUNERATION' => $jobInput['JR_REMUNERATION'],
+       $jrId = Job_Request::create([
+        'CATEGORY_ID'     => $jobInput['Category'],
+        'POSTED_BY_USER'  => $user['USER_ID'],
+        'JR_TITLE'        => $jobInput['Project_Title'],
+        'JR_REMUNERATION' => $jobInput['Remuneration'],
         'JR_STATUS'       => 'PENDING',
-        'JR_DELIVERYDATE' => $jobInput['JR_DELIVERYDATE'],
+        'JR_DELIVERYDATE' => $jobInput['Delivery_Date'],
         'JR_DATEPOSTED'   => now(),
-
         ]);
 
-        $jrId =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->latest()->first('JR_ID');
+        if($request->hasFile('Attachment')){
 
-        if($request->hasFile($jobInput['JR_ATTACHMENT'])){
-            $imageName = $request->file($jobInput['JR_ATTACHMENT'])->getClientOriginalName();
-            $request->file($jobInput['JR_ATTACHMENT'])->storeAs('public/images/',$imageName);
+            $imageName = $request->file('Attachment')->getClientOriginalName();
+            $request->file('Attachment')->storeAs('public/images/',$imageName);
 
-            Job_Request::where('JR_ID',$jrId['JR_ID'])
+            Job_Request::where('JR_ID',$jrId['id'])
                 ->update([
-                'JR_REMUNERATION' => $jobInput['JR_REMUNERATION']
+                'JR_ATTACHMENT' => $imageName
             ]);
         }
 
-        if(AppHelper::instance()->ai($jobInput['JR_DESCRIPTION'])=='foul'){
+        if(AppHelper::instance()->ai($jobInput['Description'])=='foul'){
 
-            Job_Request::where('JR_ID',$jrId['JR_ID'])
+            Job_Request::where('JR_ID',$jrId['id'])
                 ->update([
-                'JR_DESCRIPTION' => $jobInput['JR_DESCRIPTION'],
+                'JR_DESCRIPTION' => $jobInput['Description'],
                 'JR_STATUS'       => 'DRAFT',
             ]);
 
         }else{
-            Job_Request::where('JR_ID',$jrId['JR_ID'])
+            Job_Request::where('JR_ID',$jrId['id'])
                 ->update([
-                'JR_DESCRIPTION' => $jobInput['JR_DESCRIPTION'],
+                'JR_DESCRIPTION' => $jobInput['Description'],
                 'JR_STATUS'       => 'CONFIRMED',
             ]);
         }

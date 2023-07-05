@@ -14,6 +14,10 @@ use App\Http\Controllers\Custom\CustomController;
 use App\Http\Controllers\Custom\CategoryController;
 use App\Http\Controllers\Custom\FreelancerController;
 use App\Http\Controllers\Custom\stripeController;
+use App\Http\Controllers\Admin\gigController;
+use App\Http\Controllers\Admin\departmentController;
+use App\Http\Controllers\Admin\jobAdminController;
+use App\Http\Controllers\Admin\userAdminController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\department;
 use Illuminate\Support\Facades\Crypt;
@@ -31,6 +35,8 @@ use Illuminate\Contracts\Encryption\DecryptException;
 */
 
 //USER PAGE
+Route::post('/login-req', [CustomController::class, 'login'])->name('login-req');
+
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
 Route::get('/user/profile',  [UserController::class, 'viewProfile'])->name('viewProfileUser');
 Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
@@ -93,15 +99,6 @@ Route::post('/servisea/modification/created/{oid}', [UserController::class, 'req
 Route::post('/servisea/dispute/created/{oid}', [UserController::class, 'requestDispute'])->name('createDispute');
 
 
-
-//Index Page
-Route::get('/test', function (request $request) {
-
-    return view('index');
-})->name('index');
-
-
-
 //Index Page
 Route::get('/order/requirement', function (request $request) {
 
@@ -124,7 +121,7 @@ Route::get('/index', function (request $request) {
     $request->session()->put(['categoryList'=>$category,'departmentList'=>$department]);
 
     return view('index');
-});
+})->name('home');
 
 
 //Index Page
@@ -135,22 +132,50 @@ Route::get('/order/viwe', function (request $request) {
 })->name('order');
 
 //Login Page
-Route::get('/login_user', function () {
+Route::get('/login', function () {
     return view('login_user');
 })->name("login_user");
 
-Route::post('/login-req', [CustomController::class, 'login'])->name('login-req');
 
 Route::get('/admin.dashboard', function () {
     return view('admin.dashboard');
 });
 
-//Admin
+//ADMINISTRATOR
+//Category - ADMINISTRATOR
 Route::get('/admin/category', [CategoryController::class, 'viewCategory'])->name('category.page');
 Route::post('/editCategory', [CategoryController::class, 'editCategory'])->name('editCategory');
 Route::post('/insertCategory', [CategoryController::class, 'insertCategory'])->name('insertCategory');
 Route::post('/updateCategory', [CategoryController::class, 'updateCategory'])->name('updateCategory');
 Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('deleteCategory');
+
+//Department List- ADMINISTRATOR
+Route::get('/admin/Department/List/{name?}', [departmentController::class, 'view_admin_department'])->name('view_admin_department');
+Route::post('/admin/Department/insert', [departmentController::class, 'admin_insert_department'])->name('admin_insert_department');
+Route::get('/admin/department/delete/{id?}', [departmentController::class, 'admin_delete_department'])->name('admin_delete_department');
+Route::post('/admin/department/update/{id?}', [departmentController::class, 'admin_update_department'])->name('admin_update_department');
+
+//Employee List - ADMINISTRATOR
+Route::get('/admin/Employee/List', [CategoryController::class, 'view_admin_department'])->name('view_admin_emp');
+
+//Gig List - ADMINISTRATOR
+Route::get('/admin/Gig/List', [gigController::class, 'view_admin_gig'])->name('view_admin_gig');
+Route::get('/admin/gig/update/{id}', [gigController::class, 'admin_update_gig'])->name('admin_update_gig');
+
+//Job Request List - ADMINISTRATOR
+Route::get('/admin/Job/Requests/List', [jobAdminController::class, 'admin_view_jr'])->name('view_admin_jr');
+Route::get('/admin/Job/Requests/{id}', [jobAdminController::class, 'admin_update_jr'])->name('admin_update_jr');
+Route::get('/admin/Job/Requests/{id}/delete', [jobAdminController::class, 'admin_delete_jr'])->name('admin_delete_jr');
+
+//Freelancer List - ADMINISTRATOR
+Route::get('/admin/Freelancer/List', [CategoryController::class, 'view_admin_department'])->name('view_admin_freelancer');
+
+//Project Owner List- ADMINISTRATOR
+Route::get('/admin/{user}/List', [userAdminController::class, 'admin_view_user'])->name('view_admin_user');
+Route::get('/admin/{user}/update/{uid}', [userAdminController::class, 'admin_update_user'])->name('admin_update_user');
+Route::get('/admin/{user}/delete/{uid}', [userAdminController::class, 'admin_delete_user'])->name('admin_delete_user');
+
+
 
 Route::get('/admin/profile', [ProfileController::class, 'viewProfile'])->name('view_profile.page');
 Route::post('/admin/profile', [ProfileController::class, 'updateProfile'])->name('updateAdmin');
@@ -181,17 +206,6 @@ Route::controller(DemoController::class)->group(function(){
     Route::get('/about','Index')->name('about.page');
     Route::get('/contact','contact')->name('contact.page');
 });
-
-
-
-// Route::get('/momos', function () {
-//     if (session('user_id')>0){
-//         echo session('user_id');
-//     }else{
-//         return view('bobo');
-//     }
-// });
-
 
 Route::get('/admin_view',[AdminController::class,'AuthenticateUser']);
 

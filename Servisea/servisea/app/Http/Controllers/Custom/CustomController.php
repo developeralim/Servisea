@@ -18,62 +18,64 @@ function login(Request $request){
     //REQUEST INPUT FROM FORM
     $data = $request->validate([
         'email'      => 'required|email',
-        'password'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
+        'password'   => 'required|min:8|string',
    ]);
 
     $email = $data['email'];
     $password = $data['password'];
 
-    //CHECK IF USER
-    $user = User::where('USER_EMAIL', $email)->first();
+    //CHECK IF USER EXIST
 
-    if( ! $user ){
+    if(User::where('USER_EMAIL', $email)->exists()){
 
-        //CHECK IF ADMIN
-       $adminDetails = admin::where('ADMIN_EMAIL', $email)->first();
-
-        if( ! $adminDetails ){
-            $noUser = 1;
-            return redirect('login',$noUser);
-        }else{
-
-            if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
-                if( $adminDetails['ADMIN_STATUS'] == 1){
-                    //REDIRECT TO ADMIN DASHBOARD
-                    $request->Session()->put('adminDetails',$adminDetails);
-                    return redirect('admin.dashboard');
-                }else{
-                    //ADMIN ACCOUNT HAS BEEN BLOCKED
-                    //$adminDetails[0]["ADMIN_ID"] = 0;
-                    $request->Session()->put('adminDetails',$adminDetails);
-                    return redirect('login');
-                }
-            }else{
-                return redirect('index');
-            }
-        }
-    }else{
+     $user = User::where('USER_EMAIL', $email)->first();
 
         if(Hash::check($password,$user['USER_PASSWORD'])){
             if($user['ACCOUNT_STATUS'] == 1){
-                $request->Session()->put('user',$user);
-            
+                request()->Session()->put('user',$user);
+
                 if($user['USER_ROLE']==2){
                     $freelancer = Freelancer::where('USER_ID', $user['USER_ID'])->get();
                     $freelancer = json_decode(json_encode($freelancer[0]), true);
-                    $request->Session()->put('freelancer',$freelancer);
+                    request()->Session()->put('freelancer',$freelancer);
+                }
+
+                if($user['USER_ROLE']==3){
+                    $employee = Freelancer::where('USER_ID', $user['USER_ID'])->get();
+                    $employee = json_decode(json_encode($employee[0]), true);
+                    request()->Session()->put('employee',$employee);
+                    return redirect('index');
                 }
 
                 return redirect('index');
 
-             }else{
-                return redirect('login');
-             }
+            }else{
 
+                return redirect()->route('login_user');
+
+            }
         }else{
-            return 'password no match';
+
+            return redirect()->route('login_user');
+
         }
+
+    }elseif(admin::where('ADMIN_EMAIL', $email)->exist()){
+        $adminDetails = admin::where('ADMIN_EMAIL', $email)->first();
+        if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
+            if( $adminDetails['ADMIN_STATUS'] == 1){
+                //REDIRECT TO ADMIN DASHBOARD
+                $request->Session()->put('adminDetails',$adminDetails);
+                return redirect('admin.dashboard');
+            }
+                //ADMIN ACCOUNT HAS BEEN BLOCKED
+                return redirect()->route('login_user');
+        }else{
+            return redirect('index');
     }
+
+    }
+
 }
 
 }

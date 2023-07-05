@@ -72,12 +72,6 @@
     @include('user.body.footer')
 </div>
     <!-- Start Script -->
-    <!-- <script src="{{asset('backend/USER_ASSET/assets/js/jquery-1.11.0.min.js')}}"></script>
-    <script src="{{asset('backend/USER_ASSET/assets/js/jquery-migrate-1.2.1.min.js')}}"></script>
-    <script src="{{asset('backend/USER_ASSET/assets/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('backend/USER_ASSET/assets/js/templatemo.js')}}"></script>
-    <script src="{{asset('backend/USER_ASSET/assets/js/custom.js')}}"></script> -->
-
     <script src="{{asset('backend/THEME/js/jquery-3.6.4.min.js')}}"></script>
     <script src="{{asset('backend/THEME/js/jquery-migrate-3.0.0.min.js')}}"></script>
     <script src="{{asset('backend/THEME/js/popper.min.js')}}"></script>

@@ -65,37 +65,55 @@
         <div class="col-lg-8">
         <div class="checkout_form">
 
-        @if (isset($modifications))
+
         <div class="checkout_coupon">
-                <div class="form2">
+            <div class="form2">
                 <div class="row">
                     <div class="col-sm-6">
-                      <div class="mb25">
-                        <div class="d-grid mt15">
-                        <div class="service-about">
-                            <h4 class="mb30">Modifications Requested:</h4>
-                            @foreach($modifications as $modification)
-                            <div class="educational-quality">
-                                <div class="m-circle text-thm">M</div>
-                                <div class="wrapper mb40">
-                                <span class="tag">{{date('d-m-Y', strtotime($modification->updated_at))}}</span>
-                                <h5 class="mt15">{{$modification->MODIF_REQUIREMENTS}}</h5>
+                        <div class="mb25">
+                            <div class="d-grid mt15">
+                                <div class="service-about">
+                                    <h3 class="mb30">Deliverables</h3>
+                                    @if ($order->ORDER_DELIVERABLES != null )
+                                        @if (isset($orderAttachment))
+                                        <div class="educational-quality">
+                                            <div class="m-circle text-thm">D</div>
+                                            <div class="wrapper mb40">
+                                            @foreach($orderAttachment as $attachment)
+                                                <span class="tag">{{date('d-m-Y', strtotime($attachment->created_at))}}</span>
+                                                <h5 class="mt15">{{$attachment->MEDIA_PATH}}</h5>
+                                                <a href="{{route('dlFile',Crypt::encryptString($attachment->MEDIA_PATH))}}" class="btn btn-info btn-lg">
+                                                    <span class="glyphicon glyphicon-save-file">Download</span>
+                                                </a>
+                                                <br>
+                                            @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
+                                    @endif
+                                    <br>
+                                    <br>
+                                    @if (isset($modifications))
+                                        <h3 class="mb30">Modifications Requested</h3>
+                                        @foreach($modifications as $modification)
+                                            <div class="educational-quality">
+                                                <div class="m-circle text-thm">M</div>
+                                                <div class="wrapper mb40">
+                                                    <span class="tag">{{date('d-m-Y', strtotime($modification->updated_at))}}</span>
+                                                    <h5 class="mt15">{{$modification->MODIF_REQUIREMENTS}}</h5>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
-
-                            @endforeach
                         </div>
-
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <hr class="opacity-100 mb60">
-        @endif
-
-            <h4 class="title mb30 ">Deliverable</h4>
+            </div>
+        </div>
+        <hr class="opacity-100 mb60">
               <div class="checkout_coupon">
                 <form class="form2" id="coupon_form"  enctype="multipart/form-data" action="{{route('closeOrder',Crypt::encryptString($order->ORDER_ID))}}" name="order_form" method="post">
                 @csrf
@@ -105,19 +123,6 @@
                         @if (Session::get('freelancer') != null )
                         <div class="d-grid mt15">
                             @if ($order->ORDER_DELIVERABLES != null )
-
-                            @if (isset($orderAttachment))
-                            <div class="row">
-                                @foreach($orderAttachment as $attachment)
-                                 {{$attachment->MEDIA_PATH}}
-                                 <a href="{{route('dlFile',Crypt::encryptString($attachment->MEDIA_PATH))}}" class="btn btn-info btn-lg">
-                                    <span class="glyphicon glyphicon-save-file">Download</span>
-                                </a>
-                                <br>
-                                @endforeach
-                            </div>
-                            @endif
-                            <br>
                             <h5 class="title mb30 ">Please upload the deliverable here:</h5>
                             <input class="form-control" multiple name="order_deliverables[]" type="file" value="{{$order->ORDER_DELIVERABLES}}">
                             @else
@@ -126,42 +131,30 @@
                             <br>
                         <div class="d-grid gap-2 d-md-block">
                            <input class="ud-btn btn-warning" type="submit" value="Submit Order">
-                           <input class="ud-btn btn-light-thm" type="submit" value="Cancel Order">
+                           <input class="ud-btn btn-light-thm" type="submit" value="Cancel Order(Request to support employee)">
                         </div>
                         </div>
                         @else
-                        <h3 class="title mb30 ">Please Find Attached your file here</h3>
                             @if ($order->ORDER_DELIVERABLES != null )
-                            @if (isset($orderAttachment))
-                            <div class="row">
-                                @foreach($orderAttachment as $attachment)
-                                 {{$attachment->MEDIA_PATH}}
-                                 <a href="{{route('dlFile',Crypt::encryptString($attachment->MEDIA_PATH))}}" class="btn btn-info btn-lg">
-                                    <span class="glyphicon glyphicon-save-file">Download</span>
-                                </a>
-                                <br>
-                                @endforeach
-                            </div>
-                            @endif
-                                @if($order->ORDER_STATUS != 'COMPLETED')
-                                <div class="d-grid gap-5 d-md-block mt15">
-                                <!-- Button trigger modal -->
-                                @if(isset($modifications))
-                                @if($order->REVISION == 'Unlimited' || $order->REVISION == 'UNLIMITED' )
-                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
-                                @elseif((count($modifications)+1)<((int)$order->REVISION))
-                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
-                                @endif
-                                @else
-                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
-                                @endif
-                                <a href="{{route('confirmOrder',Crypt::encryptString($order->ORDER_ID))}}"><button type="button" href="#" class="ud-btn btn-light-thm no-border">Confirm Order</button></a>
-                                </div>
-                                @endif
+                                    @if($order->ORDER_STATUS != 'COMPLETED')
+                                    <div class="d-grid gap-5 d-md-block mt15">
+                                    <!-- Button trigger modal -->
+                                        @if(isset($modifications))
+                                            @if($order->REVISION == 'Unlimited' || $order->REVISION == 'UNLIMITED' )
+                                            <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                            @elseif((count($modifications)+1)<((int)$order->REVISION))
+                                            <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                            @endif
+                                        @else
+                                        <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                        @endif
+                                    <a href="{{route('confirmOrder',Crypt::encryptString($order->ORDER_ID))}}"><button type="button" href="#" class="ud-btn btn-light-thm no-border">Confirm Order</button></a>
+                                    </div>
+                                    @endif
                             @else
-                            <h6 class="mb15">Expected Delivery: {{$order->ORDER_DUE}}</h6>
+                                <h6 class="mb15">Expected Delivery: {{$order->ORDER_DUE}}</h6>
                             @endif
-                       @endif
+                        @endif
                       </div>
                     </div>
                   </div>
@@ -187,13 +180,13 @@
                     <!-- <span class="field-label-header">How would you rate your ability to use the computer and access internet?*</span><br> -->
                     <span class="field-label-info"></span>
                     @if(isset($review))
-                    @for ($i = 0; $i < $review->RATING; $i++)
-                    <input type="hidden" id="selected_rating" name="selected_rating" value="{{$review->RATING}}" required="required">
-                    </label>
-                    <button type="button" class="btnrating btn-warning btn btn-default btn-lg" data-attr="{{$i+1}}" id="rating-star-{{$i+1}}">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                    </button>
-                    @endfor
+                        @for ($i = 0; $i < $review->RATING; $i++)
+                        <input type="hidden" id="selected_rating" name="selected_rating" value="{{$review->RATING}}" required="required">
+                        </label>
+                        <button type="button" class="btnrating btn-warning btn btn-default btn-lg" data-attr="{{$i+1}}" id="rating-star-{{$i+1}}">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </button>
+                        @endfor
                     @else
                     <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
                     </label>
@@ -257,12 +250,17 @@
               @if(!isset($dispute))
               <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
                 <br>
-               @license MIT
+               @else
+               <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">View Dispute</button>
+                <br>
               @endif
               <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Project Owner<i class="fal fa-arrow-right-long"></i></a>
               @else
               @if(!isset($dispute))
               <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
+                <br>
+                @else
+                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">View Dispute</button>
                 <br>
                 @endif
                 <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Seller<i class="fal fa-arrow-right-long"></i></a>

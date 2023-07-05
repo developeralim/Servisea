@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('backend/ADMIN_ASSET/assets/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/ADMIN_ASSET/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
 
+
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></> -->
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">

@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-            $category = [
+        $category = [
             ['CATEGORY_NAME' => 'Graphics & Design',     'CATEGORY_DESCRIPTION' => 'Illustration / Cartooning / Painting / Sculpting'],
             ['CATEGORY_NAME' => 'Digital Marketing',     'CATEGORY_DESCRIPTION' => 'Marketing / Advertising / Sales / PR / Internet marketing'],
             ['CATEGORY_NAME' => 'Writing & Translation', 'CATEGORY_DESCRIPTION' => 'Content Writing / Presentations / Multimedia'],
@@ -37,7 +37,11 @@ class DatabaseSeeder extends Seeder
 
         $user = [
             ['USERNAME' => 'Jean',  'USER_EMAIL' => 'Jean@gmail.com',   'USER_PASSWORD' => Hash::make('Jean1234'),  'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '1'],
-            ['USERNAME' => 'Jean1', 'USER_EMAIL' => 'Jean1@gmail.com',  'USER_PASSWORD' =>Hash::make('Jean1234'),   'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '2'],
+            ['USERNAME' => 'Jean1', 'USER_EMAIL' => 'Jean1@gmail.com',  'USER_PASSWORD' => Hash::make('Jean1234'),   'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '2'],
+        ];
+
+        $admin = [
+            ['ADMIN_USERNAME'=> 'Dev01', 'ADMIN_EMAIL'=> 'dev01@gmail.com', 'ADMIN_PASSWORD'=> Hash::make('dev01234'), 'ADMIN_STATUS'=> 1, 'ADMIN_LEVEL'=> 1,],
         ];
 
         $freelancer= [

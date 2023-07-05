@@ -101,7 +101,11 @@ class UserController extends Controller
             modification::create([
                     'MODIF_REQUIREMENTS' => $modifInput['modifications'],
                     'ORDER_ID' => $oid
-                ]);
+            ]);
+
+            Order::where('ORDER_ID',$oid)->update([
+                    'ORDER_STATUS' => 'IN PROGRESS'
+            ]);
 
             return view('user.modifications.modification',['oid'=>$oid]);
 
@@ -321,8 +325,6 @@ class UserController extends Controller
 
         $department = department::all();
 
-
-
         if(isset($session)||isset($freelancer)){
 
             if(
@@ -354,11 +356,11 @@ class UserController extends Controller
                       $modification = modification::where('ORDER_ID',$oid)->get();
                       $dispute = dispute::where('ORDER_ID',$oid)->get();
 
-                      return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review[0],'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute[0]]);
+                      return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
 
                     }
 
-                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review[0],'departments'=>$department]);
+                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'departments'=>$department]);
 
                 }else{
 
@@ -368,7 +370,7 @@ class UserController extends Controller
 
                         $dispute = dispute::where('ORDER_ID',$oid)->get();
 
-                        return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute[0]]);
+                        return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
 
                       }
 

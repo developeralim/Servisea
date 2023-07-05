@@ -17,8 +17,133 @@
 @stop
 
 @section('user-main-content')
-<div class="container">
 
+<div class="dashboard__main pl0-md" style="padding-left: 0px;">
+        <div class="dashboard__content hover-bgc-color">
+          <div class="row pb40">
+            <div class="col-lg-9">
+              <div class="dashboard_title_area">
+                <h2>Create Your Job Request</h2>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="ps-widget bgc-white bdrs4 p30 mb30 overflow-hidden position-relative">
+                <div class="bdrb1 pb15 mb25">
+                  <h5 class="list-title">Basic Information</h5>
+                </div>
+                <div class="col-xl-8">
+                  <form class="form-style1" action="{{route('JobPageA')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+
+                   <!-- @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach -->
+
+                      <div class="col-sm-12">
+                        <div class="mb20">
+                          <label class="heading-color ff-heading fw500 mb10">Project Title</label>
+                          <input type="text" class="form-control" placeholder="i want" id="Project_Title" name="Project_Title">
+                            @if ($errors->any())
+                                @error('Project_Title')
+                                        <div class="error" style="color:#FF0000">{{ $message }}</div>
+                                @enderror
+                            @endif
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="mb20">
+                          <div class="form-style1">
+                            <label class="heading-color ff-heading fw500 mb10">Category</label>
+                            <div class="bootselect-multiselect">
+                              <select class="selectpicker" id="CATEGORY_ID" name='Category'>
+                                <option>Select</option>
+                                @foreach (Session('categoryList') as $category)
+                                <option value="{{$category->CATEGORY_ID}}" >{{$category->CATEGORY_NAME}}</option>
+                                @endforeach
+                              </select>
+                              @if ($errors->any())
+                                @error('Category')
+                                        <div class="error" style="color:#FF0000">{{ $message }}</div>
+                                    @enderror
+                               @endif
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="mb20">
+                          <label class="heading-color ff-heading fw500 mb10">I'm looking to spend</label>
+                          <input class="form-control" value="10" min="10" id="JR_REMUNERATION" name="Remuneration" placeholder="$">
+                          @if ($errors->any())
+                                @error('Remuneration')
+                                        <div class="error" style="color:#FF0000">{{ $message }}</div>
+                                @enderror
+                           @endif
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="mb20">
+                          <div class="form-style1">
+                            <label class="heading-color ff-heading fw500 mb10">Project Duration</label>
+                            <input type="date" class="form-control" id="JR_DELIVERYDATE"  name="Delivery_Date"></input>
+                            @if ($errors->any())
+                                @error('Delivery_Date')
+                                        <div class="error" style="color:#FF0000">{{ $message }}</div>
+                                @enderror
+                           @endif
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="mb20">
+                          <div class="form-style1" >
+                            <label class="heading-color ff-heading fw500 mb10">Upload Attachments</label>
+                            <input type="file" style="height: 35px;" class="form-control" id="JR_ATTACHMENT" name="Attachment">
+                            @if ($errors->any())
+                                @error('Attachment')
+                                        <div class="error" style="color:#FF0000">{{ $message }}</div>
+                                @enderror
+                            @endif
+                            <p class="text">Maximum file size: 10 MB</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <div class="mb10">
+                          <label class="heading-color ff-heading fw500 mb10">Project Detail</label>
+                          <textarea cols="30" rows="6"  id="JR_DESCRIPTION"  name="Description" placeholder="Description"></textarea>
+                          @if ($errors->any())
+                                @error('Description')
+                                        <div class="error" style="color:#FF0000">{{ $message }}</div>
+                                @enderror
+                           @endif
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <div class="text-lg-end">
+                            <button type="submit"  class="ud-btn btn-dark" >Save & Publish<i class="fal fa-arrow-right-long"></i></button>
+                       </div>
+                       </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- <div class="container">
 
 <h2>Servisea</h2>
 <ul class="breadcrumb">
@@ -41,6 +166,7 @@
             <div class="mb-3">
                 <label for="project" class="form-label">Attach file</label>
                 <input type="file" class="form-control" id="JR_ATTACHMENT" name="JR_ATTACHMENT">
+
             </div>
             <div class="mb-3">
                 <label for="project" class="form-label">Category</label>
@@ -66,10 +192,8 @@
   <button type="submit" class="btn btn-primary">Submit</button>
  </div>
 </form>
-    @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-</div>
+
+</div> -->
 
 @stop
 
