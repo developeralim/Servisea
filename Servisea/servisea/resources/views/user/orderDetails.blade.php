@@ -29,23 +29,6 @@
 <div class="body_content">
 @if(isset($orders))
     @foreach($orders as $order)
-
-    <!-- Blog Section -->
-    <section class="breadcumb-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="breadcumb-style1">
-              <div class="breadcumb-list">
-                <a href="">Home</a>
-                <a href="">Services</a>
-                <a href="">Design & Creative</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <section class="pt40 pb0">
       <div class="container">
         <div class="row">
@@ -76,35 +59,37 @@
                                     <h3 class="mb30">Deliverables</h3>
                                     @if ($order->ORDER_DELIVERABLES != null )
                                         @if (isset($orderAttachment))
-                                        <div class="educational-quality">
-                                            <div class="m-circle text-thm">D</div>
-                                            <div class="wrapper mb40">
+                                            <div class="educational-quality">
                                             @foreach($orderAttachment as $attachment)
-                                                <span class="tag">{{date('d-m-Y', strtotime($attachment->created_at))}}</span>
-                                                <h5 class="mt15">{{$attachment->MEDIA_PATH}}</h5>
-                                                <a href="{{route('dlFile',Crypt::encryptString($attachment->MEDIA_PATH))}}" class="btn btn-info btn-lg">
-                                                    <span class="glyphicon glyphicon-save-file">Download</span>
-                                                </a>
-                                                <br>
+                                                <div class="m-circle text-thm">D</div>
+                                                <div class="wrapper mb40">
+                                                    <span class="tag">{{date('d-m-Y', strtotime($attachment->created_at))}}</span>
+                                                    <h5 class="mt15">{{$attachment->MEDIA_PATH}}</h5>
+                                                    <a href="{{route('dlFile',Crypt::encryptString($attachment->MEDIA_PATH))}}" class="btn btn-info btn-lg">
+                                                        <span class="glyphicon glyphicon-save-file">Download</span>
+                                                    </a>
+                                                    <br>
+                                                </div>
                                             @endforeach
                                             </div>
-                                        </div>
                                         @endif
                                     @endif
                                     <br>
                                     <br>
                                     @if (isset($modifications))
+                                        @if (!$modifications->isEmpty())
                                         <h3 class="mb30">Modifications Requested</h3>
-                                        @foreach($modifications as $modification)
-                                            <div class="educational-quality">
-                                                <div class="m-circle text-thm">M</div>
-                                                <div class="wrapper mb40">
-                                                    <span class="tag">{{date('d-m-Y', strtotime($modification->updated_at))}}</span>
-                                                    <h5 class="mt15">{{$modification->MODIF_REQUIREMENTS}}</h5>
+                                            @foreach($modifications as $modification)
+                                                <div class="educational-quality">
+                                                    <div class="m-circle text-thm">M</div>
+                                                    <div class="wrapper mb40">
+                                                        <span class="tag">{{date('d-m-Y', strtotime($modification->updated_at))}}</span>
+                                                        <h5 class="mt15">{{$modification->MODIF_REQUIREMENTS}}</h5>
+                                                    </div>
+                                                    <br>
                                                 </div>
-                                                <br>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -113,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <hr class="opacity-100 mb60">
+        <hr class="opacity-100 mb10">
               <div class="checkout_coupon">
                 <form class="form2" id="coupon_form"  enctype="multipart/form-data" action="{{route('closeOrder',Crypt::encryptString($order->ORDER_ID))}}" name="order_form" method="post">
                 @csrf
@@ -140,13 +125,15 @@
                                     <div class="d-grid gap-5 d-md-block mt15">
                                     <!-- Button trigger modal -->
                                         @if(isset($modifications))
-                                            @if($order->REVISION == 'Unlimited' || $order->REVISION == 'UNLIMITED' )
-                                            <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
-                                            @elseif((count($modifications)+1)<((int)$order->REVISION))
+                                          @if(!$modifications->isEmpty())
+                                                @if($order->REVISION == 'Unlimited' || $order->REVISION == 'UNLIMITED' )
+                                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                                @elseif((count($modifications)+1)<((int)$order->REVISION))
+                                                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
+                                                @endif
+                                            @else
                                             <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
                                             @endif
-                                        @else
-                                        <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#exampleModal">Request For Modification</button>
                                         @endif
                                     <a href="{{route('confirmOrder',Crypt::encryptString($order->ORDER_ID))}}"><button type="button" href="#" class="ud-btn btn-light-thm no-border">Confirm Order</button></a>
                                     </div>
@@ -165,10 +152,9 @@
                 <li>{{ $error }}</li>
             @endforeach
 
-                @if($order->ORDER_STATUS == 'COMPLETED' && Session::get('freelancer') == null)
+            @if($order->ORDER_STATUS == 'COMPLETED' && Session::get('freelancer') == null)
               <form class="bsp_reveiw_wrt" name="review-form" id="review-form" action="{{route('rateGig',Crypt::encryptString($order->ORDER_ID))}}" method="post">
               @csrf
-              <hr class="opacity-100 mb60">
               @if(isset($review))
               <h6 class="fz17">Review:</h6>
               @else
@@ -179,11 +165,12 @@
                     <label class="control-label" for="rating">
                     <!-- <span class="field-label-header">How would you rate your ability to use the computer and access internet?*</span><br> -->
                     <span class="field-label-info"></span>
-                    @if(isset($review))
-                        @for ($i = 0; $i < $review->RATING; $i++)
-                        <input type="hidden" id="selected_rating" name="selected_rating" value="{{$review->RATING}}" required="required">
+                @if(isset($review))
+                    @if(!$review->isEmpty())
+                        <input type="hidden" id="selected_rating" name="selected_rating" value="{{$review[0]->RATING}}" required="required">
                         </label>
-                        <button type="button" class="btnrating btn-warning btn btn-default btn-lg" data-attr="{{$i+1}}" id="rating-star-{{$i+1}}">
+                        @for ($i = 0; $i < $review[0]->RATING; $i++)
+                        <button disabled class="btnrating btn-warning btn btn-default btn-lg" data-attr="{{$i}}" id="rating-star-{{$i}}">
                             <i class="fa fa-star" aria-hidden="true"></i>
                         </button>
                         @endfor
@@ -209,31 +196,32 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                     </button>
                     @endif
+                @endif
                 </div>
-
                   <div class="comments_form mt30 mb30-md">
+                  @if(isset($review))
                     <div class="row">
                       <div class="col-md-12">
                         <div class="mb-4">
                           <label class="fw500 fz16 ff-heading dark-color mb-2">Comment</label>
-                          @if(isset($review))
-                          <textarea class="pt15" name="reviewDescription" rows="6" placeholder="Enter your comment review here!">{{$review->DESCRIPTION}}</textarea>
-                          @else
-                          <textarea class="pt15" name="reviewDescription" rows="6"  placeholder="Enter your comment review here!"></textarea>
-                          @endif
+                            @if(!$review->isEmpty())
+                            <p class="pt15" name="reviewDescription" rows="6" placeholder="Enter your comment review here!">{{$review[0]->DESCRIPTION}}</p>
+                            @else
+                            <textarea class="pt15" name="reviewDescription" rows="6"  placeholder="Enter your comment review here!"></textarea>
+                            @endif
                         </div>
                       </div>
+                      @if($review->isEmpty())
                       <div class="col-md-12">
-                      @if(!isset($review))
                         <button class="ud-btn btn-thm" type="submit">Send</button>
+                      </div>
                       @endif
                     </div>
-                    </div>
+                  @endif
                   </div>
                 </form>
                 @endif
             </div>
-
         </div>
 
         <div class="col-lg-4">
@@ -246,26 +234,29 @@
               <p class="text">Delivery Date: <span class="float-end">{{$order->ORDER_DUE}}</span></p>
 
               <div class="d-grid mt40">
-              @if (Session::get('freelancer') != null )
-              @if(!isset($dispute))
-              <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
-                <br>
-               @else
-               <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">View Dispute</button>
-                <br>
+            @if (Session::get('freelancer') != null )
+              @if(isset($dispute))
+                @if($dispute->isEmpty())
+                    <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
+                        <br>
+                @else
+                    <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">View Dispute</button>
+                        <br>
+                @endif
               @endif
-              <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Project Owner<i class="fal fa-arrow-right-long"></i></a>
-              @else
-              @if(!isset($dispute))
-              <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
+                <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Project Owner<i class="fal fa-arrow-right-long"></i></a>
+            @else
+              @if(isset($dispute))
+                @if($dispute->isEmpty())
+                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
                 <br>
                 @else
                 <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">View Dispute</button>
                 <br>
                 @endif
+               @endif
                 <a class="ud-btn btn-light-thm" href="page-shop-checkout.html">Contact Seller<i class="fal fa-arrow-right-long"></i></a>
-
-                @endif
+            @endif
             </div>
             </div>
           </div>
@@ -338,9 +329,9 @@
                 <div class="bootselect-multiselect">
                     <select name="Department" class="selectpicker">
                     @if(isset($departments))
-                    @foreach($departments as $department)
-                    <option value="{{$department->DEPARTMENT_ID}}">{{$department->DEPARTMENT_NAME}}</option>
-                    @endforeach
+                        @foreach($departments as $department)
+                        <option value="{{$department->DEPARTMENT_ID}}">{{$department->DEPARTMENT_NAME}}</option>
+                        @endforeach
                     @endif
                     </select>
                 </div>

@@ -123,7 +123,7 @@
                     <ul>
                         <li> <a href="#"><span class="title">Requests</span></a>
                             <ul>
-                                <li><a href="{{route('viewJobList')}}">View Request List</a></li>
+                                <li><a href="{{route('viewReqJobList')}}">View Request List</a></li>
                                 <li><a href="{{route('viewRequestJobPage')}}">Post a Request</a></li>
                             </ul>
                         </li>

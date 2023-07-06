@@ -30,7 +30,7 @@ class jobController extends Controller
         $session= $request->session()->get('user');
 
         if(Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->exists()){
-            $jobs =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->where('JR_STATUS','CONFIRMED')->get();
+            $jobs =  Job_Request::where('POSTED_BY_USER', $session['USER_ID'])->where('JR_STATUS','CONFIRMED')->orderBy('JR_ID', 'desc')->get();
             $category =  DB::table('CATEGORY')->get();
 
             return view("user.jobList")->with(['jobList'=>$jobs,'category'=>$category]);
@@ -39,7 +39,6 @@ class jobController extends Controller
         }
 
     }
-
 
     public function viewJobList(Request $request){
         $session= $request->session()->get('user');

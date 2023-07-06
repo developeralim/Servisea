@@ -19,44 +19,6 @@
 @section('user-main-content')
 <div class="container">
 <div class="body_content">
-    <section class="categories_list_section overflow-hidden">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="listings_category_nav_list_menu">
-              <ul class="mb0 d-flex ps-0">
-                <li><a href="#">All Categories</a></li>
-                <li><a href="#">Graphics & Design</a></li>
-                <li><a class="active" href="#">Digital Marketing</a></li>
-                <li><a href="#">Writing & Translation</a></li>
-                <li><a href="#">Video & Animation</a></li>
-                <li><a href="#">Music & Audio</a></li>
-                <li><a href="#">Programming & Tech</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Trending</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Breadcumb Sections -->
-    <section class="breadcumb-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="breadcumb-style1">
-              <div class="breadcumb-list">
-                <a href="">Home</a>
-                <a href="">Services</a>
-                <a href="">Design & Creative</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Listings All Lists -->
     <section class="pt40 pb90">
@@ -177,17 +139,6 @@
                     </div>
                   </li>
                 </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="page_control_shorting mb10 d-flex align-items-center justify-content-center justify-content-sm-end">
-              <div class="pcs_dropdown dark-color pr10"><span>Sort by</span>
-                <select class="selectpicker show-tick">
-                  <option>Best Seller</option>
-                  <option>Recommended</option>
-                  <option>New Arrivals</option>
-                </select>
               </div>
             </div>
           </div>

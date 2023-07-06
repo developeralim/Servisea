@@ -330,11 +330,9 @@ class FreelancerController extends Controller
                     ORDER BY PRICE ASC
                     LIMIT 1)');
 
-                $reviews = DB::select(
-                'SELECT GIG_ID , AVG(RATING) AS RATING
-                FROM reviews
-                GROUP BY GIG_ID;
-                ');
+                $reviews = reviews::select('GIG_ID', DB::raw('round(AVG(RATING),0) as RATING') , DB::raw('COUNT(GIG_ID) as COUNT'))
+                ->groupBy('GIG_ID')
+                ->get();
 
                 $gigMedia = DB::select('
                 SELECT media_id ,GIG_ID, media_path
@@ -362,7 +360,7 @@ class FreelancerController extends Controller
                     LIMIT 1)');
 
 
-                    $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+        $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
 
         if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
 
@@ -408,8 +406,6 @@ class FreelancerController extends Controller
         ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
         RIGHT JOIN users
         ON FREELANCER.USER_ID = users.USER_ID
-        LEFT OUTER JOIN REVIEWS
-        ON gig.GIG_ID = reviews.GIG_ID
         WHERE package.GIG_ID =  gig.GIG_ID
         AND gig.GIG_STATUS = "COMPLETED"
         AND gig.GIG_ID = '.$input_gigID.'
@@ -439,22 +435,41 @@ class FreelancerController extends Controller
 
         $gig = json_decode(json_encode($gig[0]), true);
 
-                    if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
+        $review = reviews::select('GIG_ID', DB::raw('round(AVG(RATING),0) as RATING') , DB::raw('COUNT(GIG_ID) as COUNT'))
+                ->where('GIG_ID',$input_gigID)
+                ->groupBy('GIG_ID')
+                ->get();
+
+        $order = order::select(DB::raw('COUNT(ORDER_ID) as COUNT'))
+        ->join('package','order.PACKAGE_ID','=','package.PACKAGE_ID')
+        ->join('gig','gig.GIG_ID','=','package.GIG_ID')
+        ->where(['gig.GIG_ID'=>$input_gigID,'ORDER_STATUS'=>'IN PROGRESS'])
+        ->get();
+
+
+
+         if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
 
             if(count($standard) === 0){
 
-                            return view('freelancer.gigSingle')
-                            ->with('gig',$gig)
-                            ->with('basic',$basic);
+            return view('freelancer.gigSingle')
+            ->with('reviewsCount',$review)
+            ->with('orderCount',$order)
+            ->with('gig',$gig)
+            ->with('basic',$basic);
 
             }else{
-                $standard = json_decode($standard[0]);
-                $premium  = json_decode($premium[0]);
-                return view('freelancer.gigSingle')
-                ->with('gig',$gig)
-                ->with('basic',$basic)
-                ->with('standard',$standard)
-                ->with('premium',$premium);
+
+            $standard = json_decode($standard[0]);
+            $premium  = json_decode($premium[0]);
+            return view('freelancer.gigSingle')
+            ->with('orderCount',$order)
+            ->with('reviewsCount',$review)
+            ->with('gig',$gig)
+            ->with('basic',$basic)
+            ->with('standard',$standard)
+            ->with('premium',$premium);
+
             };
 
         }else{

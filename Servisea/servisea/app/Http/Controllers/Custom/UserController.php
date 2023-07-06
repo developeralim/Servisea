@@ -151,9 +151,9 @@ class UserController extends Controller
                 'ORDER_DUE'=> date('Y-m-d', strtotime(now().' + '.$package[0]->DELIVERY_DAYS.'days')),
                 'ORDER_STATUS'=> 'IN PROGRESS'];
 
-                $request->Session()->put('orderDetails',$orderDetails);
+                $request->session()->put('orderDetails',$orderDetails);
 
-                return view('user.checkout');
+                return view('user.checkout',['det'=>$orderDetails]);
 
         }else{
             return redirect('index');
@@ -253,26 +253,28 @@ class UserController extends Controller
 
     public function listApplicants(Request $request)
     {
-
         $jr_id = $request->route('jobid');
-
         $session= $request->session()->get('user');
+
         if(isset($session)){
-            if(Job_Application::where(['JA_STATUS'=>'PENDING','JR_ID'=>$jr_id])->exists()){
 
-                $Applicants = Freelancer::select('*')
-                ->join('JOB_APPLICATION', 'FREELANCER.FREELANCER_ID', '=', 'JOB_APPLICATION.FREELANCER_ID')
-                ->join('USERS', 'FREELANCER.USER_ID', '=', 'USERS.USER_ID')
-                ->where(['JA_STATUS'=>'PENDING','JOB_APPLICATION.JR_ID'=>$jr_id])
-                ->get();
+            $Applicants = Freelancer::select('*')
+            ->join('JOB_APPLICATION', 'FREELANCER.FREELANCER_ID', '=', 'JOB_APPLICATION.FREELANCER_ID')
+            ->join('USERS', 'FREELANCER.USER_ID', '=', 'USERS.USER_ID')
+            ->where(['JA_STATUS'=>'PENDING','JOB_APPLICATION.JR_ID'=>$jr_id])
+            ->get();
 
-                return view('user.applicantList',['applicants'=>$Applicants]);
-            }else{
-                return view('index');
-            }
+            $reviews = Freelancer::select('FREELANCER.FREELANCER_ID' , DB::raw('round(AVG(RATING),0) as quantity'))
+            ->join('GIG', 'GIG.FREELANCER_ID', '=', 'FREELANCER.FREELANCER_ID')
+            ->join('REVIEWS', 'REVIEWS.GIG_ID', '=', 'GIG.GIG_ID')
+            ->groupBy('FREELANCER.FREELANCER_ID')
+            ->get();
+
+            return view('user.applicantList',['applicants'=>$Applicants,'reviews'=>$reviews]);
 
         }else{
-            return redirect('index');
+
+            return redirect()-route('login-req');
         }
     }
 
@@ -345,44 +347,54 @@ class UserController extends Controller
              ON users.USER_ID = freelancer.USER_ID
              WHERE orders.ORDER_ID ='.$oid.';');
 
-             if(orderAttachment::where('ORDER_ID',$oid)->exists()){
-                $attachment = orderAttachment::where('ORDER_ID',$oid)->get();
+            $attachment = orderAttachment::where('ORDER_ID',$oid)->get();
+            $review = reviews::where('ORDER_ID',$oid)->get();
+            $modification = modification::where('ORDER_ID',$oid)->get();
+            $dispute = dispute::where('ORDER_ID',$oid)->get();
 
-                if(reviews::where('ORDER_ID',$oid)->exists()){
-                    $review = reviews::where('ORDER_ID',$oid)->get();
+            return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
 
-                    if(modification::where('ORDER_ID',$oid)->exists()){
 
-                      $modification = modification::where('ORDER_ID',$oid)->get();
-                      $dispute = dispute::where('ORDER_ID',$oid)->get();
+            //  if(orderAttachment::where('ORDER_ID',$oid)->exists()){
+            //     $attachment = orderAttachment::where('ORDER_ID',$oid)->get();
 
-                      return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
+            //     if(reviews::where('ORDER_ID',$oid)->exists()){
+            //         $review = reviews::where('ORDER_ID',$oid)->get();
 
-                    }
+            //         if(modification::where('ORDER_ID',$oid)->exists()){
 
-                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'departments'=>$department]);
+            //           $modification = modification::where('ORDER_ID',$oid)->get();
+            //           $dispute = dispute::where('ORDER_ID',$oid)->get();
 
-                }else{
+            //           return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
 
-                    if(modification::where('ORDER_ID',$oid)->exists()){
+            //         }
 
-                        $modification = modification::where('ORDER_ID',$oid)->get();
+            //         return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'departments'=>$department]);
 
-                        $dispute = dispute::where('ORDER_ID',$oid)->get();
+            //     }else{
 
-                        return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
+            //         if(modification::where('ORDER_ID',$oid)->exists()){
 
-                      }
+            //             $modification = modification::where('ORDER_ID',$oid)->get();
 
-                    return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'departments'=>$department]);
+            //             $dispute = dispute::where('ORDER_ID',$oid)->get();
 
-                }
-             }
+            //             return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
+
+            //           }
+
+            //         return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'departments'=>$department]);
+
+            //     }
+            //  }
+
                 return view('user.orderDetails',['orders'=>$orders]);
 
             }else{
                 return view('user.orderList');
             }
+
         }else{
             return redirect('index');
         }

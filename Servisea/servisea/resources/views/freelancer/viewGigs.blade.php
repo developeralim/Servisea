@@ -190,48 +190,42 @@
 
         @foreach ($gigs as $gig)
           <div class="col-sm-6 col-xl-3">
-
           <div class="listing-style1">
-          <form method="POST" action="{{route('viewGig',$gig->GIG_ID)}}" id="gig-id">
-           @csrf
-           @if(isset($gig))
-            <input name="gig_id" value="{{$gig->GIG_ID}}" hidden>
-            @endif
-            <div class="list-thumb">
-
-
-            @foreach ($gigMedia as $gigmed)
+           <div class="list-thumb">
+           @if(isset($gigMedia)&&count($gigMedia)!=0)
+                @foreach ($gigMedia as $gigmed)
                     @if($gigmed->GIG_ID == $gig->GIG_ID)
-                <img class="w-100" src="{{asset('backend/USER_ASSET/images')}}" alt="">
-                <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                @else
-                <img class="w-100" src="{{asset('backend/USER_ASSET/images/signup-image.jpg')}}" alt="">
-                <a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                    <img class="w-100" src="{{asset('backend/THEME/images/gallery/gig_img.png')}}" alt="">
+                    <a a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                    @endif
+                @endforeach
+            @else
+            <img class="w-100" src="{{asset('backend/THEME/images/gallery/gig_img.png')}}" alt="">
+            <a a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+            @endif
 
-                  @endif
-                  @endforeach
-
-
-               </div>
+            </div>
               <div class="list-content">
                 <p class="list-text body-color fz14 mb-1">{{$gig->GIG_NAME}}</p>
                 <h5 class="list-title"><a href="{{route('viewGig',$gig->GIG_ID)}}">{{$gig->GIG_DESCRIPTION}}</a></h5>
                 <input name="freelancer_id" value="{{$gig->FREELANCER_ID}}" hidden ></input>
                 <div class="review-meta d-flex align-items-center">
                   <i class="fas fa-star fz10 review-color me-2"></i>
+                  @if(isset($reviews))
                   @foreach ($reviews as $review)
                     @if($review->GIG_ID == $gig->GIG_ID)
-                    <p class="mb-0 body-color fz14"><span class="dark-color me-2">{{$review->RATING}}</span>94 reviews</p>
-                    @else
-                    <p class="mb-0 body-color fz14"><span class="dark-color me-2"></span>No reviews yet</p>
+                    <p class="mb-0 body-color fz14"><span class="dark-color me-2">{{$review->RATING}}</span>{{$review->COUNT}} reviews</p>
                     @endif
                   @endforeach
+                  @else
+                  <p class="mb-0 body-color fz14"><span class="dark-color me-2"></span>No reviews yet</p>
+                  @endif
                 </div>
                 <hr class="my-2">
                 <div class="list-meta d-flex justify-content-between align-items-center mt15">
                   <a href="{{route('viewFreelancer',$gig->FREELANCER_ID)}}">
                     <span class="position-relative mr10">
-                      <img class="rounded-circle" src="images/team/fl-s-1.png" alt="Freelancer Photo">
+                      <img class="rounded-circle" style="width: 60px;" src="{{asset('backend/THEME/images/freelancer_icon.jpg')}}" alt="Freelancer Photo">
                       <span class="online-badge"></span>
                     </span>
                     <span class="fz14">{{$gig->USERNAME}}</span>
@@ -241,7 +235,7 @@
                   </div>
                 </div>
               </div>
-            </form>
+
             </div>
           </div>
           @endforeach

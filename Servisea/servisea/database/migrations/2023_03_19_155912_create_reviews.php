@@ -15,14 +15,15 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->integerIncrements('REVIEW_ID');
 
+            $table->unsignedInteger('ORDER_ID');
+            $table->foreign('ORDER_ID')->references('ORDER_ID')->on('order')->onDelete('cascade')->cascadeOnUpdate();
+
             $table->unsignedInteger('GIG_ID');
             $table->foreign('GIG_ID')->references('GIG_ID')->on('gig')->onDelete('cascade')->cascadeOnUpdate();
 
-            $table->string('RATING')->nullable();
+            $table->integer('RATING')->nullable();
             $table->string('DESCRIPTION')->nullable();
 
-            $table->unsignedInteger('ORDER_ID');
-            $table->foreign('ORDER_ID')->references('ORDER_ID')->on('order')->onDelete('cascade')->cascadeOnUpdate();
 
         });
     }

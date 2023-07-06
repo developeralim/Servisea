@@ -44,59 +44,40 @@
 <div class="body_content">
 
     <!-- Breadcumb Sections -->
-    <section class="breadcumb-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 col-lg-10">
-            <div class="breadcumb-style1 mb10-xs">
-              <div class="breadcumb-list">
-                <a href="">Home</a>
-                <a href="">Services</a>
-                <a href="">Design & Creative</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4 col-lg-2">
-            <div class="d-flex align-items-center justify-content-sm-end">
-              <div class="share-save-widget d-flex align-items-center">
-                <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                <div class="h6 mb-0">Share</div>
-              </div>
-              <div class="share-save-widget d-flex align-items-center ml15">
-                <span class="icon flaticon-like dark-color fz12 mr10"></span>
-                <div class="h6 mb-0">Save</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Breadcumb Sections -->
     <section class="breadcumb-section pt-0">
       <div class="cta-service-single cta-banner mx-auto maxw1700 pt120 pt60-sm pb120 pb60-sm bdrs16 position-relative overflow-hidden d-flex align-items-center mx20-lg px30-lg">
         <img class="left-top-img wow zoomIn" src="{{asset('backend/THEME/images/vector-img/left-top.png')}}" alt="">
-        <img class="right-bottom-img wow zoomIn" src="{{asset('backend/THEME/images/vector-img/vector-service-v1.png')}}" alt="">
-        <img class="service-v1-vector bounce-y d-none d-xl-block" src="{{asset('backend/THEME/images/vector-img/vector-service-v1.png')}}" alt="">
+        <img class="right-bottom-img wow zoomIn"  src="{{asset('backend/THEME/images/background/blue.jpg')}}" alt="">
+        <img class="service-v1-vector bounce-y d-none d-xl-block" src="{{asset('backend/THEME/images/background/paleblue.jpg')}}" alt="">
         <div class="container">
           <div class="row wow fadeInUp">
             <div class="col-xl-7">
               <div class="position-relative">
                 <h2>{{$gig["GIG_NAME"]}}</h2>
                 <div class="list-meta mt30">
-
-                <button type="submit">
                 <a class="list-inline-item mb5-sm">
                     <input name="freelancer_id" value="{{$gig['FREELANCER_ID']}}" hidden />
                     <span class="position-relative mr10">
-                      <img class="rounded-circle" src="{{asset('backend/THEME/images/team/fl-d-1.png')}}" alt="Freelancer Photo">
+                      <img class="rounded-circle" src="{{asset('backend/THEME/images/freelancer_icon.jpg')}}" style="width:45px;" alt="Freelancer Photo">
                       <span class="online-badge"></span>
                     </span>
-                    <span class="fz14">{{$gig["USER_FNAME"]}} {{$gig["USER_LNAME"]}}</span>
+                    <span class="fz14">{{$gig["USERNAME"]}}</span>
                 </a>
-                </button>
+                @if(isset($reviewsCount))
+                    @if(!$reviewsCount->isEmpty())
+                    <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="fas fa-star vam fz10 review-color me-2"></i> {{$reviewsCount[0]->RATING}} <br> {{$reviewsCount[0]->COUNT}} reviews</p>
+                    @else
+                    <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs">No reviews</p>
+                    @endif
+                @endif
 
-                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="fas fa-star vam fz10 review-color me-2"></i> 4.82 94 reviews</p>
-                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-file-1 vam fz20 me-2"></i> 2 Order in Queue</p>
+                @if(isset($orderCount))
+                    @if(!$orderCount->isEmpty())
+                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-file-1 vam fz20 me-2"></i> {{$orderCount[0]->COUNT}} Order in Queue</p>
+                    @else
+                  <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs"><i class="flaticon-file-1 vam fz20 me-2"></i> 0 Order in Queue</p>
+                  @endif
+                @endif
                 </div>
               </div>
             </div>
@@ -130,15 +111,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
-                  <div class="iconbox-style1 contact-style d-flex align-items-start mb30">
-                    <div class="icon flex-shrink-0"><span class="flaticon-tracking"></span></div>
-                    <div class="details">
-                      <h5 class="title">Location</h5>
-                      <p class="mb-0 text">New York</p>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div class="service-single-sldier vam_nav_style slider-1-grid owl-carousel owl-theme mb60">
                 <div class="item">
@@ -163,77 +135,102 @@
                       <tr>
                         <th class="col" scope="col"></th>
                         <th class="col" scope="col">
-                          <span class="h2">$29 <small>/ monthly</small></span><br>
+                          <span class="h2">${{$basic->PRICE}} </span><br>
                           <span class="h4">Basic</span><br>
-                          <span class="text">I will redesign your current <br class="d-none d-lg-block"> landing page or create one for <br class="d-none d-lg-block"> you (upto 4 sections)</span>
                         </th>
+                        @if (isset($standard))
                         <th class="col" scope="col">
-                          <span class="h2">$49 <small>/ monthly</small></span><br>
+                          <span class="h2">${{$standard->PRICE}}</span><br>
                           <span class="h4">Standard</span><br>
-                          <span class="text">4 High Quality Desktop <br class="d-none d-lg-block"> Pages.</span>
                         </th>
+                        @endif
+                        @if (isset($premium))
                         <th class="col" scope="col">
-                          <span class="h2">$89 <small>/ monthly</small></span><br>
+                          <span class="h2">${{$premium->PRICE}} </span><br>
                           <span class="h4">Premium</span><br>
-                          <span class="text">4 High Quality Desktop and <br class="d-none d-lg-block"> Mobile Pages.</span>
                         </th>
-                      </tr>
+                        @endif
+                    </tr>
                     </thead>
                     <tbody class="t-body">
-                      <tr class="bgc-thm3">
+                    <tr >
+                        <th scope="row">Name</th>
+                        <td>{{$basic->PACKAGE_NAME}}</td>
+                        @if (isset($standard))
+                        <td>{{$standard->PACKAGE_NAME}}</td>
+                        @endif
+                        @if (isset($premium))
+                        <td>{{$premium->PACKAGE_NAME}}</td>
+                        @endif
+                    </tr>
+
+                    <tr class="bgc-thm3">
                         <th scope="row">Source file</th>
                         <td><a class="check_circle bgc-thm" href="#"><span class="fas fa-check"></span></a></td>
+                        @if (isset($standard))
                         <td><a class="check_circle bgc-thm" href="#"><span class="fas fa-check"></span></a></td>
                         <td><a class="check_circle bgc-thm" href="#"><span class="fas fa-check"></span></a></td>
+                        @endif
                       </tr>
-                      <tr>
-                        <th scope="row">Number of pages</th>
-                        <td>2</td>
-                        <td>4</td>
-                        <td>6</td>
-                      </tr>
-                      <tr class="bgc-thm3">
+                      <tr >
                         <th scope="row">Revisions</th>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>5</td>
-                      </tr>
-                      <tr>
+                        <td>{{$basic->REVISION}}</td>
+                        @if (isset($standard))
+                        <td>{{$standard->REVISION}}</td>
+                        @endif
+                        @if (isset($premium))
+                        <td>{{$premium->REVISION}}</td>
+                        @endif
+                    </tr>
+
+                    <tr class="bgc-thm3">
                         <th scope="row">Delivery Time </th>
-                        <td>2 Days</td>
-                        <td>3 Days</td>
-                        <td>4 Days</td>
-                      </tr>
-                      <tr class="bgc-thm3">
+                        <td>{{$basic->DELIVERY_DAYS}} Days</td>
+                        @if (isset($standard))
+                        <td>{{$standard->DELIVERY_DAYS}} Days</td>
+                        @endif
+                        @if (isset($premium))
+                        <td>{{$premium->DELIVERY_DAYS}} Days</td>
+                        @endif
+                    </tr>
+
+                    <tr>
                         <th scope="row">Total</th>
-                        <td>$29</td>
-                        <td>$49</td>
-                        <td>$89</td>
-                      </tr>
-                      <tr>
-                        <th scope="row"></th>
-                        <td><a href="" class="ud-btn btn-thm">Select<i class="fal fa-arrow-right-long"></i></a></td>
-                        <td><a href="" class="ud-btn btn-thm">Select<i class="fal fa-arrow-right-long"></i></a></td>
-                        <td><a href="" class="ud-btn btn-thm">Select<i class="fal fa-arrow-right-long"></i></a></td>
-                      </tr>
+                        <td>${{$basic->PRICE}}</td>
+                        @if (isset($standard))
+                        <td>${{$standard->PRICE}}</td>
+                        @endif
+                        @if (isset($premium))
+                        <td>${{$premium->PRICE}}</td>
+                        @endif
+                    </tr>
+
                     </tbody>
                   </table>
                 </div>
                 <hr class="opacity-100 mb60">
-                <hr class="opacity-100 mb15">
+                @if(isset($reviewsCount))
                 <div class="product_single_content mb50">
                   <div class="mbp_pagination_comments">
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="total_review mb30 mt45">
-                          <h4>80 Reviews</h4>
+                            @if(!$reviewsCount->isEmpty())
+                                <h4>{{$reviewsCount[0]->COUNT}} Reviews</h4>
+                                @else
+                                <h4>No Reviews</h4>
+                            @endif
                         </div>
                         <div class="d-md-flex align-items-center mb30">
                           <div class="total-review-box d-flex align-items-center text-center mb30-sm">
                             <div class="wrapper mx-auto">
-                              <div class="t-review mb15">4.96</div>
-                              <h5>Exceptional</h5>
-                              <p class="text mb-0">3,014 reviews</p>
+                                @if(!$reviewsCount->isEmpty())
+                                <div class="t-review mb15">{{$reviewsCount[0]->RATING}}</div>
+                                <h5>Exceptional</h5>
+                                <p class="text mb-0">{{$reviewsCount[0]->COUNT}} reviews</p>
+                                @else
+                                <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs">No reviews</p>
+                                @endif
                             </div>
                           </div>
                           <div class="wrapper ml60 ml0-sm">
@@ -275,6 +272,7 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="col-md-12">
                         <div class="mbp_first position-relative d-flex align-items-center justify-content-start mb30-sm">
                           <img src="images/blog/comments-2.png" class="mr-3" alt="comments-2.png">
@@ -284,76 +282,14 @@
                           </div>
                         </div>
                         <p class="text mt20 mb20">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                        <div class="review_cansel_btns d-flex">
-                          <a href="#"><i class="fas fa-thumbs-up"></i>Helpful</a>
-                          <a href="#"><i class="fas fa-thumbs-down"></i>Not helpful</a>
-                        </div>
                       </div>
-                      <div class="col-md-12">
-                        <div class="mbp_first position-relative d-flex align-items-center justify-content-start mt30 mb30-sm">
-                          <img src="images/blog/comments-2.png" class="mr-3" alt="comments-2.png">
-                          <div class="ml20">
-                            <h6 class="mt-0 mb-0">Darrell Steward</h6>
-                            <div><span class="fz14">12 March 2022</span></div>
-                          </div>
-                        </div>
-                        <p class="text mt20 mb20">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                        <div class="review_cansel_btns d-flex pb30">
-                          <a href="#"><i class="fas fa-thumbs-up"></i>Helpful</a>
-                          <a href="#"><i class="fas fa-thumbs-down"></i>Not helpful</a>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="position-relative bdrb1 pb50">
-                          <a href="page-service-single.html" class="ud-btn btn-light-thm">See More<i class="fal fa-arrow-right-long"></i></a>
-                        </div>
-                      </div>
+
                     </div>
                   </div>
                 </div>
-                <div class="bsp_reveiw_wrt">
-                  <h6 class="fz17">Add a Review</h6>
-                  <p class="text">Your email address will not be published. Required fields are marked *</p>
-                  <h6>Your rating of this product</h6>
-                  <div class="d-flex">
-                    <i class="fas fa-star review-color"></i>
-                    <i class="far fa-star review-color ms-2"></i>
-                    <i class="far fa-star review-color ms-2"></i>
-                    <i class="far fa-star review-color ms-2"></i>
-                    <i class="far fa-star review-color ms-2"></i>
-                  </div>
-                  <form class="comments_form mt30 mb30-md">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="mb-4">
-                          <label class="fw500 fz16 ff-heading dark-color mb-2">Comment</label>
-                          <textarea class="pt15" rows="6" placeholder="There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text."></textarea>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="mb20">
-                          <label class="fw500 ff-heading dark-color mb-2">Name</label>
-                          <input type="text" class="form-control" placeholder="Ali Tufan">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="mb20">
-                          <label class="fw500 ff-heading dark-color mb-2">Email</label>
-                          <input type="email" class="form-control" placeholder="creativelayers088">
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
-                          <label class="custom_checkbox fz15 ff-heading">Save my name, email, and website in this browser for the next time I comment.
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <a href="" class="ud-btn btn-thm">Send<i class="fal fa-arrow-right-long"></i></a>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+                @endif
+
+
               </div>
             </div>
           </div>
@@ -406,7 +342,6 @@
                           </ul>
                           <div class="list-style1">
                             <ul class="">
-                              <li class="mb15"><i class="far fa-check text-thm3 bgc-thm3-light"></i>2 Page / Screen</li>
                               <li><i class="far fa-check text-thm3 bgc-thm3-light"></i>Source file</li>
                             </ul>
                           </div>
@@ -436,11 +371,12 @@
                           </div>
                         </div>
                       </div>
-
                       @endif
                     </div>
                   </div>
                 </div>
+
+                @if(isset($gig))
                 <div class="freelancer-style1 service-single mb-0">
                   <div class="wrapper d-flex align-items-center">
                     <div class="thumb position-relative mb25">
@@ -448,23 +384,29 @@
                       <span class="online"></span>
                     </div>
                     <div class="ml20">
-                      <h5 class="title mb-1">Kristin Watson</h5>
-                      <p class="mb-0">Dog Trainer</p>
-                      <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span> (595 reviews)</p></div>
+                      <h5 class="title mb-1">{{$gig["USERNAME"]}}</h5>
+                      <!-- <p class="mb-0">Dog Trainer</p> -->
+                      @if(isset($reviewsCount))
+                        @if(!$reviewsCount->isEmpty())
+                        <div class="review"><p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">{{$reviewsCount[0]->RATING}}</span> ({{$reviewsCount[0]->COUNT}}  reviews)</p></div>
+                        @else
+                        <p class="mb-0 dark-color fz14 list-inline-item ml25 ml15-sm mb5-sm ml0-xs">No reviews</p>
+                        @endif
+                      @endif
                     </div>
                   </div>
                   <hr class="opacity-100">
                   <div class="details">
                     <div class="fl-meta d-flex align-items-center justify-content-between">
-                      <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                      <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">$90 / hr</span></a>
-                      <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">%98</span></a>
+
                     </div>
                   </div>
                   <div class="d-grid mt30">
-                    <a href="page-freelancer-single.html" class="ud-btn btn-thm-border">Contact Me<i class="fal fa-arrow-right-long"></i></a>
+                    <a href="" class="ud-btn btn-thm-border">Contact Me<i class="fal fa-arrow-right-long"></i></a>
                   </div>
                 </div>
+                @endif
+
               </div>
             </div>
           </div>
@@ -513,7 +455,9 @@
               </div>
             </div>
           </div>
+
           <div class="col-sm-6 col-lg-3">
+
             <div class="listing-style1">
               <div class="list-thumb">
                 <div class="listing-thumbIn-slider position-relative navi_pagi_bottom_center slider-1-grid owl-carousel owl-theme">
@@ -557,7 +501,9 @@
                 </div>
               </div>
             </div>
+
           </div>
+
           <div class="col-sm-6 col-lg-3">
             <div class="listing-style1">
               <div class="list-thumb">
@@ -587,6 +533,7 @@
               </div>
             </div>
           </div>
+
           <div class="col-sm-6 col-lg-3">
             <div class="listing-style1">
               <div class="list-thumb">
@@ -616,6 +563,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

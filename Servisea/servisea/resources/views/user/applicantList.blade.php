@@ -50,15 +50,23 @@
                           <div class="freelancer-style1 p-0 mb-0 box-shadow-none">
                             <div class="d-lg-flex align-items-lg-center">
                               <div class="thumb w60 position-relative rounded-circle mb15-md">
+                                @if(($applicant->USER_IMG)== null)
+                                <img class="rounded-circle mx-auto" style="width: 60px;" src="{{asset('backend/THEME/images/freelancer_icon.jpg')}}" alt="">
+                                @else
                                 <img class="rounded-circle mx-auto" src="{{$applicant->USER_IMG}}" alt="">
+                                @endif
                                 <span class="online-badge2"></span>
                               </div>
                               <div class="details ml15 ml0-md mb15-md">
-                                <h5 class="title mb-2">{{$applicant->USER_FNAME}} {{$applicant->USER_LNAME}}</h5>
+                                <h5><a class="title mb-2" href="">{{$applicant->USERNAME}}</a></h5>
                                 <!-- <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-place fz16 vam text-thm2 me-1"></i> London, UK</p> -->
-                                <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> {{$applicant->F_SINCE}}</p>
-                                <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="flaticon-contract fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i> 1 Received</p>
-                              </div>
+                                <p class="mb-0 fz14 list-inline-item mb5-sm pe-1"><i class="flaticon-30-days fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i>Date Applied: {{ date('d-M-y', strtotime($applicant->JA_DATEAPPLIED)) }}</p>
+                                @foreach($reviews as $review)
+                                    @if($applicant->FREELANCER_ID == $review->FREELANCER_ID)
+                                        <p class="mb-0 fz14 list-inline-item mb5-sm"><i class="fas fa-star vam fz10 review-color me-2 fz16 vam text-thm2 me-1 bdrl1 pl15 pl0-xs bdrn-xs"></i><span class="fz15 fw500">{{$review->quantity}}</span></p>
+                                    @endif
+                                @endforeach
+                             </div>
                             </div>
                           </div>
                         </th>

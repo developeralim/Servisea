@@ -40,6 +40,9 @@ Route::post('/login-req', [CustomController::class, 'login'])->name('login-req')
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
 Route::get('/user/profile',  [UserController::class, 'viewProfile'])->name('viewProfileUser');
 Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
+
+Route::get('/servisea/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewReqJobList');
+
 //User Get Job Page and Post Job
 Route::get('/user/postJob=1',  [jobController::class, 'viewRequestJobPage'])->name('viewRequestJobPage');
 Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPageA');
@@ -60,7 +63,6 @@ Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
 Route::get('/servisea/viewgig/{gigid}', [FreelancerController::class, 'viewGig'])->name('viewGig');
-Route::get('/servisea/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewReqJobList');
 
 
 Route::get('/servisea/view/job/{jobid}', [jobController::class, 'viewJob'])->name('viewJob');
