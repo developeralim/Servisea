@@ -40,15 +40,12 @@
         </div>
       </div>
     </section>
-
     <!-- Shop Cart Area -->
     <section class="shop-checkout pt-0">
       <div class="container">
         <div class="row wow fadeInUp" data-wow-delay="300ms">
         <div class="col-lg-8">
         <div class="checkout_form">
-
-
         <div class="checkout_coupon">
             <div class="form2">
                 <div class="row">
@@ -147,11 +144,9 @@
                   </div>
                 </form>
               </div>
-
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
-
             @if($order->ORDER_STATUS == 'COMPLETED' && Session::get('freelancer') == null)
               <form class="bsp_reveiw_wrt" name="review-form" id="review-form" action="{{route('rateGig',Crypt::encryptString($order->ORDER_ID))}}" method="post">
               @csrf
@@ -223,7 +218,6 @@
                 @endif
             </div>
         </div>
-
         <div class="col-lg-4">
           <div class="shop-sidebar ms-lg-auto">
             <div class="order_sidebar_widget default-box-shadow1">
@@ -232,7 +226,6 @@
               <p class="text">Ordered from:  <span class="float-end">{{$order->USERNAME}}</span></p>
               <p class="text">Total price:   <span class="float-end">${{$order->ORDER_AMOUNT}}</span></p>
               <p class="text">Delivery Date: <span class="float-end">{{$order->ORDER_DUE}}</span></p>
-
               <div class="d-grid mt40">
             @if (Session::get('freelancer') != null )
               @if(isset($dispute))
@@ -249,9 +242,10 @@
               @if(isset($dispute))
                 @if($dispute->isEmpty())
                 <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
+                <a type="button" href="{{route('viewDispute',Crypt::encryptString($order->ORDER_ID))}}" class="ud-btn btn-warning no-border">View Dispute</a>
                 <br>
                 @else
-                <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">View Dispute</button>
+                <a type="button" href="{{route('viewDispute',Crypt::encryptString($order->ORDER_ID))}}" class="ud-btn btn-warning no-border">View Dispute</a>
                 <br>
                 @endif
                @endif
@@ -264,7 +258,6 @@
         </div>
       </div>
     </section>
-
   @endforeach
  @endif
 
@@ -296,7 +289,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="modal fade" id="disputeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -338,7 +330,6 @@
                 </div>
             </div>
             </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -348,7 +339,6 @@
     </div>
   </div>
 </div>
-
  </div>
 @stop
 

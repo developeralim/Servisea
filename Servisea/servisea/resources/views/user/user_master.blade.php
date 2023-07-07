@@ -34,7 +34,7 @@
     <!-- <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/templatemo.css')}}">
     -->
-    <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/custom.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/custom.css')}}"> -->
 
     <!-- Load fonts style after rendering the layout styles -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
@@ -48,7 +48,7 @@
 
 <body class="maxw1700 mx-auto">
 <div class="wrapper ovh">
-  <!-- <div class="preloader"></div> -->
+   <div id="preloader" class="preloader"></div>
 
     @include('user.body.header')
     <!-- Modal -->
@@ -67,10 +67,17 @@
             </form>
         </div>
     </div>
+
     @yield('user-main-content')
 
     @include('user.body.footer')
 </div>
+
+<script>
+    window.addEventListener ("preloader", function() {
+    loader.style.display = 'none';
+});
+</script>
     <!-- Start Script -->
     <script src="{{asset('backend/THEME/js/jquery-3.6.4.min.js')}}"></script>
     <script src="{{asset('backend/THEME/js/jquery-migrate-3.0.0.min.js')}}"></script>

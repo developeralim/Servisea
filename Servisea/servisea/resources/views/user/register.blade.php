@@ -12,78 +12,93 @@
 @stop
 
 @section('user_style')
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="{{asset('backend/USER_ASSET/fonts/material-icon/css/material-design-iconic-font.min.css')}}">
-    <!-- Main css -->
-    <link rel="stylesheet" href="{{asset('backend/USER_ASSET/css/style.css')}}">
 
 @stop
 @section('user-main-content')
 
-    <div class="main">
-        <!-- Sign up form -->
-        <section class="signup">
-            <div class="container">
-                <div class="signup-content">
-                    <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
-                        <form method="POST" action="{{ route('registerUser') }}" class="register-form" id="register-form">
-                            @csrf
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="username" id="username" placeholder="Username"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email"/>
-                            </div>
-                            <!-- <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email[]" id="email1" placeholder="Your Email"/>
-                            </div> -->
-                            <div class="form-group">
-                                <label for="phone"><i class="zmdi zmdi-phone"></i></label>
-                                <input type="phone" name="phone" id="phone" placeholder="Your Phone"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" id="password" placeholder="Password"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="password_confirmation" id="re_pass" placeholder="Repeat your password"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="signup-image">
-                        <figure><img src="{{asset('backend/USER_ASSET/images/signup-image.jpg')}}" alt="sing up image"></figure>
-                        <a href="#" class="signup-image-link">I am already member</a>
-                    </div>
-                </div>
+
+<div class="bgc-thm4">
+<div class="wrapper ovh">
+<div class="body_content">
+    <!-- Our SignUp Area -->
+    <section class="our-register">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
+            <div class="main-title text-center">
+              <h2 class="title">Register</h2>
             </div>
-        </section>
-    </div>
+          </div>
+        </div>
+        <div class="row wow fadeInRight" data-wow-delay="300ms">
+        <form method="POST" action="{{ route('registerUser') }}" class="register-form" id="register-form">
+            @csrf
+          <div class="col-xl-6 mx-auto">
+            <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+              <div class="mb30">
+                <h4>Let's create your account!</h4>
+                <p class="text mt20">Already have an account? <a href="{{route('login_user')}}" class="text-thm">Log In!</a></p>
+              </div>
+              <div class="mb25">
+                <label class="form-label fw500 dark-color">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="ali">
+                @if ($errors->any())
+                    @error('username')
+                            <div class="error" style="color:#FF0000">{{ $message }}</div>
+                    @enderror
+                @endif
+              </div>
+              <div class="mb25">
+                <label class="form-label fw500 dark-color">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="alitfn58@gmail.com">
+                @if ($errors->any())
+                    @error('email')
+                            <div class="error" style="color:#FF0000">{{ $message }}</div>
+                    @enderror
+                @endif
+              </div>
+              <div class="mb15">
+                <label class="form-label fw500 dark-color">Password</label>
+                <input type="text" class="form-control" name="password" placeholder="*******">
+                @if ($errors->any())
+                    @error('password')
+                            <div class="error" style="color:#FF0000">{{ $message }}</div>
+                    @enderror
+                @endif
+              </div>
+              <div class="mb15">
+                <label class="form-label fw500 dark-color">Confirm Password</label>
+                <input type="text" class="form-control" name="password_confirmation" placeholder="*******">
+                @if ($errors->any())
+                    @error('password_confirmation')
+                            <div class="error" style="color:#FF0000">{{ $message }}</div>
+                    @enderror
+                @endif
+              </div>
+              <div class="d-grid mb20">
+                <button class="ud-btn btn-thm default-box-shadow2" type="submit">Create Account<i class="fal fa-arrow-right-long"></i></button>
+              </div>
+              <div class="hr_content mb20"><hr><span class="hr_top_text">OR</span></div>
+              <div class="d-md-flex justify-content-between">
+                <button class="ud-btn btn-fb fz14 fw400 mb-2 mb-md-0" type="button"><i class="fab fa-facebook-f pr10"></i> Continue Facebook</button>
+                <button class="ud-btn btn-google fz14 fw400 mb-2 mb-md-0" type="button"><i class="fab fa-google"></i> Continue Google</button>
+                <button class="ud-btn btn-apple fz14 fw400" type="button"><i class="fab fa-apple"></i> Continue Apple</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </section>
+</div>
+</div>
+</div>
+
+
+
     @stop
     @section('user_script')
-    <!-- JS -->
-    <script src="{{asset('backend/USER_ASSET/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('backend/USER_ASSET/js/main.js')}}"></script>
+
     @stop
 
 

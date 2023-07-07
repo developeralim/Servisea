@@ -38,14 +38,19 @@ class DatabaseSeeder extends Seeder
         $user = [
             ['USERNAME' => 'Jean',  'USER_EMAIL' => 'Jean@gmail.com',   'USER_PASSWORD' => Hash::make('Jean1234'),  'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '1'],
             ['USERNAME' => 'Jean1', 'USER_EMAIL' => 'Jean1@gmail.com',  'USER_PASSWORD' => Hash::make('Jean1234'),   'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '2'],
+            ['USERNAME' => 'Jean2', 'USER_EMAIL' => 'Jean2@gmail.com',  'USER_PASSWORD' => Hash::make('Jean1234'),   'ACCOUNT_STATUS' => '1',    'USER_ROLE' => '3'],
         ];
 
         $admin = [
             ['ADMIN_USERNAME'=> 'Dev01', 'ADMIN_EMAIL'=> 'dev01@gmail.com', 'ADMIN_PASSWORD'=> Hash::make('dev01234'), 'ADMIN_STATUS'=> 1, 'ADMIN_LEVEL'=> 1,],
         ];
 
+        $employee = [
+            ['USER_ID'=> 3, 'DEPARTMENT_ID'=> 1, 'EMP_LEVEL'=> 1, 'EMP_SINCE'=> now(),'EMP_SALARY'=> 5000.00 , 'created_at'=> now(), 'updated_at'=> now()],
+        ];
+
         $freelancer= [
-            ['USER_ID' => 2,  'F_LEVEL' => 1,   'F_DESCRIPTION' =>'Description of Freelancer',  'F_SINCE' => now(),    'F_LANGUAGE' => 'EN'],
+            ['USER_ID' => 2,  'F_LEVEL' => 1,   'F_DESCRIPTION' =>'Description of Freelancer',  'F_SINCE' => now(), 'F_LANGUAGE' => 'EN'],
         ];
 
         $gig= [

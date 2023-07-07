@@ -57,7 +57,7 @@
                         <td class="vam"><a href="{{route('viewGig',$order->GIG_ID)}}">{{$order->GIG_NAME}}</a></td>
                         <td class="vam">$ {{$order->ORDER_AMOUNT}}</td>
                         <td class="vam">{{ date('d-M-y', strtotime($order->ORDER_DUE))}}</td>
-                        <td class="vam"><span class="pending-style style4"><a onmouseover="this.style.color='orange';" onmouseout="this.style.color='';" style="color:aliceblue;" href="{{route('orderDetails',$order->ORDER_ID)}}">View</a></span></td>
+                        <td class="vam"><span class="pending-style style4"><a onmouseover="this.style.color='orange';" onmouseout="this.style.color='';" style="color:aliceblue;" href="{{route('orderDetails',Crypt::encryptString($order->ORDER_ID))}}">View</a></span></td>
                       </tr>
                     @endforeach
                     @else

@@ -28,14 +28,23 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function viewRegisterPage(Request $request){
-        $sessionAdmin= $request->session()->get('adminDetails');
         $session= $request->session()->get('user');
-        if(isset($sessionAdmin)==null&&isset($session)==null){
+        if(isset($session)==null){
             return view("user.register");
         }else{
             return redirect('login_user');
         }
+    }
 
+    public function viewDispute(Request $request){
+        $session= $request->session()->get('user');
+        $oid = Crypt::decryptString( $request->route('oid'));
+
+        if(isset($session)){
+            return view("user.Dispute.disputeView",['oid'=>$oid]);
+        }else{
+            return redirect('login_user');
+        }
     }
 
     public function requestDispute(Request $request){
@@ -196,15 +205,12 @@ class UserController extends Controller
         }
     }
 
-
     public function confirmOrder(Request $request)
     {
         $oid = Crypt::decryptString( $request->route('oid'));
 
         $session= $request->session()->get('user');
         if(isset($session)&&isset($oid)){
-
-            Order::where('ORDER_ID',$oid);
 
             Order::where('ORDER_ID',$oid)
            ->update([
@@ -217,7 +223,6 @@ class UserController extends Controller
             return redirect('index');
         }
     }
-
 
     public function rateGig(Request $request)
     {
@@ -323,7 +328,7 @@ class UserController extends Controller
     {
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
-        $oid= $request->route('oid');
+        $oid = Crypt::decryptString( $request->route('oid'));
 
         $department = department::all();
 
@@ -354,43 +359,6 @@ class UserController extends Controller
 
             return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
 
-
-            //  if(orderAttachment::where('ORDER_ID',$oid)->exists()){
-            //     $attachment = orderAttachment::where('ORDER_ID',$oid)->get();
-
-            //     if(reviews::where('ORDER_ID',$oid)->exists()){
-            //         $review = reviews::where('ORDER_ID',$oid)->get();
-
-            //         if(modification::where('ORDER_ID',$oid)->exists()){
-
-            //           $modification = modification::where('ORDER_ID',$oid)->get();
-            //           $dispute = dispute::where('ORDER_ID',$oid)->get();
-
-            //           return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
-
-            //         }
-
-            //         return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'departments'=>$department]);
-
-            //     }else{
-
-            //         if(modification::where('ORDER_ID',$oid)->exists()){
-
-            //             $modification = modification::where('ORDER_ID',$oid)->get();
-
-            //             $dispute = dispute::where('ORDER_ID',$oid)->get();
-
-            //             return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
-
-            //           }
-
-            //         return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'departments'=>$department]);
-
-            //     }
-            //  }
-
-                return view('user.orderDetails',['orders'=>$orders]);
-
             }else{
                 return view('user.orderList');
             }
@@ -399,7 +367,6 @@ class UserController extends Controller
             return redirect('index');
         }
     }
-
 
     public function DeleteProfile(Request $request)
     {
@@ -418,46 +385,29 @@ class UserController extends Controller
     }
 
     public function RegisterUser(Request $request){
-/*
-        $userInput = $request->validate([
-            'USERNAME'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_-.]+$/|unique:users|unique:admin,ADMIN_USERNAME',
-            'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
-            'USER_PASSWORD'   => 'required|string|min:6|regex:/^[a-zA-Z0-9_-.]+$/',
-            'USER_LNAME'      => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-            'USER_FNAME'      => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-            'USER_IMG'        => 'required|mimes:jpg,bmp,png',
-            'USER_DOB'        => 'required|before:'.now()->subYears(18)->toDateString(),
-            'USER_GENDER'     => 'required|char|max:7',
-            'USER_TEL'        => 'required|string|max:255|regex:/^[0-9]+$/',
-            'USER_CITY'       => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-            'USER_COUNTRY'    => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-            'USER_DISTRICT'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-            'USER_POSTALCODE' => 'required|string|max:255|regex:/^[0-9]+$/'
-       ]); */
 
-        #validation
-        $userInput = $request->validate([
-            'USERNAME'        => 'required|string|max:255|unique:users|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
-            'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
-            'USER_PASSWORD'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
-       ]);
+        try{
 
-       $messages = array(
-        'required' => 'The :attribute field is required.',
-    );
+            $userInput = $request->validate([
+                'username'   => 'required|string|max:255|unique:users|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
+                'email'      => 'required|email|unique:users,USER_EMAIL|unique:admin,ADMIN_EMAIL',
+                'password'   => 'required|min:8|string|regex:/^[a-zA-Z0-9_ ]+$/|confirmed',
+                'password_confirmation'   => 'required',
+            ]);
 
-       //DB::insert('Insert into users(USERNAME,USER_EMAIL,USER_PASSWORD) values(?,?,?)', [$userInput['USERNAME'],$userInput['USER_EMAIL'],Hash::make($userInput['USER_PASSWORD'])]);
+            User::Create(array( 'USERNAME' => $userInput['username'],
+                                'USER_EMAIL' => $userInput['email'],
+                                'USER_PASSWORD' => Hash::make($userInput['password'])));
 
-        User::Create(array('USERNAME' => $userInput['USERNAME'],
-                           'USER_EMAIL' => $userInput['USER_EMAIL'],
-                           'USER_PASSWORD' => Hash::make($userInput['USER_PASSWORD'])));
+            $user = User::where('USER_EMAIL',$userInput['email'])->first();
 
-       $user = User::where('USER_EMAIL', $userInput['USER_EMAIL'])->get();
-       $user = json_decode(json_encode($user[0]), true);
+            $request->session()->put('user',$user);
 
-       $request->session()->put('user',$user);
-       return redirect('index');
+        } catch (\Exception $e) {
 
+            return redirect("index");
+
+        }
     }
 
     public function UpdateProfile(Request $request){
@@ -560,8 +510,5 @@ class UserController extends Controller
 
                return redirect('index');
     }
-
-
-
 
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\gigController;
 use App\Http\Controllers\Admin\departmentController;
 use App\Http\Controllers\Admin\jobAdminController;
 use App\Http\Controllers\Admin\userAdminController;
+use App\Http\Controllers\Admin\employeeController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\department;
 use Illuminate\Support\Facades\Crypt;
@@ -101,6 +102,16 @@ Route::post('/servisea/modification/created/{oid}', [UserController::class, 'req
 Route::post('/servisea/dispute/created/{oid}', [UserController::class, 'requestDispute'])->name('createDispute');
 
 
+Route::get('/servisea/view/dispute/list', [employeeController::class, 'viewDisputeList'])->name('viewEmpDispute');
+Route::get('/servisea/view/dispute/{did}', [employeeController::class, 'viewDispute'])->name('viewSingleDispute');
+Route::get('/servisea/refund/{oid}/{did}', [employeeController::class, 'issueRefund'])->name('issueRefund');
+Route::get('/servisea/{choose}/refund/{oid}', [employeeController::class, 'chooseRefund'])->name('chooseRefund');
+Route::post('/servisea/close/dispute={did}', [employeeController::class, 'closeDispute'])->name('closeDispute');
+
+Route::get('/servisea/view/dispute/{oid}', [UserController::class, 'viewDispute'])->name('viewDispute');
+
+
+
 //Index Page
 Route::get('/order/requirement', function (request $request) {
 
@@ -109,11 +120,15 @@ Route::get('/order/requirement', function (request $request) {
 })->name('order.requirements');
 
 //Index Page
-Route::get('/order/requirement', function (request $request) {
+Route::get('/index/home', function (request $request) {
 
-    echo '<h1>Submit order rquirements</h1>';
+    $category = Category::all();
+    $department = department::all();
+    $request->session()->put(['categoryList'=>$category,'departmentList'=>$department]);
 
-})->name('order.requirements');
+    return view('index');
+})->name('home');
+
 
 //Index Page
 Route::get('/index', function (request $request) {
@@ -123,8 +138,7 @@ Route::get('/index', function (request $request) {
     $request->session()->put(['categoryList'=>$category,'departmentList'=>$department]);
 
     return view('index');
-})->name('home');
-
+})->name('index');
 
 //Index Page
 Route::get('/order/viwe', function (request $request) {

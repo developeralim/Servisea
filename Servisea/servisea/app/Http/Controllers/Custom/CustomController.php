@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
+use App\Models\employee;
 use Illuminate\Http\Request;
 use App\Models\admin;
 use App\Models\Freelancer;
@@ -41,10 +42,10 @@ function login(Request $request){
                 }
 
                 if($user['USER_ROLE']==3){
-                    $employee = Freelancer::where('USER_ID', $user['USER_ID'])->get();
+                    $employee = employee::where('USER_ID', $user['USER_ID'])->get();
                     $employee = json_decode(json_encode($employee[0]), true);
                     request()->Session()->put('employee',$employee);
-                    return redirect('index');
+                    return view('admin.Employee.dashboard');
                 }
 
                 return redirect('index');

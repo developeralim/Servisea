@@ -1,104 +1,4 @@
 
-    <!-- Header -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-                Zay
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                        @if (Session::get('user') !== null )
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle show" type="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            User
-                        </button>
-                        <ul class="dropdown-menu show">
-                             <li><a class="dropdown-item" href="{{route('viewProfileUser')}}">Profile</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="{{route('viewRequestJobPage')}}">Post a request</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="#">Billing and Payments</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="{{route('viewAllGig')}}">View all Gig</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="#">Setting</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="{{route('OrderList')}}">Orders</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="{{route('viewJobList')}}">Requests List</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="{{route('chat.index',[session('user')->USERNAME])}}">Chat</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="#">Dispute</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="{{route('clearSession')}}">Log Out</a></li> -->
-                            <!-- @if (Session::get('user.USER_ROLE') == 2 ) -->
-                            <!-- <li><a class="dropdown-item" href="{{route('switchToBuyer')}}">Switch to Buyer</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="">Post a gig</a></li> -->
-                            <!-- <li><a class="dropdown-item" href="">View Created Gigs</a></li>
-                            <li><a class="dropdown-item" href="">Apply Jobs</a></li>
-                            <li><a class="dropdown-item" href="">View Freelancer Profile</a></li>
-                            <li><a class="dropdown-item" href="">View orders</a></li>
-                            <li><a class="dropdown-item" href="">View Earnings</a></li>
-                            @else
-                            <li><a class="dropdown-item" href="{{route('switchToSeller')}}">Become a Seller</a></li>
-                            @endif -->
-
-                        <!-- </ul>
-                    </div>
-                    @endif
-                        </li>
-                    </ul>
-
-                </div>
-                <div class="navbar align-self-center d-flex">
-
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-
-                    @if (Session::get('user') == null )
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Register
-                    </button>
-                    <br>
-                    <a class="nav-icon position-relative text-decoration-none" href="{{route('login_user')}}">
-                        <i class="" >Login</i>
-                    </a>
-                    @else
-                    <a class="nav-icon position-relative text-decoration-none">
-                        <i class="" >Welcome {{Session('user.USERNAME')}}</i>
-                    </a>
-                    @endif
-                </div>
-            </div>
-
-        </div>
-    </nav> -->
-
-    <!-- Close Header -->
-
-
     <header class="header-nav nav-innerpage-style stricky main-menu border-0">
     <!-- Ace Responsive Menu -->
     <nav class="posr">
@@ -112,7 +12,7 @@
               <a class="login-info mr15" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe vam"></span></a>
               <!-- Responsive Menu Structure-->
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
-                <li class="visible_list"> <a class="list-item" href="{{route('home')}}"><span class="title">Home</span></a></li>
+                <li class="visible_list"> <a class="list-item" href="{{route('index')}}"><span class="title">Home</span></a></li>
                 <li> <a class="list-item" href="page-contact.html">Contact</a></li>
                 @if (Session::get('user') !== null )
                 <li class="visible_list"> <a class="list-item" href="{{route('viewAllGig')}}"><span class="title">Services</span></a></li>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('refund', function (Blueprint $table) {
             Schema::dropIfExists('refund');
-            $table->integerIncrements('REFUND_ID');
+            $table->string('REFUND_ID');
 
             $table->unsignedInteger('ORDER_ID');
             $table->foreign('ORDER_ID')->references('ORDER_ID')->on('order')->onDelete('cascade')->cascadeOnUpdate();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('REFUND_STATUS',['PENDING','CONFIRMED','CANCELLED'])->nullable();
             $table->dateTime('REFUND_DATE')->nullable();
             $table->decimal('REFUND_AMOUNT',8,2)->nullable();
+            
         });
     }
 

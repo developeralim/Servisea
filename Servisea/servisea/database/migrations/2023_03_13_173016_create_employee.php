@@ -22,8 +22,8 @@ return new class extends Migration
 
             $table->integer('EMP_LEVEL')->default(1);
             $table->dateTime('EMP_SINCE')->nullable();
-            $table->tinyInteger('EMP_ROLE')->nullable();
             $table->decimal('EMP_SALARY',8,2)->nullable();
+            $table->timestamps();
         });
     }
 
