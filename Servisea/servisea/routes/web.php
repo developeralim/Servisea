@@ -149,7 +149,26 @@ Route::get('/order/viwe', function (request $request) {
 
 //Login Page
 Route::get('/login', function () {
-    return view('login_user');
+
+    try{
+        //retrieve information from user and admin
+        $user= request()->session()->get('user');
+        $admin= request()->session()->get('adminDetails');
+
+        //if no information retrieved for user and admin
+        if(!isset($admin)&&!isset($user)){
+        //access login page
+            return view('login_user');
+        }else{
+        //else redirect to homepage
+            return redirect('index');
+        }
+
+    }
+    catch (\Exception $e){
+        return redirect('index');
+    }
+
 })->name("login_user");
 
 

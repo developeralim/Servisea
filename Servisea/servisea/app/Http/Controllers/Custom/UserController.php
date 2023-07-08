@@ -28,12 +28,20 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function viewRegisterPage(Request $request){
-        $session= $request->session()->get('user');
-        if(isset($session)==null){
-            return view("user.register");
-        }else{
-            return redirect('login_user');
+        try{
+
+            $user= $request->session()->get('user');
+            $admin= $request->session()->get('adminDetails');
+            if(!isset($user) && !isset($admin)){
+                return view("user.register");
+            }else{
+                return redirect('index');
+            }
         }
+        catch (\Exception $e){
+            return redirect('index');
+        }
+
     }
 
     public function viewDispute(Request $request){
@@ -144,44 +152,58 @@ class UserController extends Controller
 
     public function orderGig(Request $request)
     {
-        $pid = $request->route('pid');
-        $session= $request->session()->get('user');
 
-        if(isset($session)&&$session['USER_ROLE']!=2){
+        try {
+            //Request Order Id from URL
+            $pid = Crypt::decryptString($request->route('pid'));
+            $session= $request->session()->get('user');
+            //Check if information is retrieved and User is a project owner
+            if(isset($session)&&$session['USER_ROLE']==1){
+                //Get package Information
+                $package = Package::where('PACKAGE_ID',$pid)->get();
+                // Get gig Information
+                $gig = Gig::where('GIG_ID',$package[0]->GIG_ID)->get();
 
-            $package = Package::where('PACKAGE_ID',$pid)->get();
-            $gig = Gig::where('GIG_ID',$package[0]->GIG_ID)->get();
+                $orderDetails = ['PACKAGE_ID' => $pid,
+                    'USER_ID' => $session['USER_ID'],
+                    'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
+                    'ORDER_AMOUNT' => $package[0]->PRICE,
+                    'ORDER_DATE' => now(),
+                    'ORDER_DUE'=> date('Y-m-d', strtotime(now().' + '.$package[0]->DELIVERY_DAYS.'days')),
+                    'ORDER_STATUS'=> 'IN PROGRESS'];
 
-            $orderDetails = ['PACKAGE_ID' => $pid,
-                'USER_ID' => $session['USER_ID'],
-                'FREELANCER_ID'=> $gig[0]->FREELANCER_ID,
-                'ORDER_AMOUNT' => $package[0]->PRICE,
-                'ORDER_DATE' => now(),
-                'ORDER_DUE'=> date('Y-m-d', strtotime(now().' + '.$package[0]->DELIVERY_DAYS.'days')),
-                'ORDER_STATUS'=> 'IN PROGRESS'];
-
+                // Assign Order Information to Session
                 $request->session()->put('orderDetails',$orderDetails);
 
+                //Redirect to user Checkout
                 return view('user.checkout',['det'=>$orderDetails]);
 
-        }else{
-            return redirect('index');
+            }else{
+                return redirect('index');
+            }
+
+        }catch (\Exception $e){
+           return redirect('index');
         }
     }
 
     public function acceptApplicant(Request $request)
     {
+        //Retrieve Job Application from URL
         $ja_id = $request->route('jaid');
 
+        //Get information from User
         $session= $request->session()->get('user');
-        if(isset($session)){
 
-            Job_Application::where('JA_ID',$ja_id)
-           ->update(['JA_STATUS' => 'CONFIRMED']);
+        //if session is set
+        if(isset($session)){
+            //Update Job Application status
+            Job_Application::where('JA_ID',$ja_id)->update(['JA_STATUS' => 'CONFIRMED']);
 
         }else{
             return redirect('index');
         }
+
     }
 
     public function dlFile(Request $request)
@@ -285,39 +307,47 @@ class UserController extends Controller
 
     public function orderList(Request $request)
     {
+        //retrieving user's information from session
         $session= $request->session()->get('user');
+        //if user's information is set
         if(isset($session)){
-
+            //get Feelancer's Information
             $freelancer = $request->session()->get('freelancer');
+            //if freelancer's information is set
+            if(isset($freelancer)){
 
-                if(isset($freelancer)){
+                //retrieving order's information assigned to Freelancer
+                $orders = DB::select('
+                SELECT *
+                FROM fms.order AS orders
+                RIGHT JOIN package
+                ON orders.PACKAGE_ID = package.PACKAGE_ID
+                RIGHT JOIN gig
+                ON gig.GIG_ID = package.GIG_ID
+                WHERE orders.FREELANCER_ID ='.$freelancer['FREELANCER_ID'].';');
 
-                    $orders = DB::select('SELECT *
+                return view('user.orderList',['orders'=>$orders]);
+
+            }else{
+
+                //retrieving user's order
+                if(order::where(['USER_ID'=>$session['USER_ID']])->exists()){
+
+                    //retrieving order's information assigned to user
+                    $orders = DB::select('
+                    SELECT *
                     FROM fms.order AS orders
                     RIGHT JOIN package
                     ON orders.PACKAGE_ID = package.PACKAGE_ID
                     RIGHT JOIN gig
                     ON gig.GIG_ID = package.GIG_ID
-                    WHERE orders.FREELANCER_ID ='.$freelancer['FREELANCER_ID'].';');
+                    WHERE orders.USER_ID ='.$session['USER_ID'].';');
 
-                       return view('user.orderList',['orders'=>$orders]);
-
-                   }else{
-                    if(order::where(['USER_ID'=>$session['USER_ID']])->exists()){
-
-                        $orders = DB::select('SELECT *
-                        FROM fms.order AS orders
-                        RIGHT JOIN package
-                        ON orders.PACKAGE_ID = package.PACKAGE_ID
-                        RIGHT JOIN gig
-                        ON gig.GIG_ID = package.GIG_ID
-                        WHERE orders.USER_ID ='.$session['USER_ID'].';');
-
-                           return view('user.orderList',['orders'=>$orders]);
-                       }else{
-                           return view('user.orderList');
-                       }
-                   }
+                    return view('user.orderList',['orders'=>$orders]);
+                }else{
+                    return view('user.orderList');
+                }
+            }
 
         }else{
             return redirect('index');
@@ -326,20 +356,26 @@ class UserController extends Controller
 
     public function orderdetails(Request $request)
     {
+        //Retrieve Information about user and freelancer
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
+
+        //Request order id from URL (decrypting)
         $oid = Crypt::decryptString( $request->route('oid'));
 
+        //retrieve information from department
         $department = department::all();
 
+        //session is set and freelancer is set
         if(isset($session)||isset($freelancer)){
-
+            //if user logged in or freelancer logged
             if(
             order::where(['USER_ID'=>$session['USER_ID']])->exists()||
             order::where(['FREELANCER_ID'=>$freelancer['FREELANCER_ID']])->exists()
             ){
 
-             $orders = DB::select(
+            //retrieve information of orders
+            $orders = DB::select(
             'SELECT *
              FROM fms.order AS orders
              RIGHT JOIN package
@@ -352,9 +388,13 @@ class UserController extends Controller
              ON users.USER_ID = freelancer.USER_ID
              WHERE orders.ORDER_ID ='.$oid.';');
 
+            //retrieve attachment
             $attachment = orderAttachment::where('ORDER_ID',$oid)->get();
+            //retrieve review
             $review = reviews::where('ORDER_ID',$oid)->get();
+            //retrieve modification
             $modification = modification::where('ORDER_ID',$oid)->get();
+            //retrieve dispute
             $dispute = dispute::where('ORDER_ID',$oid)->get();
 
             return view('user.orderDetails',['orders'=>$orders,'orderAttachment'=>$attachment,'review'=>$review,'modifications'=>$modification,'departments'=>$department,'dispute'=>$dispute]);
@@ -387,7 +427,7 @@ class UserController extends Controller
     public function RegisterUser(Request $request){
 
         try{
-
+            //Requesting Input value from text fields on web pages and validating
             $userInput = $request->validate([
                 'username'   => 'required|string|max:255|unique:users|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
                 'email'      => 'required|email|unique:users,USER_EMAIL|unique:admin,ADMIN_EMAIL',
@@ -395,12 +435,15 @@ class UserController extends Controller
                 'password_confirmation'   => 'required',
             ]);
 
+            //Inserting user in Users table
             User::Create(array( 'USERNAME' => $userInput['username'],
                                 'USER_EMAIL' => $userInput['email'],
                                 'USER_PASSWORD' => Hash::make($userInput['password'])));
 
+            //Retrieving inserted user from users Table
             $user = User::where('USER_EMAIL',$userInput['email'])->first();
 
+            //Putting data in session
             $request->session()->put('user',$user);
 
         } catch (\Exception $e) {

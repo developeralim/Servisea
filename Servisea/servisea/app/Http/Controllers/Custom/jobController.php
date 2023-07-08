@@ -55,25 +55,29 @@ class jobController extends Controller
     }
 
     public function viewJob(Request $request){
+        //Get user and freelancer information
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
-
+        //Retrieve job id from url
         $jr_id = $request->route('jobid');
+        //If job requested exists in db
         if(Job_Request::where('JR_ID',$jr_id)->exists()){
+            //Get Job requested Information
             $job =  Job_Request::where('JR_ID', $jr_id)->get();
+            //Get Category information
             $category =  DB::table('CATEGORY')->get();
-
+            //if Freelancers information is retrieved
             if(isset($freelancer)){
+                //if freelancer already applied
                 if(Job_Application::where(['JR_ID'=>$jr_id,'FREELANCER_ID'=>$freelancer['FREELANCER_ID']])->exists()){
                     return view("user.jrSingle")->with(['job'=>$job,'category'=>$category,'order'=>1]);
                 }
             }
+            //return to job request page
             return view("user.jrSingle")->with(['job'=>$job,'category'=>$category,'freelancer',$freelancer]);
-
         }else{
             return redirect("index");
         }
-
     }
 
     public function pauseJob(Request $request){
@@ -94,9 +98,10 @@ class jobController extends Controller
 
     public function CreateJob(Request $request){
 
+        //Get user's Information
         $user= $request->session()->get('user');
 
-        #validation
+        //Requesting input from job web page
         $jobInput = $request->validate([
             'Project_Title'   => 'required|string|max:255|regex:/^[a-zA-Z -.& ]+$/',
             'Description'  => 'required|string|max:255|regex:/^[a-zA-Z -.& 0-9]+$/',
@@ -106,6 +111,7 @@ class jobController extends Controller
             'Delivery_Date' => 'required|after_or_equal:'.now()->toDateString(),
        ]);
 
+       //Inserting value in Job Request Table
        $jrId = Job_Request::create([
         'CATEGORY_ID'     => $jobInput['Category'],
         'POSTED_BY_USER'  => $user['USER_ID'],
@@ -116,6 +122,7 @@ class jobController extends Controller
         'JR_DATEPOSTED'   => now(),
         ]);
 
+        //Checking if attachment has file
         if($request->hasFile('Attachment')){
 
             $imageName = $request->file('Attachment')->getClientOriginalName();
@@ -127,6 +134,8 @@ class jobController extends Controller
             ]);
         }
 
+        //Using AI to check if description of job request contain any foul language
+        //if description of job request does contain any foul language
         if(AppHelper::instance()->ai($jobInput['Description'])=='foul'){
 
             Job_Request::where('JR_ID',$jrId['id'])
@@ -136,6 +145,7 @@ class jobController extends Controller
             ]);
 
         }else{
+        //if description of job request does not contain any foul language
             Job_Request::where('JR_ID',$jrId['id'])
                 ->update([
                 'JR_DESCRIPTION' => $jobInput['Description'],

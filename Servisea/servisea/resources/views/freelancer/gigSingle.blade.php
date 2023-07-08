@@ -325,7 +325,7 @@
                             </ul>
                           </div>
                           <div class="d-grid">
-                            <a href="{{route('OrderGig',$basic->PACKAGE_ID)}}" class="ud-btn btn-thm">Continue ${{$basic->PRICE}}<i class="fal fa-arrow-right-long"></i></a>
+                            <a href="{{route('OrderGig',Crypt::encryptString($basic->PACKAGE_ID))}}" class="ud-btn btn-thm">Continue ${{$basic->PRICE}}<i class="fal fa-arrow-right-long"></i></a>
                           </div>
                         </div>
                       </div>
@@ -346,7 +346,7 @@
                             </ul>
                           </div>
                           <div class="d-grid">
-                            <a href="{{route('OrderGig',$standard->PACKAGE_ID)}}" class="ud-btn btn-thm">Continue ${{$standard->PRICE}}<i class="fal fa-arrow-right-long"></i></a>
+                            <a href="{{route('OrderGig',Crypt::encryptString($standard->PACKAGE_ID))}}" class="ud-btn btn-thm">Continue ${{$standard->PRICE}}<i class="fal fa-arrow-right-long"></i></a>
                           </div>
                         </div>
                       </div>
@@ -367,7 +367,7 @@
                             </ul>
                           </div>
                           <div class="d-grid">
-                            <a href="{{route('OrderGig',$premium->PACKAGE_ID)}}" class="ud-btn btn-thm">Continue ${{$premium->PRICE}}<i class="fal fa-arrow-right-long"></i></a>
+                            <a href="{{route('OrderGig',Crypt::encryptString($premium->PACKAGE_ID))}}" class="ud-btn btn-thm">Continue ${{$premium->PRICE}}<i class="fal fa-arrow-right-long"></i></a>
                           </div>
                         </div>
                       </div>

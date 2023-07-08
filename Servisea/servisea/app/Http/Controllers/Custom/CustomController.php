@@ -15,68 +15,68 @@ use Illuminate\Support\Facades\Hash;
 class CustomController extends Controller
 {
 
-function login(Request $request){
-    //REQUEST INPUT FROM FORM
-    $data = $request->validate([
-        'email'      => 'required|email',
-        'password'   => 'required|min:8|string',
-   ]);
+    function login(Request $request){
+        //Request Value from Input Form
+        $data = $request->validate([
+            'email'      => 'required|email',
+            'password'   => 'required|min:8|string',
+        ]);
 
-    $email = $data['email'];
-    $password = $data['password'];
+        $email = $data['email'];
+        $password = $data['password'];
 
-    //CHECK IF USER EXIST
-
-    if(User::where('USER_EMAIL', $email)->exists()){
-
-     $user = User::where('USER_EMAIL', $email)->first();
-
-        if(Hash::check($password,$user['USER_PASSWORD'])){
-            if($user['ACCOUNT_STATUS'] == 1){
-                request()->Session()->put('user',$user);
-
-                if($user['USER_ROLE']==2){
-                    $freelancer = Freelancer::where('USER_ID', $user['USER_ID'])->get();
-                    $freelancer = json_decode(json_encode($freelancer[0]), true);
-                    request()->Session()->put('freelancer',$freelancer);
+        //Check if User Exists
+        if(User::where('USER_EMAIL', $email)->exists()){
+            //retrieving users information
+            $user = User::where(['USER_EMAIL'=>$email])->first();
+            //check if password matches else redirect to login page
+            if(Hash::check($password,$user['USER_PASSWORD'])){
+                //checking account status (if 1 = active else account is frozen)
+                if($user['ACCOUNT_STATUS'] == 1){
+                    //putting user information in a session variable
+                    request()->Session()->put('user',$user);
+                    //if user's role is 2 means he is a freelancer
+                    if($user['USER_ROLE']==2){
+                        //retrieve information about freelancer and putting in a session variable
+                        $freelancer = Freelancer::where('USER_ID', $user['USER_ID'])->get();
+                        $freelancer = json_decode(json_encode($freelancer[0]), true);
+                        request()->Session()->put('freelancer',$freelancer);
+                    }
+                    //if user's role is 3 means he is an employee
+                    if($user['USER_ROLE']==3){
+                        //retrieve information about employee and putting in a session variable
+                        $employee = employee::where('USER_ID', $user['USER_ID'])->get();
+                        $employee = json_decode(json_encode($employee[0]), true);
+                        request()->Session()->put('employee',$employee);
+                        //redirect to employee dashboard
+                        return view('admin.Employee.dashboard');
+                    }
+                    return redirect('index');
+                }else{
+                    return redirect()->route('login_user');
                 }
-
-                if($user['USER_ROLE']==3){
-                    $employee = employee::where('USER_ID', $user['USER_ID'])->get();
-                    $employee = json_decode(json_encode($employee[0]), true);
-                    request()->Session()->put('employee',$employee);
-                    return view('admin.Employee.dashboard');
-                }
-
-                return redirect('index');
-
             }else{
-
                 return redirect()->route('login_user');
-
             }
-        }else{
-
-            return redirect()->route('login_user');
-
-        }
-
-    }elseif(admin::where('ADMIN_EMAIL', $email)->exist()){
-        $adminDetails = admin::where('ADMIN_EMAIL', $email)->first();
-        if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
-            if( $adminDetails['ADMIN_STATUS'] == 1){
-                //REDIRECT TO ADMIN DASHBOARD
-                $request->Session()->put('adminDetails',$adminDetails);
-                return redirect('admin.dashboard');
-            }
+        //check if admin exists
+        }elseif(admin::where('ADMIN_EMAIL', $email)->exist()){
+            //retrieve information about admin with same email
+            $adminDetails = admin::where('ADMIN_EMAIL', $email)->first();
+            //check if password is the same
+            if(Hash::check($password,$adminDetails['ADMIN_PASSWORD'])){
+                // if status = 1 means that admin account is active
+                if( $adminDetails['ADMIN_STATUS'] == 1){
+                  //REDIRECT TO ADMIN DASHBOARD
+                  $request->Session()->put('adminDetails',$adminDetails);
+                  return redirect('admin.dashboard');
+                }
                 //ADMIN ACCOUNT HAS BEEN BLOCKED
                 return redirect()->route('login_user');
-        }else{
-            return redirect('index');
+            }else{
+                return redirect('index');
+            }
+        }
     }
 
-    }
-
-}
 
 }

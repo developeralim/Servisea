@@ -242,7 +242,6 @@
               @if(isset($dispute))
                 @if($dispute->isEmpty())
                 <button type="button" class="ud-btn btn-warning no-border" data-toggle="modal" data-target="#disputeModal">Open Dispute</button>
-                <a type="button" href="{{route('viewDispute',Crypt::encryptString($order->ORDER_ID))}}" class="ud-btn btn-warning no-border">View Dispute</a>
                 <br>
                 @else
                 <a type="button" href="{{route('viewDispute',Crypt::encryptString($order->ORDER_ID))}}" class="ud-btn btn-warning no-border">View Dispute</a>

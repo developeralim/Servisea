@@ -312,14 +312,14 @@ class FreelancerController extends Controller
         if(gig::where('GIG_STATUS','COMPLETED')->exists()){
 
             $gigs = DB::select(
-                'SELECT GIG.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
-                FROM GIG
-                RIGHT JOIN PACKAGE
+                'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
+                FROM gig
+                RIGHT JOIN package
                 ON gig.GIG_ID = package.GIG_ID
                 RIGHT JOIN freelancer
-                ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+                ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
                 RIGHT JOIN users
-                ON FREELANCER.USER_ID = users.USER_ID
+                ON freelancer.USER_ID = users.USER_ID
                 WHERE package.GIG_ID =  gig.GIG_ID
                 AND gig.GIG_STATUS = "COMPLETED"
                 AND package.PACKAGE_ID = (
@@ -341,14 +341,14 @@ class FreelancerController extends Controller
                 LIMIT 1');
 
                 $gigsCounter = DB::select(
-                    'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
-                FROM GIG
-                RIGHT JOIN PACKAGE
+                    'SELECT COUNT(gig.GIG_ID) AS "TOTAL"
+                FROM gig
+                RIGHT JOIN package
                 ON gig.GIG_ID = package.GIG_ID
                 RIGHT JOIN freelancer
-                ON gig.FREELANCER_ID = FREELANCER.FREELANCER_ID
+                ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
                 RIGHT JOIN users
-                ON FREELANCER.USER_ID = users.USER_ID
+                ON freelancer.USER_ID = users.USER_ID
                 WHERE package.GIG_ID =  gig.GIG_ID
                 AND gig.GIG_STATUS = "COMPLETED"
                 AND package.PACKAGE_ID = (
@@ -372,11 +372,16 @@ class FreelancerController extends Controller
 }
 
     public function viewGig(Request $request){
+
+    try{
+        //Get user information
         $session= $request->session()->get('user');
 
+        //get gig_id from url
         $input_gigID = $request->route('gigid');
 
-       $gig = DB::select(
+        //retrieve gig information
+        $gig = DB::select(
         'SELECT GIG.GIG_ID,GIG_NAME, GIG_DESCRIPTION ,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,users.USER_LNAME,users.USER_FNAME
         FROM GIG
         RIGHT JOIN PACKAGE
@@ -396,8 +401,8 @@ class FreelancerController extends Controller
             ORDER BY PRICE ASC
             LIMIT 1)');
 
-       //convert into json
-       $gigsCounter = DB::select(
+        //convert into json
+        $gigsCounter = DB::select(
         'SELECT COUNT(GIG.GIG_ID) AS "TOTAL"
         FROM GIG
         RIGHT JOIN PACKAGE
@@ -436,9 +441,9 @@ class FreelancerController extends Controller
         $gig = json_decode(json_encode($gig[0]), true);
 
         $review = reviews::select('GIG_ID', DB::raw('round(AVG(RATING),0) as RATING') , DB::raw('COUNT(GIG_ID) as COUNT'))
-                ->where('GIG_ID',$input_gigID)
-                ->groupBy('GIG_ID')
-                ->get();
+                 ->where('GIG_ID',$input_gigID)
+                 ->groupBy('GIG_ID')
+                 ->get();
 
         $order = order::select(DB::raw('COUNT(ORDER_ID) as COUNT'))
         ->join('package','order.PACKAGE_ID','=','package.PACKAGE_ID')
@@ -446,35 +451,37 @@ class FreelancerController extends Controller
         ->where(['gig.GIG_ID'=>$input_gigID,'ORDER_STATUS'=>'IN PROGRESS'])
         ->get();
 
-
-
-         if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
+        if(isset($gigsCounter['TOTAL']) && $gigsCounter['TOTAL'] == 1){
 
             if(count($standard) === 0){
 
-            return view('freelancer.gigSingle')
-            ->with('reviewsCount',$review)
-            ->with('orderCount',$order)
-            ->with('gig',$gig)
-            ->with('basic',$basic);
+                return view('freelancer.gigSingle')
+                ->with('reviewsCount',$review)
+                ->with('orderCount',$order)
+                ->with('gig',$gig)
+                ->with('basic',$basic);
 
             }else{
 
-            $standard = json_decode($standard[0]);
-            $premium  = json_decode($premium[0]);
-            return view('freelancer.gigSingle')
-            ->with('orderCount',$order)
-            ->with('reviewsCount',$review)
-            ->with('gig',$gig)
-            ->with('basic',$basic)
-            ->with('standard',$standard)
-            ->with('premium',$premium);
+                $standard = json_decode($standard[0]);
+                $premium  = json_decode($premium[0]);
+                return view('freelancer.gigSingle')
+                ->with('orderCount',$order)
+                ->with('reviewsCount',$review)
+                ->with('gig',$gig)
+                ->with('basic',$basic)
+                ->with('standard',$standard)
+                ->with('premium',$premium);
 
             };
 
         }else{
             return redirect('index');
         };
+    }
+    catch (\Exception $e){
+        return redirect('index');
+    }
 
     }
 
