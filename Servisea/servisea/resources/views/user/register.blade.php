@@ -59,7 +59,7 @@
               </div>
               <div class="mb15">
                 <label class="form-label fw500 dark-color">Password</label>
-                <input type="text" class="form-control" name="password" placeholder="*******">
+                <input type="password" class="form-control" name="password" placeholder="*******">
                 @if ($errors->any())
                     @error('password')
                             <div class="error" style="color:#FF0000">{{ $message }}</div>
@@ -68,7 +68,7 @@
               </div>
               <div class="mb15">
                 <label class="form-label fw500 dark-color">Confirm Password</label>
-                <input type="text" class="form-control" name="password_confirmation" placeholder="*******">
+                <input type="password" class="form-control" name="password_confirmation" placeholder="*******">
                 @if ($errors->any())
                     @error('password_confirmation')
                             <div class="error" style="color:#FF0000">{{ $message }}</div>

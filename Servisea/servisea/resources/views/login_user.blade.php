@@ -81,10 +81,15 @@
             </div>
             <a href="#!" class="text-body">Forgot password?</a>
           </div>
-
+          @if (isset($no_user))
+          <br>
+             <p class="error" style="color:#FF0000">{{ $no_user }}</p>
+            @endif
           <div class="text-center text-lg-start mt-4 pt-2">
+
             <button type="submit"  class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">{{ __('Log in') }}</button>
-            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!" class="link-danger">Register</a></p>
+
+            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{{route('RegisterUser.page')}}" class="link-danger">Register</a></p>
           </div>
 
         </form>
@@ -97,6 +102,7 @@
  @stop
 
 @section('user_script')
+
 
 
 @stop

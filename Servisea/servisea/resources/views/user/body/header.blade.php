@@ -7,7 +7,7 @@
           <div class="col-auto">
             <div class="d-flex align-items-center justify-content-between">
               <div class="logos mr20">
-                <a class="header-logo logo2" href="{{route('home')}}"><img style="width: 100px;" src="{{asset('backend/THEME/images/icon/logo.png')}}" alt="Header Logo"></a>
+                <a class="header-logo logo2" href="{{route('index')}}"><img style="width: 100px;" src="{{asset('backend/THEME/images/icon/logo.png')}}" alt="Header Logo"></a>
               </div>
               <a class="login-info mr15" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span class="flaticon-loupe vam"></span></a>
               <!-- Responsive Menu Structure-->
@@ -16,7 +16,7 @@
                 <li> <a class="list-item" href="page-contact.html">Contact</a></li>
                 @if (Session::get('user') !== null )
                 <li class="visible_list"> <a class="list-item" href="{{route('viewAllGig')}}"><span class="title">Services</span></a></li>
-                <li class="visible_list"> <a class="list-item" href="{{route('chat.index',[session('user')->USERNAME])}}"><span class="title">Message</span></a></li>
+                <li class="visible_list"> <a class="list-item" href="{{route('chat.index',[session('user')->USERNAME])}}" ><span class="title">Message</span></a></li>
                 @if (Session::get('freelancer') == null && Session::get('employee') == null)
                 <li class="visible_list"> <a class="list-item" href="{{route('OrderList')}}"><span class="title">Orders</span></a></li>
                 <li class="visible_list"> <a class="list-item"><span class="title">Project Owner</span></a>

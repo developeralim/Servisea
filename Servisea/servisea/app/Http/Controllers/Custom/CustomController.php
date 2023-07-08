@@ -51,15 +51,13 @@ class CustomController extends Controller
                         //redirect to employee dashboard
                         return view('admin.Employee.dashboard');
                     }
-                    return redirect('index');
+                    return redirect()->route('index');
                 }else{
-                    return redirect()->route('login_user');
+                    return view('login_user')->with('no_user',"Wrong Login Credentials or Check if you are allowed to login");
                 }
-            }else{
-                return redirect()->route('login_user');
             }
         //check if admin exists
-        }elseif(admin::where('ADMIN_EMAIL', $email)->exist()){
+        }elseif(admin::where('ADMIN_EMAIL', $email)->exists()){
             //retrieve information about admin with same email
             $adminDetails = admin::where('ADMIN_EMAIL', $email)->first();
             //check if password is the same
@@ -70,12 +68,11 @@ class CustomController extends Controller
                   $request->Session()->put('adminDetails',$adminDetails);
                   return redirect('admin.dashboard');
                 }
-                //ADMIN ACCOUNT HAS BEEN BLOCKED
-                return redirect()->route('login_user');
-            }else{
-                return redirect('index');
             }
         }
+
+        return view('login_user')->with('no_user',"Wrong Login Credentials or Check if you are allowed to login");
+
     }
 
 

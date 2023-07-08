@@ -62,11 +62,21 @@
   </div>
 </div>
 
-<script>
-       setTimeout(function() {
-           window.location.href = "{{route('orderDetails',$oid)}}"
-       }, 2000); // 3 second
+@if(isset($oid))
+    @if($oid->isEmpty())
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{route('orderDetails',$oid)}}"
+        }, 2000); // 3 second
     </script>
+    @else
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{route('index')}}"
+        }, 2000); // 3 second
+    </script>
+    @endif
+@endif
 
 <script src="{{asset('backend/THEME/js/jquery-3.6.4.min.js')}}"></script>
     <script src="{{asset('backend/THEME/js/jquery-migrate-3.0.0.min.js')}}"></script>

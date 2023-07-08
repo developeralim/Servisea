@@ -32,7 +32,7 @@ class FreelancerController extends Controller
         if(isset($session)!=null){
             return view("freelancer.sellerp1");
         }else{
-            return redirect('login_user');
+            return redirect()-route('login_user');
         }
     }
 
@@ -122,38 +122,39 @@ class FreelancerController extends Controller
     }
 
     public function viewPackagePage(Request $request){
+
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
 
-                #validation
-                $PackageInput = $request->validate([
-                    'Title'        => 'string|max:255|regex:/^[a-zA-Z]+$/',
-                    'Description'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-                    'CATEGORY_ID'     => 'integer|regex:/^[0-9]+$/',
-                    'Requirements'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-               ]);
+        #validation
+        $PackageInput = $request->validate([
+            'Title'        => 'string|max:255|regex:/^[a-zA-Z]+$/',
+            'Description'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
+            'CATEGORY_ID'     => 'integer|regex:/^[0-9]+$/',
+            'Requirements'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
+        ]);
 
-               /*
-               GIG_ID
-               CATEGORY_ID
-               FREELANCER_ID
-               GIG_NAME
-               GIG_DESCRIPTION
-               GIG_REQUIREMENTS
-               GIG_STATUS
+        /*
+        GIG_ID
+        CATEGORY_ID
+        FREELANCER_ID
+        GIG_NAME
+        GIG_DESCRIPTION
+        GIG_REQUIREMENTS
+        GIG_STATUS
 
-               DON'T FORGET GIG ATTACHMENT
+        DON'T FORGET GIG ATTACHMENT
 
-               */
+        */
 
-             Gig::create([
-              'CATEGORY_ID'      => $PackageInput['CATEGORY_ID'],
-              'FREELANCER_ID'    => $freelancer['FREELANCER_ID'],
-              'GIG_NAME'         => $PackageInput['Title'],
-              'GIG_DESCRIPTION'  => $PackageInput['Description'],
-              'GIG_REQUIREMENTS' => $PackageInput['Requirements'],
-              'GIG_STATUS'       => 'PENDING',
-              ]);
+        Gig::create([
+        'CATEGORY_ID'      => $PackageInput['CATEGORY_ID'],
+        'FREELANCER_ID'    => $freelancer['FREELANCER_ID'],
+        'GIG_NAME'         => $PackageInput['Title'],
+        'GIG_DESCRIPTION'  => $PackageInput['Description'],
+        'GIG_REQUIREMENTS' => $PackageInput['Requirements'],
+        'GIG_STATUS'       => 'PENDING',
+        ]);
 
 
         if(isset($session)!=null){
@@ -177,7 +178,6 @@ class FreelancerController extends Controller
             'R_B'   => 'string|max:255|regex:/^[0-9]+$/',
             'P_B'   => 'string|max:255|regex:/^[0-9]+$/',
        ]);
-
 
         Package::create([
             'GIG_ID'              => $gigId['GIG_ID'],
@@ -255,55 +255,40 @@ class FreelancerController extends Controller
     }
 
     public function createFreelancer(Request $request){
-
         $session= $request->session()->get('user');
 
         user::where('USER_ID',$session['USER_ID'])
-           ->update([
-                    //  'USER_FNAME' => $userInput['USER_FNAME'],
-                    //  'USER_LNAME' => $userInput['USER_LNAME'],
-                    // 'USERNAME' => $userInput['USERNAME'],
-                    // 'USER_EMAIL' => $userInput['USER_EMAIL'],
-                    'USER_ROLE' => 2,
-                    //   'USER_TEL' => $userInput['USER_TEL'],
-                    //   'USER_IMG' => $imageName,
-                    //   'USER_DOB' => $userInput['USER_DOB'],
-                    //   'USER_GENDER' => $userInput['USER_GENDER'],
-                    //   'ADMIN_CITY' => $admin['ADMIN_CITY'],
-                    //   'ADMIN_COUNTRY' => $admin['ADMIN_COUNTRY'],
-                    //   'ADMIN_DISTRICT' => $admin['ADMIN_DISTRICT'],
-                    //   'ADMIN_POSTALCODE' => $admin['ADMIN_POSTALCODE'],
-                    //   'ADMIN_LEVEL' => $admin['ADMIN_LEVEL']
-                ]);
+           ->update(['USER_ROLE' => 2,]);
 
-        if (Freelancer::where('USER_ID',$session['USER_ID'])->exists()) {
+        if (!Freelancer::where('USER_ID',$session['USER_ID'])->exists()) {
 
-            }else{
-
-                Freelancer::create([
+            Freelancer::create([
                     'USER_ID'     => $session['USER_ID'],
                     'F-LEVEL'  => 1,
                     'F_DESCRIPTION' => "",
                     'F_SINCE' => now(),
                     'F_LANGUAGE' => 'ENGLISH'
-                    ]);
+            ]);
+        }
 
-            }
-
-            $request->Session()->put('user.USER_ROLE',2);
-            $session= $request->session()->get('user');
-            return redirect('index');
-
+        $user = User::where(['USER_EMAIL'=>$session['USER_EMAIL']])->first();
+        $request->session()->put('user',$user);
+        $session= $request->session()->get('user');
+        $freelancer = Freelancer::where('USER_ID', $session['USER_ID'])->get();
+        $freelancer = json_decode(json_encode($freelancer[0]), true);
+        request()->Session()->put('freelancer',$freelancer);
+        $freelancer= $request->session()->get('freelancer');
+        return redirect()->route('index');
     }
 
     public function switchToBuyer(Request $request){
         $session= $request->session()->get('user');
-
-                user::where('USER_ID',$session['USER_ID'])
-                ->update(['USER_ROLE' => 1,]);
-                        $request->Session()->put('user.USER_ROLE',1);
-                        $session= $request->session()->get('user');
-                        return redirect('index');
+        user::where('USER_ID',$session['USER_ID'])->update(['USER_ROLE' => 1,]);
+        $user = User::where(['USER_EMAIL'=>$session['USER_EMAIL']])->first();
+        $request->session()->put('user',$user);
+        $session= $request->session()->get('user');
+        session()->forget('freelancer');
+        return redirect()->route('index');
     }
 
     public function viewAllGig(Request $request){
@@ -378,7 +363,7 @@ class FreelancerController extends Controller
         $session= $request->session()->get('user');
 
         //get gig_id from url
-        $input_gigID = $request->route('gigid');
+        $input_gigID = Crypt::decryptString($request->route('gigid'));
 
         //retrieve gig information
         $gig = DB::select(
@@ -487,32 +472,23 @@ class FreelancerController extends Controller
 
     public function viewFreelancer(Request $request){
         $session= $request->session()->get('user');
-
-        $freelancerID = $request->route('fid');
+        $freelancerID = Crypt::decryptString($request->route('fid'));
 
        if (Freelancer::where('FREELANCER_ID',$freelancerID)->exists()) {
-
         $freelancer = Freelancer::where('FREELANCER_ID',$freelancerID)->get();
-
         $freelancer = json_decode($freelancer[0]);
-
         $user = user::where('USER_ID',$freelancer->USER_ID)->get();
-
         $user = json_decode($user[0]);
-
-        if (Address::where('ADDED_BY_USER_ID',$freelancer->USER_ID)->exists()){
-
-        }
 
         if(isset($session)!=null){
             return view("freelancer.freelancerSingle")->with('freelancer',$freelancer)->with('userfree',$user);
         }else{
-            return redirect('index');
+            return redirect()->route('index');
         }
 
+       }else{
+        return redirect()->route('index');
        }
-
-
     }
 
     public function Order(Request $request){

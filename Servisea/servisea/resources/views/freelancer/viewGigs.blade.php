@@ -207,8 +207,7 @@
             </div>
               <div class="list-content">
                 <p class="list-text body-color fz14 mb-1">{{$gig->GIG_NAME}}</p>
-                <h5 class="list-title"><a href="{{route('viewGig',$gig->GIG_ID)}}">{{$gig->GIG_DESCRIPTION}}</a></h5>
-                <input name="freelancer_id" value="{{$gig->FREELANCER_ID}}" hidden ></input>
+                <h5 class="list-title"><a href="{{route('viewGig',Crypt::encryptString($gig->GIG_ID))}}">{{$gig->GIG_DESCRIPTION}}</a></h5>
                 <div class="review-meta d-flex align-items-center">
                   <i class="fas fa-star fz10 review-color me-2"></i>
                   @if(isset($reviews))
@@ -223,7 +222,7 @@
                 </div>
                 <hr class="my-2">
                 <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                  <a href="{{route('viewFreelancer',$gig->FREELANCER_ID)}}">
+                  <a href="{{route('viewFreelancer',Crypt::encryptString($gig->FREELANCER_ID))}}">
                     <span class="position-relative mr10">
                       <img class="rounded-circle" style="width: 60px;" src="{{asset('backend/THEME/images/freelancer_icon.jpg')}}" alt="Freelancer Photo">
                       <span class="online-badge"></span>

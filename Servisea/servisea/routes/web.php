@@ -36,9 +36,47 @@ use Illuminate\Contracts\Encryption\DecryptException;
 */
 
 //USER PAGE
-Route::post('/login-req', [CustomController::class, 'login'])->name('login-req');
+
+//Login Page
+Route::get('/login', function () {
+
+    try{
+        //retrieve information from user and admin
+        $user= request()->session()->get('user');
+        $admin= request()->session()->get('adminDetails');
+
+        //if no information retrieved for user and admin
+        if(!isset($admin)&&!isset($user)){
+        //access login page
+            return view('login_user');
+        }else{
+        //else redirect to homepage
+            return redirect()->route('index');
+        }
+
+    }
+    catch (\Exception $e){
+        return redirect()->route('index');
+    }
+
+})->name('login_user');
+
+Route::post('/login', [CustomController::class, 'login'])->name('login-req');
 
 Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name('RegisterUser.page');
+
+Route::group(['middleware' => 'prevent-back-history'],function(){
+
+    Route::post('/register/store', [UserController::class, "registerUser"])->name("registerUser");
+
+    Route::get('/clearSession', function (request $request) {
+        $request->session()->flush();
+        return redirect()->route('index');
+    })->name('clearSession');
+
+});
+
+
 Route::get('/user/profile',  [UserController::class, 'viewProfile'])->name('viewProfileUser');
 Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
 
@@ -60,7 +98,7 @@ Route::get('/freelancer/postService/overview', [FreelancerController::class, 'vi
 Route::post('/freelancer/postService/package', [FreelancerController::class, 'viewPackagePage'])->name('viewPackagePage');
 
 Route::post('/freelancer/postService/package/standard',    [FreelancerController::class, 'postBasicGig'])->name('postBasicPackagePage');
-Route::post('/freelancer/postService/package/Multi/gig=3', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
+Route::post('/freelancer/postService/package/Multiple', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
 
 Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
 Route::get('/servisea/viewgig/{gigid}', [FreelancerController::class, 'viewGig'])->name('viewGig');
@@ -99,7 +137,7 @@ Route::post('/servisea/rate/order/{oid}', [UserController::class, 'rateGig'])->n
 Route::post('/servisea/modification/created/{oid}', [UserController::class, 'requestModifications'])->name('createModif');
 
 //Request Disputes
-Route::post('/servisea/dispute/created/{oid}', [UserController::class, 'requestDispute'])->name('createDispute');
+Route::post('/servisea/dispute/created/{oid?}', [UserController::class, 'requestDispute'])->name('createDispute');
 
 
 Route::get('/servisea/view/dispute/list', [employeeController::class, 'viewDisputeList'])->name('viewEmpDispute');
@@ -131,12 +169,13 @@ Route::get('/index/home', function (request $request) {
 
 
 //Index Page
-Route::get('/index', function (request $request) {
+Route::get('/', function (request $request) {
 
     $category = Category::all();
     $department = department::all();
     $request->session()->put(['categoryList'=>$category,'departmentList'=>$department]);
-
+    $request->session()->get('user');
+    $request->session()->get('freelancer');
     return view('index');
 })->name('index');
 
@@ -147,29 +186,7 @@ Route::get('/order/viwe', function (request $request) {
 
 })->name('order');
 
-//Login Page
-Route::get('/login', function () {
 
-    try{
-        //retrieve information from user and admin
-        $user= request()->session()->get('user');
-        $admin= request()->session()->get('adminDetails');
-
-        //if no information retrieved for user and admin
-        if(!isset($admin)&&!isset($user)){
-        //access login page
-            return view('login_user');
-        }else{
-        //else redirect to homepage
-            return redirect('index');
-        }
-
-    }
-    catch (\Exception $e){
-        return redirect('index');
-    }
-
-})->name("login_user");
 
 
 Route::get('/admin.dashboard', function () {
@@ -226,13 +243,9 @@ Route::controller(AdminController::class)->group(function(){
     Route::get('/admin/dashboard','index')->name('admin.dashboard');
 });
 
-Route::get('/clearSession', function (request $request) {
-    $request->session()->flush();
-    return redirect('index');
-})->name('clearSession');
 
 
-Route::post('/register/store', [UserController::class, "registerUser"])->name("registerUser");
+
 
 //Route::get('/about',[DemoController::class,'Index']);
 //Route::get('/contact',[DemoController::class,'contact']);
