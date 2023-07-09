@@ -67,18 +67,30 @@ Route::get('/user/register', [UserController::class, 'viewRegisterPage'])->name(
 
 Route::group(['middleware' => 'prevent-back-history'],function(){
 
+    Route::post('/user/update/address', [UserController::class, 'updateAddress'])->name('updateAddress');
+
+    Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
+
+    Route::post('/user/change/Password', [UserController::class, 'changePassword'])->name('changePassword');
+
     Route::post('/register/store', [UserController::class, "registerUser"])->name("registerUser");
+
+    Route::post('/freelancer/update/description', [FreelancerController::class, "updateDescription"])->name("updateDescription");
+
+    Route::post('/freelancer/add/certification', [FreelancerController::class, "updateEducation"])->name("updateEducation");
+
+    Route::post('/user/delete/profile', [UserController::class, "deleteProfile"])->name("deleteProfile");
+
+    Route::post('/servisea/search', [FreelancerController::class, 'searchGig'])->name('searchGig');
 
     Route::get('/clearSession', function (request $request) {
         $request->session()->flush();
         return redirect()->route('index');
     })->name('clearSession');
-
 });
 
 
 Route::get('/user/profile',  [UserController::class, 'viewProfile'])->name('viewProfileUser');
-Route::post('/user/profile', [UserController::class, 'updateProfile'])->name('updateUser');
 
 Route::get('/servisea/user/job/list', [jobController::class, 'viewRequestJobList'])->name('viewReqJobList');
 
@@ -89,9 +101,8 @@ Route::post('/user/postJob=1', [jobController::class, 'CreateJob'])->name('JobPa
 Route::get('/user/job/list', [jobController::class, 'viewJobList'])->name('viewJobList');
 
 //FREELANCER PAGE
-//Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
-Route::get('/freelancer/becomeSeller',  [FreelancerController::class, 'viewS1p'])->name('viewSellerPage1');
-Route::post('/freelancer/becomeSeller', [FreelancerController::class, 'createFreelancer'])->name('switchToSeller');
+
+Route::get('/freelancer/becomeSeller', [FreelancerController::class, 'createFreelancer'])->name('switchToSeller');
 Route::get('/freelancer/becomeBuyer',   [FreelancerController::class, 'switchToBuyer'])->name('switchToBuyer');
 
 Route::get('/freelancer/postService/overview', [FreelancerController::class, 'viewOverviewPage'])->name('viewOverviewPage');
@@ -100,7 +111,7 @@ Route::post('/freelancer/postService/package', [FreelancerController::class, 'vi
 Route::post('/freelancer/postService/package/standard',    [FreelancerController::class, 'postBasicGig'])->name('postBasicPackagePage');
 Route::post('/freelancer/postService/package/Multiple', [FreelancerController::class, 'postMultiGig'])->name('postMultiPackagePage');
 
-Route::get('/servisea/view-all-gig', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
+Route::get('/servisea/view-all-gig/{fid?}/{cid?}/{search?}', [FreelancerController::class, 'viewAllGig'])->name('viewAllGig');
 Route::get('/servisea/viewgig/{gigid}', [FreelancerController::class, 'viewGig'])->name('viewGig');
 
 

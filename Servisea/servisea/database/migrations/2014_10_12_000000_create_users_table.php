@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->string('USER_LNAME')->nullable();
             $table->string('USER_FNAME')->nullable();
-            $table->binary('USER_IMG')->nullable();
+            $table->string('USER_IMG')->nullable();
             $table->date('USER_DOB')->nullable();
             $table->char('USER_GENDER',7)->nullable();
             $table->String('USER_TEL')->nullable();

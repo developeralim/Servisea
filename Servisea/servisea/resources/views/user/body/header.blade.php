@@ -40,7 +40,7 @@
                         </li>
                         <li><a><span class="title">Gig</span></a>
                             <ul>
-                                <li><a href="">View Created Gig</a></li>
+                                <li><a href="{{ route('viewAllGig', Crypt::encryptString( session('freelancer.FREELANCER_ID') ) ) }}">View Created Gig</a></li>
                                 <li><a href="{{route('viewOverviewPage')}}">Post a Gig</a></li>
                             </ul>
                         </li>
@@ -110,26 +110,33 @@
     </nav>
   </header>
 
-    <!-- Search Modal -->
-    <div class="search-modal">
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalToggleLabel"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-xmark"></i></button>
-          </div>
-          <div class="modal-body">
-            <div class="popup-search-field search_area">
-              <input type="text" class="form-control border-0" placeholder="What service are you looking for today?">
-              <label><span class="far fa-magnifying-glass"></span></label>
-              <button class="ud-btn btn-thm" type="submit">Search</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
+  @if(session::get('user')!=null)
+
+<!-- Search Modal -->
+<div class="search-modal">
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalToggleLabel"></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-xmark"></i></button>
     </div>
+    <form action="{{route('searchGig')}}" method="post" id="searchForm" class="modal-content modal-body border-0 p-0">
+      @csrf
+      <div class="modal-body">
+          <div class="popup-search-field search_area">
+          <input type="text" class="form-control border-0" name="Search" placeholder="What service are you looking for today?">
+          <label><span class="far fa-magnifying-glass"></span></label>
+          <button type="submit" class="ud-btn btn-thm"> Search</button>
+          </div>
+      </div>
+    </form>
   </div>
+</div>
+</div>
+</div>
+@endif
 
   <div class="hiddenbar-body-ovelay"></div>
 

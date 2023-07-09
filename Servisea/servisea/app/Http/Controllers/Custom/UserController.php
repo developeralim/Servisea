@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\certifications;
 use App\Models\department;
 use App\Models\dispute;
 use App\Models\Freelancer;
@@ -143,12 +144,17 @@ class UserController extends Controller
     public function viewProfile(Request $request)
     {
         $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
         if(isset($session)){
 
             if(Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->exists()){
                 $addressDetails = Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->get();
                 $addressDetails = json_decode($addressDetails[0]);
-                return view('user.profile')->with('addressDetails',$addressDetails);
+                if(isset($freelancer)){
+                    $certification =  certifications::where('FREELANCER_ID', $freelancer['FREELANCER_ID'])->get();
+                }
+                return view('user.profile',['addressDetails'=> $addressDetails,'certifications'=>$certification]);
             }else{
                 return view('user.profile');
             }
@@ -406,17 +412,23 @@ class UserController extends Controller
 
     public function DeleteProfile(Request $request)
     {
-        $session= $request->session()->get('user');
-        if(isset($session)){
-            if(User::where('USER_EMAIL', $session['USER_EMAIL'])->exists()){
+        $user= $request->session()->get('user');
 
-                return view('index');
-            }else{
-                return view('user.profile');
-            }
+        //Requesting Input value from text fields on web pages and validating
+        $userInput = $request->validate([
+            'close_Password'   => 'required|min:8|string',
+        ]);
+
+        if(Hash::check($userInput['close_Password'],$user['USER_PASSWORD'])){
+
+            user::where('USER_ID',$user['USER_ID'])->delete();
+            $request->session()->flush();
+            return view('index');
 
         }else{
-            return redirect()->route('login_user');
+
+            return view('user.profile')->with('error_pw',"Cannot Close Account, Your password does not match!");
+
         }
     }
 
@@ -445,104 +457,133 @@ class UserController extends Controller
     }
 
     public function UpdateProfile(Request $request){
-        $session= $request->session()->get('user');
 
-        /*
-                  $userInput = $request->validate([
-                    'USERNAME'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_-.]+$/|unique:users|unique:admin,ADMIN_USERNAME',
-                    'USER_EMAIL'      => 'required|email|unique:users|unique:admin,ADMIN_EMAIL',
-                    'USER_PASSWORD'   => 'required|string|min:6|regex:/^[a-zA-Z0-9_-.]+$/',
-                    'USER_LNAME'      => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-                    'USER_FNAME'      => 'required|string|max:255|regex:/^[a-zA-Z]+$/',
-                    'USER_IMG'        => 'required|mimes:jpg,bmp,png',
-                    'USER_DOB'        => 'required|before:'.now()->subYears(18)->toDateString(),
-                    'USER_GENDER'     => 'required|char|max:7',
-                    'USER_TEL'        => 'required|string|max:255|regex:/^[0-9]+$/',
-                    'USER_CITY'       => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-                    'USER_COUNTRY'    => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-                    'USER_DISTRICT'   => 'required|string|max:255|regex:/^[a-zA-Z-]+$/',
-                    'USER_POSTALCODE' => 'required|string|max:255|regex:/^[0-9]+$/'
-               ]); */
+        $user= $request->session()->get('user');
 
-                #validation
-                $userInput = $request->validate([
-                    'USERNAME'          => 'required|string|max:255||unique:admin,ADMIN_USERNAME|unique:users,USERNAME,'.$session['USER_ID'].',USER_ID|unique:admin,ADMIN_USERNAME|regex:/^[a-zA-Z0-9_]+$/',
-                    'USER_EMAIL'        => 'required|email|unique:admin,ADMIN_EMAIL|unique:users,USER_EMAIL,'.$session['USER_ID'].',USER_ID',
-                    'USER_PASSWORD'     => 'required|min:8|string|regex:/^[a-zA-Z0-9_]+$/',
-                    'ADDRESS_STREET'    => 'required|string|max:255|regex:/^[a-zA-Z0-9-  ]+$/'  ,
-                    'ADDRESS_CITY'      => 'required|string|max:255|regex:/^[a-zA-Z0-9- ]+$/'  ,
-                    'ADDRESS_STATE'     => 'required|string|max:255|regex:/^[a-zA-Z0-9- ]+$/'  ,
-                    'ADDRESS_DISTRICT'  => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/' ,
-                    'ADDRESS_POSTALCODE'=> 'required|string|max:255|regex:/^[0-9]+$/',
-                    'ADDRESS_COUNTRY'   => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
-               ]);
+        $user_Input = $request->validate([
+            'Username'        => 'required|string|max:255|regex:/^[a-zA-Z0-9_.]+$/|unique:users,USERNAME,'.$user->USER_ID.',USER_ID|unique:admin,ADMIN_USERNAME',
+            'Email'           => 'required|email|unique:users,USER_EMAIL,'.$user->USER_ID.',USER_ID|unique:admin,ADMIN_EMAIL',
+            'Last_Name'       => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
+            'First_Name'      => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
+            'Date_Of_Birth'   => 'required|before:'.now()->subYears(18)->toDateString(),
+            'Gender'          => 'required|not_in:0',
+            'Phone_Number'    => 'required|string|max:20|regex:/^[0-9+]+$/',
+       ],[
+        'Gender.gt' => "Select a Gender !",
+       ]);
 
+       user::where('USER_ID',$user['USER_ID'])
+           ->update([
+                    'USER_FNAME' => $user_Input['First_Name'],
+                    'USER_LNAME' => $user_Input['Last_Name'],
+                    'USERNAME' => $user_Input['Username'],
+                    'USER_EMAIL' => $user_Input['Email'],
+                    'USER_TEL' => $user_Input['Phone_Number'],
+                    'USER_DOB' => $user_Input['Date_Of_Birth'],
+                    'USER_GENDER' => $user_Input['Gender'],
+        ]);
 
-               if(Address::where('ADDED_BY_USER_ID',$session['USER_ID'])->exists()){
+        if($request->hasFile('upload_profile')){
+            $imageName = $request->file('upload_profile')->getClientOriginalName();
+            $request->file('upload_profile')->storeAs('public/profile/images/',$imageName);
 
-                address::where('ADDED_BY_USER_ID',$session['USER_ID'])
+            user::where('USER_ID',$user['USER_ID'])
+               ->update([
+                        'USER_IMG' => $imageName,
+            ]);
+
+        }
+
+        $user = User::where(['USER_EMAIL'=>$user['USER_EMAIL']])->first();
+        request()->Session()->put('user',$user);
+        $user= $request->session()->get('user');
+
+        return redirect()->route('viewProfileUser');
+
+    }
+
+    public function UpdateAddress(Request $request){
+
+        $user= $request->session()->get('user');
+
+        $address_Input = $request->validate([
+            'Street'       => 'required|string|max:255|regex:/^[a-zA-Z0-9- ]+$/',
+            'State'        => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
+            'City'         => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
+            'Country'      => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
+            'District'     => 'required|string|max:255|regex:/^[a-zA-Z- ]+$/',
+            'Postal_Code'  => 'required|string|max:255|regex:/^[0-9A-Z ]+$/'
+        ]);
+
+        if(Address::where('ADDED_BY_USER_ID',$user['USER_ID'])->exists()){
+
+            address::where('ADDED_BY_USER_ID',$user['USER_ID'])
+            ->update([
+                'ADDRESS_STREET' => $address_Input['Street'],
+                'ADDRESS_CITY'   => $address_Input['City'],
+                'ADDRESS_STATE'  => $address_Input['State'],
+                'ADDRESS_DISTRICT' => $address_Input['District'],
+                'ADDRESS_POSTALCODE' => $address_Input['Postal_Code'],
+                'ADDRESS_COUNTRY' => $$address_Input['Country'],
+            ]);
+
+        }else{
+
+           $address = address::Create(array(
+                'ADDRESS_STREET' => $address_Input['Street'],
+                'ADDRESS_CITY'   => $address_Input['City'],
+                'ADDRESS_STATE'  => $address_Input['State'],
+                'ADDRESS_DISTRICT' => $address_Input['District'],
+                'ADDRESS_POSTALCODE' => $address_Input['Postal_Code'],
+                'ADDRESS_COUNTRY' => $address_Input['Country'],
+                'ADDED_BY_USER_ROLE' => $user['USER_ROLE'],
+                'ADDED_BY_USER_ID' => $user['USER_ID'],
+            ));
+
+            user::where('USER_ID',$user['USER_ID'])
+               ->update([
+                    'ADDRESS_ID' => $address['id']
+            ]);
+
+        }
+
+            $user = User::where(['USER_EMAIL'=>$user['USER_EMAIL']])->first();
+            request()->Session()->put('user',$user);
+            $user= $request->session()->get('user');
+
+            return redirect()->route('viewProfileUser');
+
+    }
+
+    public function changePassword(Request $request){
+
+        $user= $request->session()->get('user');
+
+        //Requesting Input value from text fields on web pages and validating
+        $userInput = $request->validate([
+            'old_Password'   => 'required|min:8|string',
+            'New_Password'   => 'required|min:8|string|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation'   => 'required',
+        ]);
+
+        if(Hash::check($userInput['old_Password'],$user['USER_PASSWORD'])){
+
+            user::where('USER_ID',$user['USER_ID'])
                 ->update([
-                 'ADDRESS_STREET' => $userInput['ADDRESS_STREET'],
-                 'ADDRESS_CITY'   => $userInput['ADDRESS_CITY'],
-                 'ADDRESS_STATE'  => $userInput['ADDRESS_STREET'],
-                 'ADDRESS_DISTRICT' => $userInput['ADDRESS_DISTRICT'],
-                 'ADDRESS_POSTALCODE' => $userInput['ADDRESS_POSTALCODE'],
-                 'ADDRESS_COUNTRY' => $userInput['ADDRESS_COUNTRY'],
-                ]);
+                    'USER_PASSWORD' => Hash::make($user['New_Password'])
+            ]);
 
-               }else{
+            $user = User::where(['USER_EMAIL'=>$user['USER_EMAIL']])->first();
+            request()->Session()->put('user',$user);
+            $user= $request->session()->get('user');
 
-                address::Create(array(
-                    'ADDRESS_STREET' => $userInput['ADDRESS_STREET'],
-                    'ADDRESS_CITY' => $userInput['ADDRESS_CITY'],
-                    'ADDRESS_STATE' => $userInput['ADDRESS_STREET'],
-                    'ADDRESS_DISTRICT' => $userInput['ADDRESS_DISTRICT'],
-                    'ADDRESS_POSTALCODE' => $userInput['ADDRESS_POSTALCODE'],
-                    'ADDRESS_COUNTRY' => $userInput['ADDRESS_COUNTRY'],
-                    'ADDED_BY_USER_ROLE' => $session['USER_ROLE'],
-                    'ADDED_BY_USER_ID' => $session['USER_ID'],
-                ));
+            return view('user.profile')->with('error_pw',"Password Changed SUCCESSFULLY!");
 
-               }
+        }else{
 
-               if($request->hasFile('USER_IMG')){
-                $imageName = $request->file('USER_IMG')->getClientOriginalName();
-                $request->file('USER_IMG')->storeAs('public/images/',$imageName);
+            return view('user.profile')->with('error_pw',"Your Old password does not match!");
 
-                user::where('USER_ID',$session['USER_ID'])
-                   ->update([
-                            //  'USER_FNAME' => $userInput['USER_FNAME'],
-                            //  'USER_LNAME' => $userInput['USER_LNAME'],
-                            'USERNAME' => $userInput['USERNAME'],
-                            'USER_EMAIL' => $userInput['USER_EMAIL'],
-                            'USER_PASSWORD' => Hash::make($userInput['USER_PASSWORD']),
-                            //   'USER_TEL' => $userInput['USER_TEL'],
-                            //   'USER_IMG' => $imageName,
-                            //   'USER_DOB' => $userInput['USER_DOB'],
-                            //   'USER_GENDER' => $userInput['USER_GENDER'],
-                        ]);
-
-
-            }else{
-
-                user::where('USER_ID',$session['USER_ID'])
-                ->update([
-                        //  'USER_FNAME' => $userInput['USER_FNAME'],
-                        //  'USER_LNAME' => $userInput['USER_LNAME'],
-                          'USERNAME' => $userInput['USERNAME'],
-                          'USER_EMAIL' => $userInput['USER_EMAIL'],
-                          'USER_PASSWORD' => Hash::make($userInput['USER_PASSWORD']),
-                        //   'USER_TEL' => $userInput['USER_TEL'],
-                        //   'USER_IMG' => $imageName,
-                        //   'USER_DOB' => $userInput['USER_DOB'],
-                        //   'USER_GENDER' => $userInput['USER_GENDER'],
-                     ]);
-            }
-               $user = User::where('USER_ID', $session['USER_ID'])->get();
-               $user = json_decode(json_encode($user[0]), true);
-               $request->session()->put('user',$user);
-
-               return redirect()->route('index');
+        }
 
     }
 

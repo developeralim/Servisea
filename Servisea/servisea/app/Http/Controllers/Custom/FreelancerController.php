@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Freelancer;
 use App\Models\Category;
+use App\Models\certifications;
 use App\Models\Gig;
+use App\Models\GigMedia;
 use App\Models\Job_Application;
 use App\Models\Order;
 use App\Models\orderAttachment;
@@ -38,9 +40,12 @@ class FreelancerController extends Controller
 
     public function viewOverviewPage(Request $request){
         $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
         if(isset($session)!=null){
             $category = Category::all();
             $request->session()->put('categoryList',$category);
+
             return view("freelancer.overview");
         }else{
             return redirect('login_user');
@@ -134,19 +139,6 @@ class FreelancerController extends Controller
             'Requirements'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
         ]);
 
-        /*
-        GIG_ID
-        CATEGORY_ID
-        FREELANCER_ID
-        GIG_NAME
-        GIG_DESCRIPTION
-        GIG_REQUIREMENTS
-        GIG_STATUS
-
-        DON'T FORGET GIG ATTACHMENT
-
-        */
-
         Gig::create([
         'CATEGORY_ID'      => $PackageInput['CATEGORY_ID'],
         'FREELANCER_ID'    => $freelancer['FREELANCER_ID'],
@@ -169,28 +161,52 @@ class FreelancerController extends Controller
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
 
-        $gigId =  Gig::where('FREELANCER_ID', $freelancer['FREELANCER_ID'])->latest()->first('GIG_ID');
         #validation
         $PackageInput = $request->validate([
-            'PT_B'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'PD_B'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'DD_B'  => 'integer|regex:/^[0-9]+$/',
-            'R_B'   => 'string|max:255|regex:/^[0-9]+$/',
-            'P_B'   => 'string|max:255|regex:/^[0-9]+$/',
-       ]);
+            'Gig_Title'            => 'Required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'Gig_Description'      => 'Required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'Category'             => 'Required|gt:0',
+            'Gig_Requirements'     => 'Required|string|max:255|regex:/^[@a-zA-Z .]+$/',
+            'Basic_Title'          => 'Required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'Basic_Description'    => 'Required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'Basic_Delivery_Days'  => 'Required|integer|regex:/^[0-9]+$/',
+            'Basic_Revision'       => 'Required|string|max:255|regex:/^[0-9A-Za-z]+$/',
+            'Basic_Price'          => 'Required|string|max:255|regex:/^[0-9.]+$/',
+
+        ],[
+            'Category.gt' => 'Select a category',
+        ]);
+
+        $gig = Gig::create([
+            'CATEGORY_ID'      => $PackageInput['Category'],
+            'FREELANCER_ID'    => $freelancer['FREELANCER_ID'],
+            'GIG_NAME'         => $PackageInput['Gig_Title'],
+            'GIG_DESCRIPTION'  => $PackageInput['Gig_Description'],
+            'GIG_REQUIREMENTS' => $PackageInput['Gig_Requirements'],
+            'GIG_STATUS'       => 'COMPLETED',
+        ]);
+
+        $files = $request->File('Attachment');
+        foreach($files as $file){
+            $destination_path = 'public/storage/gig';
+            GigMedia::create([
+                'GIG_ID' => $gig['id'],
+                'MEDIA_PATH' => str_replace(' ', '', $file->getClientOriginalName())
+            ]);
+            $file->storeAs($destination_path,str_replace(' ', '', $file->getClientOriginalName()));
+        }
 
         Package::create([
-            'GIG_ID'              => $gigId['GIG_ID'],
-            'PACKAGE_NAME'        => $PackageInput['PT_B'],
-            'PRICE'               => $PackageInput['P_B'],
-            'PACKAGE_DESCRIPTION' => $PackageInput['PD_B'],
-            'DELIVERY_DAYS'       => $PackageInput['DD_B'],
-            'REVISION'            => $PackageInput['R_B'],
+            'GIG_ID'              => $gig['id'],
+            'PACKAGE_NAME'        => $PackageInput['Basic_Title'],
+            'PRICE'               => $PackageInput['Basic_Price'],
+            'PACKAGE_DESCRIPTION' => $PackageInput['Basic_Description'],
+            'DELIVERY_DAYS'       => $PackageInput['Basic_Delivery_Days'],
+            'REVISION'            => $PackageInput['Basic_Revision'],
             'PACKAGE_STATUS'      => 'BASIC',
         ]);
 
-
-    return redirect("index");
+        return redirect()->route("index");
 
     }
 
@@ -198,67 +214,85 @@ class FreelancerController extends Controller
         $session= $request->session()->get('user');
         $freelancer= $request->session()->get('freelancer');
 
-        $gigId =  Gig::where('FREELANCER_ID', $freelancer['FREELANCER_ID'])->latest()->first('GIG_ID');
-
         #validation
         $PackageInput = $request->validate([
-            'PT_B'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'PD_B'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'DD_B'  => 'integer|regex:/^[0-9]+$/',
-            'R_B'   => 'string|max:255|regex:/^[0-9]+$/',
-            'P_B'   => 'string|max:255|regex:/^[0-9]+$/',
-
-            'PT_S'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'PD_S'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'DD_S'  => 'integer|regex:/^[0-9]+$/',
-            'R_S'   => 'string|max:255|regex:/^[0-9]+$/',
-            'P_S'   => 'string|max:255|regex:/^[0-9]+$/',
-
-            'PT_P'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'PD_P'  => 'string|max:255|regex:/^[a-zA-Z]+$/',
-            'DD_P'  => 'integer|regex:/^[0-9]+$/',
-            'R_P'   => 'string|max:255|regex:/^[0-9]+$/',
-            'P_P'   => 'string|max:255|regex:/^[0-9]+$/',
+            'Gig_Title'            => 'Required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'Gig_Description'      => 'Required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'Category'             => 'Required|gt:0',
+            'Gig_Requirements'     => 'Required|string|max:255|regex:/^[@a-zA-Z .]+$/',
+            'Basic_Title'          => 'Required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'Basic_Description'    => 'Required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'Basic_Delivery_Days'  => 'Required|integer|regex:/^[0-9]+$/',
+            'Basic_Revision'       => 'Required|string|max:255|regex:/^[0-9A-Za-z]+$/',
+            'Basic_Price'          => 'Required|string|max:255|regex:/^[0-9.]+$/',
+            'Standard_Title'          => 'Required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'Standard_Description'    => 'Required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'Standard_Delivery_Days'  => 'Required|integer|regex:/^[0-9]+$/',
+            'Standard_Revision'       => 'Required|string|max:255|regex:/^[0-9A-Za-z]+$/',
+            'Standard_Price'          => 'Required|string|max:255|regex:/^[0-9.]+$/',
+            'Premium_Title'          => 'Required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'Premium_Description'    => 'Required|string|max:255|regex:/^[a-zA-Z ]+$/',
+            'Premium_Delivery_Days'  => 'Required|integer|regex:/^[0-9]+$/',
+            'Premium_Revision'       => 'Required|string|max:255|regex:/^[0-9A-Za-z]+$/',
+            'Premium_Price'          => 'Required|string|max:255|regex:/^[0-9.]+$/',
        ]);
 
-        Package::create([
-            'GIG_ID'              => $gigId['GIG_ID'],
-            'PACKAGE_NAME'        => $PackageInput['PT_B'],
-            'PRICE'               => $PackageInput['P_B'],
-            'PACKAGE_DESCRIPTION' => $PackageInput['PD_B'],
-            'DELIVERY_DAYS'       => $PackageInput['DD_B'],
-            'REVISION'            => $PackageInput['R_B'],
+        $gig = Gig::create([
+        'CATEGORY_ID'      => $PackageInput['Category'],
+        'FREELANCER_ID'    => $freelancer['FREELANCER_ID'],
+        'GIG_NAME'         => $PackageInput['Gig_Title'],
+        'GIG_DESCRIPTION'  => $PackageInput['Gig_Description'],
+        'GIG_REQUIREMENTS' => $PackageInput['Gig_Requirements'],
+        'GIG_STATUS'       => 'COMPLETED',
+        ]);
+
+
+        $files = $request->File('Attachment');
+        foreach($files as $file){
+            $destination_path = 'public/storage/gig';
+            GigMedia::create([
+                'GIG_ID' => $gig['id'],
+                'MEDIA_PATH' => str_replace(' ', '', $file->getClientOriginalName())
+            ]);
+            $file->storeAs($destination_path,str_replace(' ', '', $file->getClientOriginalName()));
+        }
+
+        Package::create(
+        [
+            'GIG_ID'              => $gig['id'],
+            'PACKAGE_NAME'        => $PackageInput['Basic_Title'],
+            'PRICE'               => $PackageInput['Basic_Price'],
+            'PACKAGE_DESCRIPTION' => $PackageInput['Basic_Description'],
+            'DELIVERY_DAYS'       => $PackageInput['Basic_Delivery_Days'],
+            'REVISION'            => $PackageInput['Basic_Revision'],
             'PACKAGE_STATUS'      => 'BASIC',
-        ]);
-
-        Package::create([
-            'GIG_ID'              => $gigId['GIG_ID'],
-            'PACKAGE_NAME'        => $PackageInput['PT_S'],
-            'PRICE'               => $PackageInput['P_S'],
-            'PACKAGE_DESCRIPTION' => $PackageInput['PD_S'],
-            'DELIVERY_DAYS'       => $PackageInput['DD_S'],
-            'REVISION'            => $PackageInput['R_S'],
+        ],
+        [
+            'GIG_ID'              => $gig['id'],
+            'PACKAGE_NAME'        => $PackageInput['Standard_Title'],
+            'PRICE'               => $PackageInput['Standard_Price'],
+            'PACKAGE_DESCRIPTION' => $PackageInput['Standard_Description'],
+            'DELIVERY_DAYS'       => $PackageInput['Standard_Delivery_Days'],
+            'REVISION'            => $PackageInput['Standard_Revision'],
             'PACKAGE_STATUS'      => 'STANDARD',
-        ]);
-
-        Package::create([
-            'GIG_ID'              => $gigId['GIG_ID'],
-            'PACKAGE_NAME'        => $PackageInput['PT_P'],
-            'PRICE'               => $PackageInput['P_P'],
-            'PACKAGE_DESCRIPTION' => $PackageInput['PD_P'],
-            'DELIVERY_DAYS'       => $PackageInput['DD_P'],
-            'REVISION'            => $PackageInput['R_P'],
+        ],
+        [
+            'GIG_ID'              => $gig['id'],
+            'PACKAGE_NAME'        => $PackageInput['Premium_Title'],
+            'PRICE'               => $PackageInput['Premium_Price'],
+            'PACKAGE_DESCRIPTION' => $PackageInput['Premium_Description'],
+            'DELIVERY_DAYS'       => $PackageInput['Premium_Delivery_Days'],
+            'REVISION'            => $PackageInput['Premium_Revision'],
             'PACKAGE_STATUS'      => 'PREMIUM',
         ]);
 
-        return redirect("index");
+        return redirect()->route("index");
     }
 
     public function createFreelancer(Request $request){
         $session= $request->session()->get('user');
 
-        user::where('USER_ID',$session['USER_ID'])
-           ->update(['USER_ROLE' => 2,]);
+        user::where('USER_ID',$session['USER_ID'])->update(['USER_ROLE' => 2,]);
 
         if (!Freelancer::where('USER_ID',$session['USER_ID'])->exists()) {
 
@@ -278,6 +312,7 @@ class FreelancerController extends Controller
         $freelancer = json_decode(json_encode($freelancer[0]), true);
         request()->Session()->put('freelancer',$freelancer);
         $freelancer= $request->session()->get('freelancer');
+
         return redirect()->route('index');
     }
 
@@ -291,10 +326,143 @@ class FreelancerController extends Controller
         return redirect()->route('index');
     }
 
+    public function searchGig(Request $request){
+        $session= $request->session()->get('user');
+
+        $search = $request->validate([
+            'Search'            => 'string|max:50|regex:/^[a-zA-Z ]+$/',
+       ]);
+
+        if(gig::where('GIG_STATUS','COMPLETED')->exists()){
+
+            $gigs = DB::select(
+                    'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
+                    FROM gig
+                    RIGHT JOIN package
+                    ON gig.GIG_ID = package.GIG_ID
+                    RIGHT JOIN freelancer
+                    ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                    RIGHT JOIN users
+                    ON freelancer.USER_ID = users.USER_ID
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND gig.GIG_STATUS = "COMPLETED"
+                    AND gig.GIG_NAME LIKE "%'.$search['Search'].'%"
+                    AND package.PACKAGE_ID = (
+                        SELECT package.PACKAGE_ID
+                        FROM package
+                        WHERE package.GIG_ID =  gig.GIG_ID
+                        AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                        ORDER BY PRICE ASC
+                        LIMIT 1)');
+
+                    $gigsCounter = DB::select(
+                        'SELECT COUNT(gig.GIG_ID) AS "TOTAL"
+                    FROM gig
+                    RIGHT JOIN package
+                    ON gig.GIG_ID = package.GIG_ID
+                    RIGHT JOIN freelancer
+                    ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                    RIGHT JOIN users
+                    ON freelancer.USER_ID = users.USER_ID
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND gig.GIG_STATUS = "COMPLETED"
+                    AND gig.GIG_NAME LIKE "%'.$search['Search'].'%"
+                    AND package.PACKAGE_ID = (
+                        SELECT package.PACKAGE_ID
+                        FROM package
+                        WHERE package.GIG_ID =  gig.GIG_ID
+                        AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                        ORDER BY PRICE ASC
+                        LIMIT 1)');
+
+
+
+        $reviews = reviews::select('GIG_ID', DB::raw('round(AVG(RATING),0) as RATING') , DB::raw('COUNT(GIG_ID) as COUNT'))
+                ->groupBy('GIG_ID')
+                ->get();
+
+        $gigMedia = DB::select('
+        SELECT media_id ,GIG_ID, media_path
+        FROM gig_media
+        GROUP BY media_id ,GIG_ID, MEDIA_PATH
+        LIMIT 1');
+
+        $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+
+        if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
+            return view('freelancer.viewGigs')
+            ->with('gigs',$gigs)
+            ->with('reviews',$reviews)
+            ->with('gigMedia',$gigMedia)
+            ->with('cat',900);
+        }else{
+            return redirect()->route('index');
+        };
+    }
+}
+
     public function viewAllGig(Request $request){
         $session= $request->session()->get('user');
 
         if(gig::where('GIG_STATUS','COMPLETED')->exists()){
+
+            if($request->route('fid') != 0){
+
+            $cat = 900;
+            $fid= Crypt::decryptString( $request->route('fid'));
+            $gigs = DB::select(
+                    'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,category.
+                    FROM gig
+                    RIGHT JOIN package
+                    ON gig.GIG_ID = package.GIG_ID
+                    RIGHT JOIN freelancer
+                    ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                    RIGHT JOIN users
+                    ON freelancer.USER_ID = users.USER_ID
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND gig.GIG_STATUS = "COMPLETED"
+                    AND freelancer.FREELANCER_ID ='.$fid.'
+                    AND package.PACKAGE_ID = (
+                        SELECT package.PACKAGE_ID
+                        FROM package
+                        WHERE package.GIG_ID =  gig.GIG_ID
+                        AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                        ORDER BY PRICE ASC
+                        LIMIT 1)');
+
+                    $gigsCounter = DB::select(
+                        'SELECT COUNT(gig.GIG_ID) AS "TOTAL"
+                    FROM gig
+                    RIGHT JOIN package
+                    ON gig.GIG_ID = package.GIG_ID
+                    RIGHT JOIN freelancer
+                    ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                    RIGHT JOIN users
+                    ON freelancer.USER_ID = users.USER_ID
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND gig.GIG_STATUS = "COMPLETED"
+                    AND freelancer.FREELANCER_ID ='.$fid.'
+                    AND package.PACKAGE_ID = (
+                        SELECT package.PACKAGE_ID
+                        FROM package
+                        WHERE package.GIG_ID =  gig.GIG_ID
+                        AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                        ORDER BY PRICE ASC
+                        LIMIT 1)');
+
+                        $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
+
+                if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
+                    return view('freelancer.viewCreatedGigs')
+                    ->with('gigs',$gigs)
+                    ->with('cat',$cat);
+                }else{
+                    return redirect()->route('index');
+                };
+
+            }elseif(!$request->route('fid') && !$request->route('cid')){
+
+                $cat = 0;
 
             $gigs = DB::select(
                 'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID
@@ -315,16 +483,6 @@ class FreelancerController extends Controller
                     ORDER BY PRICE ASC
                     LIMIT 1)');
 
-                $reviews = reviews::select('GIG_ID', DB::raw('round(AVG(RATING),0) as RATING') , DB::raw('COUNT(GIG_ID) as COUNT'))
-                ->groupBy('GIG_ID')
-                ->get();
-
-                $gigMedia = DB::select('
-                SELECT media_id ,GIG_ID, media_path
-                FROM gig_media
-                GROUP BY media_id ,GIG_ID, MEDIA_PATH
-                LIMIT 1');
-
                 $gigsCounter = DB::select(
                     'SELECT COUNT(gig.GIG_ID) AS "TOTAL"
                 FROM gig
@@ -344,14 +502,73 @@ class FreelancerController extends Controller
                     ORDER BY PRICE ASC
                     LIMIT 1)');
 
+        }elseif(!$request->route('fid'==0) && $request->route('cid')){
+
+            $cid= Crypt::decryptString( $request->route('cid'));
+            $gigs = DB::select(
+                'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,gig.CATEGORY_ID
+                FROM gig
+                RIGHT JOIN package
+                ON gig.GIG_ID = package.GIG_ID
+                RIGHT JOIN freelancer
+                ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                RIGHT JOIN users
+                ON freelancer.USER_ID = users.USER_ID
+                WHERE package.GIG_ID =  gig.GIG_ID
+                AND gig.GIG_STATUS = "COMPLETED"
+                AND gig.CATEGORY_ID ='.$cid.'
+                AND package.PACKAGE_ID = (
+                    SELECT package.PACKAGE_ID
+                    FROM package
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                    ORDER BY PRICE ASC
+                    LIMIT 1)');
+
+                $cat = $gigs[0]->CATEGORY_ID;
+
+                $gigsCounter = DB::select(
+                    'SELECT COUNT(gig.GIG_ID) AS "TOTAL"
+                FROM gig
+                RIGHT JOIN package
+                ON gig.GIG_ID = package.GIG_ID
+                RIGHT JOIN freelancer
+                ON gig.FREELANCER_ID = freelancer.FREELANCER_ID
+                RIGHT JOIN users
+                ON freelancer.USER_ID = users.USER_ID
+                WHERE package.GIG_ID =  gig.GIG_ID
+                AND gig.GIG_STATUS = "COMPLETED"
+                AND gig.CATEGORY_ID ='.$cid.'
+                AND package.PACKAGE_ID = (
+                    SELECT package.PACKAGE_ID
+                    FROM package
+                    WHERE package.GIG_ID =  gig.GIG_ID
+                    AND package.PACKAGE_STATUS NOT LIKE "CUSTOM"
+                    ORDER BY PRICE ASC
+                    LIMIT 1)');
+
+        }
+
+        $reviews = reviews::select('GIG_ID', DB::raw('round(AVG(RATING),0) as RATING') , DB::raw('COUNT(GIG_ID) as COUNT'))
+                ->groupBy('GIG_ID')
+                ->get();
+
+        $gigMedia = DB::select('
+        SELECT media_id ,GIG_ID, media_path
+        FROM gig_media
+        GROUP BY media_id ,GIG_ID, MEDIA_PATH
+        LIMIT 1');
 
         $gigsCounter = json_decode(json_encode($gigsCounter[0]), true);
 
         if(isset($gigsCounter['TOTAL']) && $gigsCounter > 0){
-
-            return view('freelancer.viewGigs')->with('gigs',$gigs)->with('reviews',$reviews)->with('gigMedia',$gigMedia);
+            return view('freelancer.viewGigs')
+            ->with('gigs',$gigs)
+            ->with('reviews',$reviews)
+            ->with('gigMedia',$gigMedia)
+            ->with('cat',$cat);
         }else{
-            return redirect('index');
+            return redirect()->route('index');
         };
     }
 }
@@ -499,6 +716,74 @@ class FreelancerController extends Controller
             $category = Category::all();
             $request->session()->put('categoryList',$category);
             return view("freelancer.overview");
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function updateDescription(Request $request){
+
+        $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
+        if(isset($session)!=null){
+
+            $freelancer_Input = $request->validate([
+                'Introduction'      => 'Required|string|max:255',
+           ]);
+
+           Freelancer::where('USER_ID',$session['USER_ID'])
+           ->update(
+            ['F_DESCRIPTION'=>$freelancer_Input['Introduction']]
+           );
+
+           session()->forget('freelancer');
+           $freelancer = Freelancer::where('USER_ID', $session['USER_ID'])->get();
+           $freelancer = json_decode(json_encode($freelancer[0]), true);
+           request()->Session()->put('freelancer',$freelancer);
+           $freelancer= $request->session()->get('freelancer');
+
+            return redirect()->route('viewProfileUser');
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function updateSkill(Request $request){
+
+        $session= $request->session()->get('user');
+
+        if(isset($session)!=null){
+            $category = Category::all();
+            $request->session()->put('categoryList',$category);
+            return view("freelancer.overview");
+        }else{
+            return redirect('login_user');
+        }
+    }
+
+    public function UpdateEducation(Request $request){
+
+        $session= $request->session()->get('user');
+        $freelancer= $request->session()->get('freelancer');
+
+        if(isset($session)!=null){
+
+            $cert_Input = $request->validate([
+                'Certification_Name'      => 'Required|string|max:255',
+                'Provider_Name'      => 'Required|string|max:255',
+                'Date_Earned'      => 'Required|string|max:255|before:'.now(),
+           ]);
+
+
+           certifications::create([
+                'FREELANCER_ID' => $freelancer['FREELANCER_ID'],
+                'CERTIFICATION_NAME' => $cert_Input['Certification_Name'],
+                'PROVIDER_NAME' => $cert_Input['Provider_Name'],
+                'DATE_EARNED' => $cert_Input['Date_Earned'],
+            ]);
+
+            return redirect()->route('viewProfileUser');
         }else{
             return redirect('login_user');
         }

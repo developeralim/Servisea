@@ -23,39 +23,24 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="listings_category_nav_list_menu">
-              <ul class="mb0 d-flex ps-0">
-                <li><a class="active" href="#">All Categories</a></li>
-                <li><a href="#">Graphics & Design</a></li>
-                <li><a href="#">Digital Marketing</a></li>
-                <li><a href="#">Writing & Translation</a></li>
-                <li><a href="#">Video & Animation</a></li>
-                <li><a href="#">Music & Audio</a></li>
-                <li><a href="#">Programming & Tech</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Trending</a></li>
-              </ul>
+                @if(isset($cat))
+                <ul class="mb0 d-flex ps-0">
+                    <li><a  @if($cat == 0) class="active" @endif href="{{ route('viewAllGig')}}">All Categories</a></li>
+                    <li><a  @if($cat == 1) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(1)])}}">Graphics & Design</a></li>
+                    <li><a  @if($cat == 2) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(2)])}}">Digital Marketing</a></li>
+                    <li><a  @if($cat == 3) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(3)])}}">Writing & Translation</a></li>
+                    <li><a  @if($cat == 4) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(4)])}}">Video & Animation</a></li>
+                    <li><a  @if($cat == 6) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(6)])}}">Music & Audio</a></li>
+                    <li><a  @if($cat == 7) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(7)])}}">Programming & Tech</a></li>
+                    <li><a  @if($cat == 5) class="active" @endif href="{{route('viewAllGig',[0,Crypt::encryptString(5)])}}">Business</a></li>
+                </ul>
+                @endif
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Breadcumb Sections -->
-    <section class="breadcumb-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="breadcumb-style1">
-              <div class="breadcumb-list">
-                <a href="">Home</a>
-                <a href="">Services</a>
-                <a href="">Design & Creative</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
     @if(isset($gigs))
     <!-- Listings All Lists -->
     <section class="pt30 pb90">
@@ -136,38 +121,6 @@
                       <button class="done-btn ud-btn btn-thm dropdown-toggle">Apply<i class="fal fa-arrow-right-long"></i></button>
                     </div>
                   </li>
-
-                  <!-- <li class="list-inline-item position-relative d-none d-xl-inline-block">
-                    <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Location <i class="fa fa-angle-down ms-2"></i></button>
-                    <div class="dropdown-menu dd4 pb20">
-                      <div class="widget-wrapper pr20">
-                        <div class="checkbox-style1">
-                          <label class="custom_checkbox">United States
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                          </label>
-                          <label class="custom_checkbox">United Kingdom
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                          <label class="custom_checkbox">Canada
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                          </label>
-                          <label class="custom_checkbox">Germany
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                          </label>
-                          <label class="custom_checkbox">Turkey
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                      </div>
-                      <button class="done-btn ud-btn btn-thm drop_btn4">Apply<i class="fal fa-arrow-right-long"></i></button>
-                    </div>
-                  </li> -->
-
                 </ul>
               </div>
             </div>
@@ -192,16 +145,16 @@
           <div class="col-sm-6 col-xl-3">
           <div class="listing-style1">
            <div class="list-thumb">
-           @if(isset($gigMedia)&&count($gigMedia)!=0)
+           @if(isset($gigMedia))
                 @foreach ($gigMedia as $gigmed)
                     @if($gigmed->GIG_ID == $gig->GIG_ID)
-                    <img class="w-100" src="{{asset('backend/THEME/images/gallery/gig_img.png')}}" alt="">
+                    <img class="w-100" src={{asset('backend/storage/storage/gig/'.$gigmed->media_path)}}  alt="{{$gigmed->media_path}}">
                     <a a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
+                    @else
+                    <img class="w-100" src="{{asset('backend/THEME/images/gallery/gig_img.png')}}" alt="">
+                     <a a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
                     @endif
                 @endforeach
-            @else
-            <img class="w-100" src="{{asset('backend/THEME/images/gallery/gig_img.png')}}" alt="">
-            <a a href="" class="listing-fav fz12"><span class="far fa-heart"></span></a>
             @endif
 
             </div>
@@ -211,13 +164,13 @@
                 <div class="review-meta d-flex align-items-center">
                   <i class="fas fa-star fz10 review-color me-2"></i>
                   @if(isset($reviews))
-                  @foreach ($reviews as $review)
-                    @if($review->GIG_ID == $gig->GIG_ID)
-                    <p class="mb-0 body-color fz14"><span class="dark-color me-2">{{$review->RATING}}</span>{{$review->COUNT}} reviews</p>
-                    @endif
-                  @endforeach
-                  @else
-                  <p class="mb-0 body-color fz14"><span class="dark-color me-2"></span>No reviews yet</p>
+                    @foreach ($reviews as $review)
+                        @if($review->GIG_ID == $gig->GIG_ID)
+                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">{{$review->RATING}}</span>{{$review->COUNT}} reviews</p>
+                        @else
+                        <p class="mb-0 body-color fz14"><span class="dark-color me-2"></span>No reviews yet</p>
+                        @endif
+                    @endforeach
                   @endif
                 </div>
                 <hr class="my-2">
