@@ -411,7 +411,7 @@ class FreelancerController extends Controller
             $cat = 900;
             $fid= Crypt::decryptString( $request->route('fid'));
             $gigs = DB::select(
-                    'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME,freelancer.FREELANCER_ID,category.
+                    'SELECT gig.GIG_ID,GIG_NAME,GIG_DESCRIPTION,package.PRICE,users.USERNAME, freelancer.FREELANCER_ID , category.CATEGORY_NAME
                     FROM gig
                     RIGHT JOIN package
                     ON gig.GIG_ID = package.GIG_ID

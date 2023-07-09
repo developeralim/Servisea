@@ -66,13 +66,13 @@
                                   <div class="list-content flex-grow-1 py-0 pl15 pl0-lg">
                                     <h6 class="list-title mb-0"><a href="{{route('viewGig',Crypt::encryptString($gig->GIG_ID))}}">{{$gig->GIG_NAME}}</a></h6>
                                     <ul class="list-style-type-bullet ps-3 dashboard-style mb-0">
-                                      <li>{{$gig->GIG_DESCRIPTION}}/li>
+                                      <li>{{$gig->GIG_DESCRIPTION}}</li>
                                     </ul>
                                   </div>
                                 </div>
                               </th>
-                              <td class="align-top"><span class="fz15 fw400">Web & App Design</span></td>
-                              <td class="align-top"><span class="fz14 fw400">$500.00/Fixed</span></td>
+                              <td class="align-top"><span class="fz15 fw400">{{$gig->CATEGORY_NAME}}</span></td>
+                              <td class="align-top"><span class="fz14 fw400">{{$gig->PRICE}}</span></td>
                               <td class="align-top">
                                 <div class="d-flex">
                                   <a href="" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><span class="flaticon-pencil"></span></a>
