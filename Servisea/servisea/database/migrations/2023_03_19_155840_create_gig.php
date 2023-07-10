@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('gig');
         Schema::create('gig', function (Blueprint $table) {
             $table->integerIncrements("GIG_ID");
 

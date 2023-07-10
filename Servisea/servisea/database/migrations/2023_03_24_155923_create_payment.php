@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('payment');
         Schema::create('payment', function (Blueprint $table) {
             $table->integerIncrements('PAYMENT_ID');
 

@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('department');
         Schema::create('department', function (Blueprint $table) {
             $table->integerIncrements('DEPARTMENT_ID');
             $table->string('DEPARTMENT_NAME');

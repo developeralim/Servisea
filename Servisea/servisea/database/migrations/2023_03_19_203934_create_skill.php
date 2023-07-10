@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('skill');
         Schema::create('skill', function (Blueprint $table) {
             $table->integerIncrements('SKILL_ID');
             $table->string('SKILL_NAME')->nullable();

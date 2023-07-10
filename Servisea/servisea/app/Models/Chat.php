@@ -48,6 +48,6 @@ class Chat extends Model
 
     public function offer()
     {
-        return Offer::where('ID',$this->offer)->first();
+        return Quotation::where('QUOTE_ID',$this->offer)->first();
     }
 }

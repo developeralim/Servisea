@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('certification');
         Schema::create('certification', function (Blueprint $table) {
             $table->integerIncrements('CERTIFICATION_ID');
 

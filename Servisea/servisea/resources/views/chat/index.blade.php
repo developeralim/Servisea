@@ -223,6 +223,8 @@
 
 @section('user_script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{asset('backend/USER_ASSET/js/chat.js')}}"></script>
+
     <script>
         $(window).on('load input submit change click', e => {
         

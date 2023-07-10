@@ -160,6 +160,11 @@ class User extends Authenticatable
 
         if ( ! $freelancer ) return false;
 
-        return Offer::where('STATUS',1)->count() !== 0;
+        return Quotation::where('STATUS',1)->count() !== 0;
+    }
+
+    public function freelancer() : HasOne
+    {
+        return $this->hasOne(Freelancer::class,'USER_ID','USER_ID');
     }
 }

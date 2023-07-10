@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Chat;
 
-use App\Models\ChatMedia;
-use App\Models\Freelancer;
-use App\Models\Gig;
-use App\Models\Offer;
-use App\Models\PaymentType;
-use App\Models\QuickResponse;
 use Carbon\Carbon;
+use App\Models\Gig;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\ChatMedia;
+use App\Models\Quotation;
+use App\Models\Freelancer;
+use App\Models\PaymentType;
 use Illuminate\Http\Request;
+use App\Models\QuickResponse;
 use App\Events\MessageNotification;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -412,10 +412,10 @@ class ChatController extends Controller
                     'price'         => 'required',
                 ]);
 
-                $offer = new Offer();
+                $offer = new Quotation();
 
                 $offer->GIG_ID          = $request->gig;
-                $offer->FREELANCER_ID   = $loggedIn->USER_ID;
+                $offer->FREELANCER_ID   = $loggedIn->freelancer->FREELANCER_ID;
                 $offer->SENT_TO         = $user->USER_ID;
                 $offer->PAYMENT_TYPE_ID = $request->payment_type;
                 $offer->DESCRIPTION     = $request->description;
@@ -431,7 +431,7 @@ class ChatController extends Controller
                 $request->merge([
                     'replied_to' => $user->USER_ID,
                     'message'    => 'Here\'s your Custom Offer ',
-                    'offer'      => $offer->ID
+                    'offer'      => $offer->QUOTE_ID
                 ]);
 
                 //call store method to store new message
@@ -454,7 +454,7 @@ class ChatController extends Controller
     }
 
     /**
-     * Offer accept
+     * Quotation accept
      */
     public function offerAccept( Request $request )
     {
@@ -464,7 +464,7 @@ class ChatController extends Controller
 
             $id    = $request->accept_offer ?? $request->withdraw_offer;
 
-            $offer = Offer::where('ID',$id)->first();
+            $offer = Quotation::where('QUOTE_ID',$id)->first();
 
             if ( $request->accept_offer ) {
                 $offer->STATUS = 1;

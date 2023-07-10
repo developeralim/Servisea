@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('gig_media');
         Schema::create('chat_media', function (Blueprint $table) {
             $table->integerIncrements('MEDIA_ID');
             $table->string('FILE_NAME');

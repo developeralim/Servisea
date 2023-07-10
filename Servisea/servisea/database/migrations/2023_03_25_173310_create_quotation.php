@@ -14,17 +14,34 @@ return new class extends Migration
         Schema::create('quotation', function (Blueprint $table) {
             $table->integerIncrements("QUOTE_ID");
 
-            $table->unsignedInteger('PACKAGE_ID');
-            $table->foreign('PACKAGE_ID')->references('PACKAGE_ID')->on('package')->onDelete('cascade')->cascadeOnUpdate();
+            $table->unsignedInteger('PACKAGE_ID')->nullable();
 
             $table->unsignedInteger('FREELANCER_ID');
             $table->foreign('FREELANCER_ID')->references('FREELANCER_ID')->on('freelancer')->onDelete('cascade')->cascadeOnUpdate();
 
             $table->string('PACKAGE_NAME')->nullable();
-            $table->decimal('PRICE',8,2)->nullable();
             $table->string('PACKAGE_DESCRIPTION')->nullable();
-            $table->integer('DELIVERY_DAYS')->nullable();
-            $table->string('REVISION')->nullable();
+            
+            $table->unsignedInteger('GIG_ID');
+            $table->foreign('GIG_ID')->references('GIG_ID')->on('gig')->onDelete('cascade')->cascadeOnUpdate();
+
+            $table->unsignedInteger('SENT_TO');
+            $table->foreign('SENT_TO')->references('USER_ID')->on('users')->onDelete('cascade')->cascadeOnUpdate();
+
+            $table->unsignedInteger('PAYMENT_TYPE_ID');
+            $table->foreign('PAYMENT_TYPE_ID')->references('ID')->on('payment_types')->onDelete('cascade')->cascadeOnUpdate();
+            
+            $table->longText('DESCRIPTION');
+
+            $table->integer('REVISION');
+            $table->integer('DELIVERY');
+            $table->float('PRICE');
+            $table->float('EXPIRES');
+            $table->integer('STATUS')->default(0);
+
+            $table->integer('REQUIREMENTS')->default(0);
+            
+            $table->timestamps();
         });
     }
 

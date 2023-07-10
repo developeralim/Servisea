@@ -30,17 +30,7 @@
     <link href="{{asset('backend/THEME/images/apple-touch-icon-72x72.png')}}" sizes="72x72" rel="apple-touch-icon">
     <link href="{{asset('backend/THEME/images/apple-touch-icon-114x114.png')}}" sizes="114x114" rel="apple-touch-icon">
     <link href="{{asset('backend/THEME/images/apple-touch-icon-180x180.png')}}" sizes="180x180" rel="apple-touch-icon">
-
-    <!-- <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/templatemo.css')}}">
-    -->
-    <!-- <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/custom.css')}}"> -->
-
-    <!-- Load fonts style after rendering the layout styles -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/fontawesome.min.css')}}"> -->
-
-    @vite(['resources/js/chat.js'])
+    <link rel="stylesheet" href="{{asset('backend/USER_ASSET/assets/css/custom.css')}}">
 
     @yield('user_style')
 
@@ -58,9 +48,9 @@
 </div>
 
 <script>
-    window.addEventListener ("preloader", function() {
-    loader.style.display = 'none';
-});
+    window.addEventListener ("load", function() {
+        document.querySelector('.preloader').style.display = 'none';
+    });
 </script>
     <!-- Start Script -->
     <script src="{{asset('backend/THEME/js/jquery-3.6.4.min.js')}}"></script>
@@ -75,15 +65,7 @@
     <script src="{{asset('backend/THEME/js/owl.js')}}"></script>
     <script src="{{asset('backend/THEME/js/scrollbalance.js')}}"></script>
     <script src="{{asset('backend/THEME/js/pricing-table.js')}}"></script>
-
-
-    <!-- Custom script for all pages -->
     <script src="{{asset('backend/THEME/js/script.js')}}"></script>
-    <!-- JS -->
-
-
-
-    <!-- End Script -->
 
     @yield('user_script')
 

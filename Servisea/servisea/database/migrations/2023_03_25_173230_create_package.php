@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('package', function (Blueprint $table) {
             $table->integerIncrements("PACKAGE_ID");
-
             $table->unsignedInteger('GIG_ID');
             $table->foreign('GIG_ID')->references('GIG_ID')->on('gig')->onDelete('cascade')->cascadeOnUpdate();
-
             $table->string('PACKAGE_NAME')->nullable();
             $table->decimal('PRICE',8,2)->nullable();
             $table->string('PACKAGE_DESCRIPTION')->nullable();

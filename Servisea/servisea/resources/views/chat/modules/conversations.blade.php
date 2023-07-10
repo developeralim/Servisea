@@ -20,6 +20,7 @@
                         <p class="text">
                             {!! $conversation->text !!}
                         </p>
+                        
                         @if ( ! $conversation->offer )   
                             <div class="media-wraper">
                                 @foreach ($conversation->media() as $media)
@@ -36,6 +37,7 @@
                                 @endforeach
                             </div>
                         @else 
+
                             <div class="offer-bot">
                                 <div class="title-price">
                                     <h4 class="d-flex justify-content-between">
@@ -95,12 +97,12 @@
                                         </button>
                                     @else 
                                        @if ( $offer->SENT_TO == session()->get('user')->USER_ID )
-                                            <input type="hidden" name="accept_offer" value="{{ $offer->ID }}">
+                                            <input type="hidden" name="accept_offer" value="{{ $offer->QUOTE_ID }}">
                                             <button type="submit" class="btn btn-sm btn-success">
                                                 Accept Offer
                                             </button>
                                        @else 
-                                            <input type="hidden" name="withdraw_offer" value="{{ $offer->ID }}">
+                                            <input type="hidden" name="withdraw_offer" value="{{ $offer->QUOTE_ID }}">
                                             <button type="submit" class="btn btn-sm btn-success">
                                                 Withdraw offer
                                             </button>
